@@ -273,8 +273,8 @@ input[type=checkbox]:focus-visible{outline:2px solid var(--g);outline-offset:2px
 #auth{position:fixed;inset:0;z-index:100;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:16px}
 .acard{width:100%;max-width:340px;background:var(--s1);border:1px solid var(--bd);border-radius:16px;padding:20px 18px;text-align:center}
 .acard h1{justify-content:center;font-size:1.2em;margin-bottom:14px}.acard input{display:block;width:100%;height:38px;margin:6px 0;font-size:.9em;padding:0 12px;border-radius:9px;background:#060a12}
-.acard button{width:100%;height:38px;margin-top:8px;font-size:.9em;border-radius:9px}.acard button#asub{background:linear-gradient(135deg,var(--g),var(--g2));color:#030712;border:0}
-#aerr{color:#ff7a80;font-size:.8em;min-height:1.4em;margin-top:6px}#anm{display:none}
+.acard button{width:100%;height:38px;margin-top:8px;font-size:.9em;border-radius:9px}.acard button#agoogle{background:linear-gradient(135deg,var(--g),var(--g2));color:#030712;border:0}
+#aerr{color:#ff7a80;font-size:.8em;min-height:1.4em;margin-top:6px}.aor{color:var(--m);font-size:.8em;margin:10px 0 2px}.asub{color:var(--m);font-size:.72em;line-height:1.7;margin-top:8px}
 </style></head><body><header><h1>☾ لورد الغوامض</h1><select id="sel"></select><button id="new">+ جديدة</button><button id="exp" title="تصدير الشخصيات">⬇ تصدير</button><button id="imp" title="استيراد الشخصيات">⬆ استيراد</button><span id="who" class="tag"></span><button id="mode" style="display:none"></button><button id="edt" style="display:none"></button><button id="out" title="تسجيل الخروج">خروج</button></header><main id="m"></main><p id="uidb" class="sub" style="text-align:center;margin:6px 0 14px"></p><nav id="nav"></nav><div id="dr"></div><input type="file" id="impf" accept=".json,application/json" hidden>
 <script>
 const $=s=>document.querySelector(s),AD=s=>String(s??'').replace(/[٠-٩۰-۹]/g,d=>{const i='٠١٢٣٤٥٦٧٨٩'.indexOf(d);return i>=0?i:'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)}),esc=s=>AD(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -677,23 +677,23 @@ $('#impf').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;
 document.addEventListener('input',e=>{const t=e.target;if(t.dataset&&t.dataset.num){const v=t.value.replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٫،]/g,'.').replace(/[^0-9.\-]/g,'');if(v!==t.value)t.value=v}},true);
 document.addEventListener('input',e=>{const t=e.target;if(t.matches&&t.matches('input:not([type=checkbox]):not([type=file]),textarea')&&!(t.dataset&&t.dataset.num)){const v=AD(t.value);if(v!==t.value){const p=t.selectionStart;t.value=v;try{t.setSelectionRange(p,p)}catch(x){}}}},true);
 </script>
-<div id="auth"><div class="acard"><h1>☾ لورد الغوامض</h1><input id="anm" placeholder="اسمك الظاهر للجميع"><input id="aem" type="email" placeholder="البريد الإلكتروني" dir="ltr"><input id="apw" type="password" placeholder="كلمة المرور (6 أحرف على الأقل)" dir="ltr"><div id="aerr"></div><button id="asub">دخول</button><button id="aswap">إنشاء حساب جديد</button></div></div>
+<div id="auth"><div class="acard"><h1>☾ لورد الغوامض</h1><button id="agoogle">الدخول بحساب Google</button><div class="aor">أو</div><input id="anm" placeholder="اكتب اسمك الظاهر للجميع"><button id="aanon">الدخول بالاسم فقط</button><div class="asub">الدخول بالاسم مرتبط بهذا المتصفح فقط؛ استخدم Google إن أردت الدخول من أجهزة مختلفة.</div><div id="aerr"></div></div></div>
 <script type="module">
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-import {getAuth,onAuthStateChanged,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,updateProfile} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import {getAuth,onAuthStateChanged,GoogleAuthProvider,signInWithPopup,signInAnonymously,signOut,updateProfile} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 import {getFirestore,collection,doc,getDocs,getDoc,setDoc,deleteDoc} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 const cfg={apiKey:"AIzaSyBnq8eGPB3g2S4rl6gIQ21AAgASNRMr98Y",authDomain:"lord-of-mysteries-22279.firebaseapp.com",projectId:"lord-of-mysteries-22279",storageBucket:"lord-of-mysteries-22279.firebasestorage.app",messagingSenderId:"963643684376",appId:"1:963643684376:web:12735bd7dbc0460ed1356d"};
 const app=initializeApp(cfg),auth=getAuth(app),fs=getFirestore(app),seg=p=>p.split('/'),NM={},Q=s=>document.querySelector(s);
-let admin=false,started=false,mode='in';
+let admin=false,started=false;
 const ERR={'auth/invalid-credential':'البريد أو كلمة المرور غير صحيحة','auth/wrong-password':'كلمة المرور غير صحيحة','auth/user-not-found':'الحساب غير موجود','auth/email-already-in-use':'هذا البريد مسجّل مسبقًا','auth/weak-password':'كلمة المرور ضعيفة (6 أحرف على الأقل)','auth/invalid-email':'البريد الإلكتروني غير صالح','auth/missing-password':'أدخل كلمة المرور','auth/network-request-failed':'تعذّر الاتصال بالإنترنت','auth/too-many-requests':'محاولات كثيرة، حاول لاحقًا','auth/unauthorized-domain':'هذا النطاق غير مضاف في Firebase (Authorized domains)'};
 const msg=t=>{Q('#aerr').textContent=t||''};
 window.claude={use:async n=>{
  if(n=='user')return{isOwner:async()=>admin,canEdit:async()=>admin,id:async()=>auth.currentUser.uid,profiles:async ids=>{const o={};[].concat(ids).forEach(i=>{o[i]={id:i,name:NM[i]||(i==auth.currentUser.uid?auth.currentUser.displayName:'')||''}});return o}};
  if(n=='db')return{collection:p=>({get:async()=>{const s=await getDocs(collection(fs,...seg(p)));if(p=='roster')s.docs.forEach(d=>{NM[d.id]=d.data().n||''});return{docs:s.docs.map(d=>({id:d.id,data:()=>d.data()}))}}}),doc:p=>({set:async x=>{if(p=='roster/'+auth.currentUser.uid)x={...x,n:auth.currentUser.displayName||''};await setDoc(doc(fs,...seg(p)),x,{merge:p.startsWith('roster/')})},delete:async()=>deleteDoc(doc(fs,...seg(p)))})};
  return null}};
-function setMode(m){mode=m;Q('#anm').style.display=m=='up'?'block':'none';Q('#asub').textContent=m=='up'?'إنشاء الحساب':'دخول';Q('#aswap').textContent=m=='up'?'لدي حساب بالفعل':'إنشاء حساب جديد';msg()}
-Q('#aswap').onclick=()=>setMode(mode=='in'?'up':'in');
-Q('#asub').onclick=async()=>{msg();const e=Q('#aem').value.trim(),p=Q('#apw').value;try{if(mode=='up'){const n=Q('#anm').value.trim();if(!n)return msg('اكتب اسمك');const u=await createUserWithEmailAndPassword(auth,e,p);await updateProfile(u.user,{displayName:n})}else await signInWithEmailAndPassword(auth,e,p)}catch(x){msg(ERR[x.code]||x.code)}};
+Object.assign(ERR,{'auth/popup-closed-by-user':'أُغلقت نافذة الدخول قبل الإكمال','auth/popup-blocked':'المتصفح حجب نافذة الدخول، اسمح بالنوافذ المنبثقة','auth/operation-not-allowed':'طريقة الدخول هذه غير مفعّلة في Firebase','auth/cancelled-popup-request':'أُلغي طلب الدخول'});
+Q('#agoogle').onclick=async()=>{msg();try{await signInWithPopup(auth,new GoogleAuthProvider())}catch(x){msg(ERR[x.code]||x.code)}};
+Q('#aanon').onclick=async()=>{msg();const n=Q('#anm').value.trim();if(!n)return msg('اكتب اسمك أولًا');try{const u=await signInAnonymously(auth);await updateProfile(u.user,{displayName:n})}catch(x){msg(ERR[x.code]||x.code)}};
 document.addEventListener('click',e=>{if(e.target.closest('#out'))signOut(auth).then(()=>location.reload())});
 onAuthStateChanged(auth,async u=>{if(!u){Q('#auth').style.display='flex';return}
  admin=false;try{admin=(await getDoc(doc(fs,'admins',u.uid))).exists()}catch(e){}
