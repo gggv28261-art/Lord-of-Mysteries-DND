@@ -1,0 +1,704 @@
+<!doctype html><html lang="ar-u-nu-latn" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>لورد الغوامض</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap"><style>
+:root{--bg:#05070d;--s1:#0a0f1a;--s2:#0f1626;--s3:#16203a;--bd:#1f2d4d;--t:#e6edf8;--m:#8fa3c4;--g:#5aa9ff;--g2:#2563eb;--r:#e5484d;--b:#4c8dff;--gr:#3ecf8e;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);color-scheme:dark}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;background:var(--bg);color:var(--t);font-family:'IBM Plex Sans Arabic',system-ui,Tahoma,'Segoe UI',sans-serif;font-size:15px;line-height:1.55}
+body{min-height:100vh;padding-bottom:calc(72px + env(safe-area-inset-bottom,0px));background:radial-gradient(ellipse at 50% -20%,color-mix(in srgb,var(--g) 8%,transparent),transparent 55%),var(--bg)}
+@keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+h1,h2,h3{margin:0 0 12px;font-weight:700;color:var(--t)}h2{font-size:1.12em;display:flex;align-items:center;gap:9px}h2::before,h3::before{content:'';width:4px;height:1.05em;background:var(--g);border-radius:2px;flex:none}h3{font-size:1em;display:flex;align-items:center;gap:9px;color:var(--t)}
+header{display:flex;gap:8px;align-items:center;padding:10px 12px;background:#070b14f2;border-bottom:1px solid var(--bd);position:sticky;top:env(safe-area-inset-top,0px);z-index:7;backdrop-filter:blur(10px)}
+header h1{margin:0;font-size:1.02em;flex:1;white-space:nowrap;display:flex;align-items:center;gap:9px;color:var(--t);min-width:0}header h1::before{content:'☾';display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--g),var(--g2));color:#030712;font-size:1em;flex:none}
+header select{max-width:36vw;padding:6px 8px}header button{padding:6px 11px;font-size:.85em;white-space:nowrap}
+main{padding:12px;max-width:880px;margin:auto}main.an>*{animation:up .28s ease both}
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:14px;padding:16px;margin:12px 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}@media(min-width:700px){.grid{grid-template-columns:repeat(auto-fit,minmax(130px,1fr))}}
+.st{background:var(--s2);border:1px solid var(--bd);border-radius:10px;padding:10px 6px;text-align:center}.st small{display:block;color:var(--m);font-size:.78em}.st b{display:block;font-size:1.45em;font-weight:700;color:var(--t);line-height:1.25}
+.rings{display:grid;gap:14px}@media(min-width:700px){.rings{grid-template-columns:1fr 1fr}}
+.sr .sh{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}.sr .sh span{color:var(--m);font-size:.9em}.sr .sh b{font-size:1.25em}.sr .sh small{color:var(--m);font-weight:400;font-size:.7em}
+.bar{height:9px;background:var(--s3);border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--g2),var(--g));transition:width .5s}
+button,select,input,textarea{font:inherit;color:var(--t);background:var(--s2);border:1px solid var(--bd);border-radius:9px;padding:8px 11px;max-width:100%}input:focus,select:focus{outline:2px solid var(--g);border-color:transparent}
+button{cursor:pointer;background:var(--g);color:#030712;border:0;font-weight:700;padding:8px 14px;transition:.15s}button:hover:not(:disabled){filter:brightness(1.1)}button:active:not(:disabled){transform:scale(.97)}
+button.r{background:var(--r);color:#fff}button:disabled{opacity:.3;cursor:not-allowed}
+input[data-num]{width:78px}input[type=checkbox]{width:19px;height:19px;accent-color:var(--g);padding:0}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:9px 0}
+nav{position:fixed;bottom:0;inset-inline:0;display:flex;background:#070b14f7;border-top:1px solid var(--bd);padding:4px 4px calc(4px + env(safe-area-inset-bottom,0px));z-index:8;overflow-x:auto;backdrop-filter:blur(10px)}
+nav button{flex:1;min-width:58px;background:none;color:var(--m);border-radius:10px;padding:6px 2px;font-size:.72em;font-weight:500;display:flex;flex-direction:column;align-items:center;gap:1px;position:relative}nav button span{font-size:1.6em;line-height:1.1}nav button:hover:not(:disabled){filter:none;color:var(--t)}nav button.on{color:var(--g);background:color-mix(in srgb,var(--g) 10%,transparent)}nav button.on::before{content:'';position:absolute;top:-5px;left:30%;right:30%;height:3px;border-radius:0 0 3px 3px;background:var(--g)}
+.tag{display:inline-block;padding:2px 11px;border:1px solid var(--bd);border-radius:20px;color:var(--t);background:var(--s2);font-size:.8em}.bad{color:#ff7a80}.good{color:var(--gr)}.sub{color:var(--m);font-size:.85em}
+.seq{display:flex;gap:4px;margin:10px 0}.seq span{flex:1;height:26px;border-radius:6px;display:grid;place-items:center;font-size:.75em;font-weight:700;background:var(--s3);color:#5470a0}.seq .past{background:color-mix(in srgb,var(--g) 19%,transparent);color:var(--g)}.seq .on{background:var(--g);color:#030712;box-shadow:0 0 14px color-mix(in srgb,var(--g) 47%,transparent)}
+.hero{display:flex;gap:14px;align-items:center;background:linear-gradient(135deg,color-mix(in srgb,var(--g2) 24%,var(--s1)),var(--s1))}.hb{flex:1;min-width:0}.hero h2{font-size:1.5em;margin:0 0 6px}.hero h2::before{display:none}
+.sig{flex:none;width:60px;height:60px;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--s3);border:2px solid var(--g)}.sig b{font-size:1.7em;color:var(--g);line-height:1}.sig small{color:var(--m);font-size:.6em}
+.hero .row{margin:6px 0}
+.skg{display:grid;grid-template-columns:1fr;gap:6px}@media(min-width:700px){.skg{grid-template-columns:1fr 1fr}}
+.sk{background:var(--s2);border:1px solid var(--bd);border-radius:10px;padding:8px 10px;display:grid;grid-template-columns:1fr auto;grid-template-areas:'n s' 'p p';gap:3px 10px;align-items:center}.sk.on{border-color:color-mix(in srgb,var(--g) 33%,transparent)}.sk b{grid-area:n;font-weight:500}.sk small{display:none}.sk select{grid-area:s;padding:4px 8px;font-size:.85em}.sk .pips{grid-area:p}
+.pips{display:flex;gap:3px}.pips i{flex:1;height:5px;border-radius:3px;background:var(--s3)}.pips i.f{background:var(--g)}
+details{margin-top:10px}summary{cursor:pointer;color:var(--g);font-weight:700;padding:6px 0}
+.log div{border-bottom:1px solid var(--bd);padding:8px 0;font-size:.92em}.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid var(--bd);padding:7px 6px;text-align:start}
+.alert{border:1px solid #e5484d55;background:#e5484d14;padding:10px 12px;border-radius:10px;margin:10px 0;font-size:.93em}
+@media(max-width:560px){header h1{font-size:0;flex:none}header select{flex:1;max-width:none}}
+html,body{overflow-x:hidden;max-width:100vw}header{flex-wrap:wrap}header select{flex:1;min-width:90px;max-width:none}header .tag{padding:1px 8px}header button{padding:6px 9px;font-size:.8em}
+button{background:var(--s3);color:var(--g);border:1px solid color-mix(in srgb,var(--g) 25%,transparent);font-weight:600}
+button[data-a=test],button[data-a=promo],button[data-a=create],button[data-a=rollattr],button[data-a=init],button[data-a=burn],button[data-a=addsk],button[data-a=additem],button#new{background:var(--g);color:#030712;border:0;font-weight:700}
+button.r{background:var(--r);color:#fff;border:0}nav button{border:0}nav button.on{background:color-mix(in srgb,var(--g) 10%,transparent)}header h1::before{content:'ل';font-weight:700}
+.ab{background:var(--s2);border:1px solid var(--bd);border-right:4px solid var(--ac);border-radius:12px;padding:11px;margin:10px 0}.ah{display:flex;align-items:center;gap:8px}.ah b{flex:1;color:var(--ac);font-size:1.02em}.ah em{font-style:normal;font-size:1.6em;font-weight:700;color:var(--ac);min-width:30px;text-align:center}.ai{width:54px;padding:4px 6px}
+.ah .pl{width:34px;height:34px;padding:0;border-radius:50%;background:var(--ac);color:#0b0f16;font-size:1.4em;line-height:1;border:0}
+.rw{border-top:1px solid var(--bd);margin-top:9px;padding-top:9px}.l1{display:flex;align-items:center;gap:8px}.l1 b{flex:1;font-weight:500;min-width:0}.lvl{font-size:.7em;color:var(--m);border:1px solid var(--bd);border-radius:10px;padding:0 8px;white-space:nowrap}.fm{font-size:.8em;color:var(--m);direction:ltr;white-space:nowrap}
+.tot{min-width:40px;text-align:center;font-weight:700;font-size:1.2em;border-radius:9px;padding:1px 6px;background:var(--ac);color:#0b0f16}
+.l2{display:flex;gap:6px;align-items:center;margin-top:7px}.l2 .pips{flex:1}.ab .pips i.f{background:var(--ac)}.l2 select{padding:3px 5px;font-size:.78em;max-width:88px}.l2 button{padding:3px 10px;background:var(--s3);color:var(--ac);border:1px solid var(--bd)}
+.lp{background:var(--s1);border:1px dashed var(--ac);border-radius:10px;padding:9px;margin-top:8px}.lr{font-size:.95em}.ga{width:100%;margin-top:9px;background:transparent;color:var(--m);border:1px dashed var(--bd);font-weight:500;font-size:.85em}
+.fm{unicode-bidi:isolate;direction:ltr}
+/* ---- size + palette pass ---- */
+html,body{font-size:14.5px}main{padding:8px;max-width:720px}.card{padding:12px;margin:10px 0;border-radius:12px}h2{font-size:1.05em;margin-bottom:8px}
+input,select{padding:3px 8px;font-size:.9em;height:30px}input[data-num]{width:64px}input[type=checkbox]{height:18px;width:18px}
+button{padding:5px 11px;font-size:.88em;border-radius:8px}header{padding:7px 10px}header button{padding:4px 9px;font-size:.78em;height:30px}header select{height:30px}
+.st{padding:6px 3px;border-radius:9px}.st b{font-size:1.2em}.st small{font-size:.72em}.grid{gap:6px}
+.hero{padding:12px;gap:10px}.hero h2{font-size:1.3em}.sig{width:48px;height:48px;border-radius:12px}.sig b{font-size:1.4em}.seq span{height:22px;font-size:.7em}
+.sr .sh b{font-size:1.1em}.bar{height:7px}.rings{gap:10px}
+nav{padding-top:2px}nav button{padding:4px 2px;font-size:.68em;height:auto}nav button span{font-size:1.4em}
+.ab{padding:8px 9px;margin:8px 0;border-radius:10px}.ah{gap:6px}.ah b{font-size:.95em}.ah em{font-size:1.35em;min-width:24px}
+.ah .pl{width:auto;height:26px;padding:0 10px;border-radius:13px;font-size:.78em;line-height:1;font-weight:700}
+.mn{width:24px;height:24px;padding:0;border-radius:50%;background:var(--s3)!important;color:var(--ac)!important;border:1px solid var(--bd)!important;font-size:1em;line-height:1}
+.rw{margin-top:7px;padding-top:7px}.l1{gap:6px}.l1 b{font-size:.95em}.lvl{font-size:.66em;padding:0 7px}.tot{min-width:30px;font-size:1em;padding:0 5px;border-radius:7px}
+.lb{padding:0 8px!important;height:24px;font-size:.8em!important;background:var(--s3)!important;color:var(--ac)!important;border:1px solid var(--bd)!important}
+.pips i{height:4px}.l2{margin-top:6px}.l2 select{height:26px;font-size:.72em;padding:0 4px;max-width:86px}.rw>.pips{margin-top:6px}
+.lp{padding:7px;margin-top:6px}.lp .row{margin:5px 0}
+.ovx,.ov{position:fixed;inset:0;z-index:20;background:#000a;border:0;border-radius:0;padding:0;box-shadow:none;height:auto;animation:fade .2s}
+.dw{position:fixed;top:0;bottom:0;right:0;width:min(78vw,280px);z-index:21;background:var(--s1);border-left:3px solid var(--ac);padding:12px;overflow:auto;animation:slide .25s ease;box-shadow:-10px 0 30px #000b}
+.dh{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}.dh b{color:var(--ac);font-size:1.02em}.dh button{padding:2px 9px;background:var(--s3);color:var(--t)}
+.it{display:flex;justify-content:space-between;align-items:center;width:100%;margin:5px 0;padding:8px 10px;background:var(--s2);color:var(--t);border:1px solid var(--bd);font-weight:500;text-align:start}.it span{color:var(--ac);font-weight:700;font-size:1.1em}.it:hover:not(:disabled){border-color:var(--ac);filter:none}
+@keyframes fade{from{opacity:0}}@keyframes slide{from{transform:translateX(100%)}}
+
+/* ---- purple/black refined pass ---- */
+html,body{font-size:13px;line-height:1.5}
+body{background:radial-gradient(ellipse at 50% -20%,color-mix(in srgb,var(--g2) 13%,transparent),transparent 55%),var(--bg)}
+main{padding:6px;max-width:660px}
+.card{padding:10px;margin:8px 0;border-radius:10px}
+h2{font-size:1em;margin-bottom:7px}h3{font-size:.93em;margin-bottom:6px}h2::before,h3::before{width:3px}
+input,select{height:24px;padding:0 8px;font-size:.82em;border-radius:6px;background:#060a12;border:1px solid var(--bd)}
+input[data-num]{width:54px}input[type=checkbox]{width:15px;height:15px}
+input:focus,select:focus{outline:1px solid var(--g);border-color:var(--g)}
+button{padding:4px 10px;font-size:.8em;border-radius:6px;font-weight:600}
+header{padding:5px 8px}header h1{font-size:.95em}header h1::before{width:24px;height:24px;border-radius:7px}
+header button,header select{height:26px;font-size:.75em}
+.row{gap:6px;margin:6px 0}
+.st{padding:5px 3px}.st b{font-size:1.05em}.st small{font-size:.68em}
+.sr .sh span{font-size:.82em}.sr .sh b{font-size:1em}.bar{height:5px}
+.hero h2{font-size:1.15em}.sig{width:42px;height:42px}.sig b{font-size:1.2em}.seq span{height:19px;font-size:.65em}
+.tag{font-size:.72em;padding:1px 9px}.sub{font-size:.78em}
+.ab{padding:7px 8px;margin:6px 0}.ah b{font-size:.9em}.ah em{font-size:1.2em}
+.l1 b{font-size:.88em}.tot{font-size:.9em;min-width:26px}.lvl{font-size:.62em}
+.l2 select{height:22px;font-size:.68em}.lb{height:22px;font-size:.72em!important}
+.pips i{height:3px}
+nav button{font-size:.62em;padding:3px 2px}nav button span{font-size:1.25em}
+body{padding-bottom:calc(58px + env(safe-area-inset-bottom,0px))}
+td,th{padding:5px 4px;font-size:.85em}.log div{padding:6px 0;font-size:.85em}
+summary,.alert{font-size:.85em}.alert{padding:8px 10px}
+
+/* ---- avatar + unified controls ---- */
+.avw{position:relative;flex:none}
+.av{width:60px;height:60px;border-radius:50%;padding:0;display:grid;place-items:center;overflow:hidden;position:relative;background-color:var(--s3);background-size:cover;background-position:center;border:2px solid var(--g);color:var(--g);font-size:1.5em}
+.av small{position:absolute;bottom:0;inset-inline:0;background:#000b;color:#fff;font-size:.34em;padding:2px 0;text-align:center;font-weight:500}
+.avx{position:absolute;top:-3px;inset-inline-end:-3px;width:18px;height:18px;padding:0;border-radius:50%;font-size:.65em;line-height:1;background:var(--r);color:#fff;border:0;display:grid;place-items:center}
+.hero{gap:10px}.hero .avw+.sig{order:3}
+:root{--h:28px}
+.row input:not([type=checkbox]),.row select,.row>button,.card>select{height:var(--h);font-size:.82em;padding:0 10px;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;line-height:1}
+.row input:not([type=checkbox]),.row select,.card>select{display:block;text-align:start}
+.row input[data-num]{width:64px!important;text-align:center;flex:none}
+.row input:not([data-num]):not([type=checkbox]){flex:1 1 110px;min-width:90px}
+.row select{flex:1 1 110px;min-width:90px}
+.row>button{flex:none;white-space:nowrap}
+.card>select{width:100%}
+.st button{height:24px;min-width:34px;padding:0 8px}
+.dw .row input:not([type=checkbox]){flex:1}
+.row label{display:inline-flex;align-items:center;gap:5px;font-size:.82em}
+
+.avin{position:absolute!important;inset:0;width:100%!important;height:100%!important;opacity:0;padding:0!important;border:0!important;margin:0;cursor:pointer;font-size:0;z-index:2;border-radius:50%}
+.av{cursor:pointer}
+
+.ovx,.ov,.dw{animation:none}.ov.ani{animation:fade .2s}.dw.ani{animation:slide .25s ease}
+
+/* ---- custom dropdown ---- */
+select.hid{display:none!important}
+.dd{position:relative;display:inline-flex;min-width:0}
+.row>.dd{flex:1 1 110px;min-width:90px;height:28px}
+.card>.dd{display:flex;width:100%;height:28px}
+.ddt,.l2 .ddt{width:100%;height:100%;display:flex;align-items:center;justify-content:space-between;gap:6px;padding:0 10px;font-size:.82em;font-weight:500;background:#060a12;color:var(--t);border:1px solid var(--bd);border-radius:7px;text-align:start;line-height:1}
+.ddt span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+.ddt i{font-style:normal;color:var(--g);font-size:.8em;flex:none}
+.ddt:hover:not(:disabled){border-color:var(--g);filter:none}
+.dd.ph .ddt span{color:var(--m)}
+.l2 .dd{height:22px;max-width:88px;flex:none}.l2 .ddt{font-size:.68em;padding:0 6px}
+header .dd{flex:1 1 auto;min-width:90px;max-width:230px;height:26px}header .ddt{font-size:.75em}
+#ddp{position:fixed;z-index:40;display:none;overflow-y:auto;background:var(--s1);border:1px solid color-mix(in srgb,var(--g) 33%,transparent);border-radius:10px;padding:4px;box-shadow:0 12px 30px #000c;overscroll-behavior:contain}
+#ddp.on{display:block;animation:ddin .12s ease}
+.ddo{display:flex;justify-content:space-between;align-items:center;width:100%;height:auto;padding:7px 10px;margin:0;font-size:.84em;font-weight:500;text-align:start;background:none;color:var(--t);border:0;border-radius:7px}
+.ddo:hover:not(:disabled),.ddo:active{background:var(--s3);filter:none}
+.ddo.on{background:color-mix(in srgb,var(--g) 13%,transparent);color:var(--g)}.ddo i{font-style:normal}
+.ddg{padding:6px 10px 3px;font-size:.7em;color:var(--m)}
+@keyframes ddin{from{opacity:0;transform:translateY(-4px)}}
+.hero .nm{width:220px;max-width:100%;text-align:center;font-size:1.15em;font-weight:700;height:34px;margin:12px 0 6px;background:transparent;border:0;border-bottom:1px solid var(--bd);border-radius:0;padding:0 4px}
+.hero .nm:focus{outline:0;border-bottom-color:var(--g)}
+.ii>input,.ii>.dd{display:flex;width:100%;height:28px;margin-top:2px}
+.ii>input{padding:0 8px;font-size:.88em;border-radius:7px}
+.rmv{color:var(--r)!important}
+#sb{position:fixed;inset-inline:8px;bottom:calc(64px + env(safe-area-inset-bottom,0px));z-index:9;display:none;align-items:center;gap:8px;background:var(--s1);border:1px solid var(--g);border-radius:12px;padding:8px 10px;box-shadow:0 8px 24px #000c;max-width:640px;margin:auto}#sb.on{display:flex}#sb span{flex:1;font-size:.82em;color:var(--m)}#sb button.sv{background:var(--g);color:#030712;border:0}
+.av.ro{cursor:default}#edt.on{background:var(--g);color:#030712;border:0}
+/* ---- centered avatar layout ---- */
+.ig{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.ii{background:var(--s2);border:1px solid var(--bd);border-inline-start:3px solid var(--g);border-radius:9px;padding:9px 16px;text-align:start;min-width:0;overflow:hidden}
+.ii small{display:block;color:var(--m);font-size:.72em;line-height:1.5;margin-bottom:3px}
+.ii b{display:block;font-weight:500;font-size:.92em;line-height:1.6;overflow-wrap:anywhere;direction:rtl;text-align:right;unicode-bidi:isolate}
+.hero{flex-direction:column;justify-content:center;text-align:center;gap:4px;padding:14px 28px 16px;width:fit-content;max-width:100%;min-width:160px;margin:10px auto;border-radius:100px 100px 18px 18px;border-color:color-mix(in srgb,var(--g) 33%,transparent)}
+.hero .av{box-shadow:0 0 0 4px var(--s1),0 0 0 6px color-mix(in srgb,var(--g) 40%,transparent)}
+.hero .av,.idt .av{width:108px;height:108px;font-size:2.6em}
+.hero .av small,.idt .av small{font-size:.24em;padding:4px 0}
+.hero h2{margin:12px 0 6px;font-size:1.3em;text-align:center;line-height:1.5}
+.hero2{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.hero2 .hb{width:100%}.hero2 .row{justify-content:center}
+.hero2 .sig{width:48px;height:48px}
+.row input[data-d=age]{flex:0 0 62px!important;width:62px!important;min-width:0!important;text-align:center;padding:0 4px}
+.idt{display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:6px}
+.idt input{width:100%;max-width:280px;text-align:center;height:30px;font-size:.9em;border-radius:8px}
+/* ---- items ---- */
+.itf{background:var(--s2);border:1px solid var(--bd);border-radius:10px;padding:10px;margin-bottom:10px}
+.itf>input{display:block;width:100%;height:30px;font-size:.9em;border-radius:7px;background:#060a12}
+.itf>input#in{font-weight:700}
+.itf>input.idmi{height:24px;width:60%;margin-top:4px;font-size:.78em;direction:ltr;text-align:start;border-color:#e5484d55}
+.itf>textarea{display:block;width:100%;min-height:130px;margin-top:8px;resize:vertical;font-size:.85em;line-height:1.7;border-radius:7px;background:#060a12;padding:8px 10px}
+.itf>.row input:not([type=checkbox]):not([data-num]){flex:1 1 90px}
+.itm{background:var(--s2);border:1px solid var(--bd);border-inline-start:3px solid var(--g);border-radius:10px;padding:9px 10px;margin:8px 0}
+.itm .idm{display:inline-block;margin-top:4px;padding:1px 9px;border:1px solid #e5484d66;border-radius:12px;color:#ff7a80;font-size:.75em}
+.itm .ids{margin-top:7px;padding-top:7px;border-top:1px solid var(--bd);white-space:pre-wrap;overflow-wrap:anywhere;font-size:.85em;line-height:1.75;color:var(--t)}
+.itm .l1 button.r{padding:0 8px;height:22px}
+.row>button.tgl{flex:none;width:20px;height:20px;padding:0;border-radius:50%;font-size:1em;line-height:1;display:grid;place-items:center;background:var(--g);color:#030712;border:0}
+.itf{border-inline-start:3px solid var(--rc,#9aa4b2);transition:border-color .2s}
+.itf .ico{color:var(--rc,#9aa4b2);font-size:1.4em;line-height:1;text-shadow:0 0 10px var(--rc,transparent);flex:none;transition:color .2s}
+.itf .ddt{border-color:var(--rc,var(--bd));color:var(--rc,var(--t))}
+.stp{display:inline-flex;align-items:stretch;direction:ltr;flex:none;height:22px;background:#060a12;border:1px solid var(--bd);border-radius:11px;overflow:hidden}
+.stp .mn{width:22px;height:20px;padding:0;border-radius:0;border:0!important;background:transparent!important;color:var(--ac)!important;font-size:.9em;font-weight:700;line-height:1;display:grid;place-items:center}
+.stp .mn:hover:not(:disabled){background:var(--s3)!important;filter:none}
+.stp em{display:grid;place-items:center;min-width:26px;padding:0 3px;font-size:.8em;line-height:1;border-inline:1px solid var(--bd);color:var(--t)}
+.itm{border-inline-start-color:var(--rc,var(--g))}
+.itm .ico{color:var(--rc);font-size:1.25em;line-height:1;text-shadow:0 0 10px var(--rc);flex:none}
+.itm .rar{font-size:.66em;color:var(--rc);border:1px solid var(--rc);border-radius:10px;padding:0 8px;white-space:nowrap}
+.pmo{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid var(--bd)}.pmo>span:first-child{flex:1;min-width:0}.pmo b{display:block;font-weight:500;font-size:.9em}.pmo small{display:block;color:var(--m);font-size:.72em}.pmo .dd{flex:none;width:140px;height:26px}.pmo input[type=checkbox]{flex:none}.pmr{background:var(--s2);border:1px solid var(--bd);border-radius:10px;padding:9px 11px;margin-top:10px;font-size:.9em}
+.dgb{display:block;width:100%;background:none!important;border:0!important;padding:0!important;text-align:start;color:inherit;font-weight:inherit;font-size:inherit;cursor:pointer}.dgp{background:var(--s2);border:1px solid var(--bd);border-radius:10px;padding:9px;margin-top:10px;animation:up .2s ease}
+bdi[dir=ltr]{unicode-bidi:isolate;display:inline-block;white-space:nowrap}
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.cb{display:flex;align-items:center;gap:9px;height:auto;padding:8px 10px;text-align:start;background:var(--s2);color:var(--m);border:1px solid var(--bd);border-radius:10px;font-weight:600;font-size:.82em;transition:.15s}
+.cb .ci{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:var(--s3);font-size:1.15em;flex:none;filter:grayscale(.7);transition:.15s}
+.cb .n{flex:1;min-width:0;line-height:1.35}
+.cb:hover:not(:disabled){border-color:var(--g);filter:none}
+.cb.on{background:color-mix(in srgb,var(--r) 14%,var(--s2));border-color:var(--r);color:var(--t);box-shadow:0 0 14px color-mix(in srgb,var(--r) 28%,transparent)}
+.cb.on .ci{background:var(--r);filter:none;box-shadow:0 0 8px var(--r)}
+.fx{margin-top:10px;display:grid;gap:6px}.fx>div{background:var(--s2);border:1px solid var(--bd);border-inline-start:3px solid var(--r);border-radius:9px;padding:8px 10px;font-size:.82em;line-height:1.7}.fx b{color:#ff7a80}
+.lk{background:var(--s2);border:1px solid var(--bd);border-inline-start:3px solid #f5b942;border-radius:10px;padding:10px;margin:10px 0}
+.lk .t{display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:.92em}.lk .t em{font-style:normal;color:#f5b942;font-size:1.1em}
+.lk small{display:block;color:var(--m);font-size:.75em;margin:3px 0 8px;line-height:1.5}
+.lk .row{margin:0;flex-wrap:nowrap}.lk .row input{flex:0 0 64px}.lk .row button{flex:1}
+
+/* ---- path tab: professional pass (visual only) ---- */
+.pth{position:relative;overflow:hidden;text-align:center;padding:16px 12px 14px;background:linear-gradient(165deg,color-mix(in srgb,var(--g2) 34%,var(--s1)),var(--s1) 72%);border-color:color-mix(in srgb,var(--g) 32%,var(--bd))}
+.pth::after{content:'';position:absolute;inset-inline:20%;top:0;height:2px;background:linear-gradient(90deg,transparent,var(--g),transparent)}
+.pth-k{font-size:.68em;letter-spacing:.08em;color:var(--m);margin-bottom:2px}
+.pth h2{justify-content:center;font-size:1.3em;margin:0 0 4px}.pth h2::before{display:none}
+.pth-s{font-size:.8em;color:var(--m)}.pth-s b{color:var(--g);font-size:1.15em}
+.pth .seq{gap:4px;margin:14px 0 12px}
+.pth .seq span{height:30px;border-radius:8px;border:1px solid var(--bd);font-size:.8em;background:var(--s2);transition:.2s}
+.pth .seq .past{background:color-mix(in srgb,var(--g) 14%,var(--s2));border-color:color-mix(in srgb,var(--g) 30%,var(--bd))}
+.pth .seq .on{transform:translateY(-3px) scale(1.12);border-color:var(--g);z-index:1}
+.pth .row{margin:6px 0 0;align-items:stretch}.pth .row input{height:32px;background:#060a12;text-align:center}
+.pth .alert{text-align:start;margin-top:12px}
+.dgc .bar{height:8px;margin:6px 0 10px;border-radius:5px}
+.dgc .bar i{background:linear-gradient(90deg,var(--g2),var(--g));box-shadow:0 0 10px color-mix(in srgb,var(--g) 50%,transparent)}
+.dgc>p{background:var(--s2);border:1px solid var(--bd);border-radius:10px;padding:9px 11px;line-height:1.8}
+.dgc .row{background:var(--s2);border:1px solid var(--bd);border-radius:10px;padding:8px 11px;justify-content:space-between;flex-wrap:nowrap}
+.dgc .row input{text-align:center}
+.pmc{padding:12px}
+.pmc h3{padding-bottom:9px;margin-bottom:4px;border-bottom:1px solid var(--bd)}
+.pmh{background:linear-gradient(165deg,color-mix(in srgb,var(--g2) 22%,var(--s1)),var(--s1) 70%);border-color:color-mix(in srgb,var(--g) 28%,var(--bd))}
+.pmh h2{font-size:1.1em;margin-bottom:10px}
+.pmh .grid{gap:7px}.pmh .st{padding:9px 4px;background:#060a12;border-radius:10px}.pmh .st b{font-size:1.35em;color:var(--g)}
+.pmr{background:#060a12;border:1px solid var(--bd);border-inline-start:3px solid var(--g);border-radius:10px;padding:10px 12px;line-height:1.8}
+.pmr bdi{color:var(--g);font-weight:700}
+.pmr .tag{margin:2px 1px}
+.pmc .pmo{padding:10px 2px;gap:12px}.pmc .pmo:first-of-type{border-top:0}
+.pmc .pmo b{font-size:.88em}.pmc .pmo small{margin-top:1px;line-height:1.5}
+.pmc .pmo input[type=checkbox]{width:20px;height:20px}
+.pmc .pmo .dd{width:150px;height:28px}
+.pmc .pmo input[data-num]{height:28px;text-align:center}
+.pmc .stp{height:26px;border-radius:13px}.pmc .stp .mn{width:26px;height:24px}.pmc .stp em{min-width:30px;font-size:.88em}
+.pmx{border-color:color-mix(in srgb,var(--r) 35%,var(--bd))}.pmx h3::before{background:var(--r)}
+.pmx button[data-a=promo]{width:100%;height:38px;font-size:.92em;border-radius:9px;background:linear-gradient(135deg,var(--g),var(--g2));color:#030712;box-shadow:0 4px 16px color-mix(in srgb,var(--g) 30%,transparent)}
+.pmx .row{flex-wrap:wrap}.pmx .row label{background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:5px 9px}
+.pmx details{background:var(--s2);border:1px solid var(--bd);border-radius:10px;padding:2px 11px;margin-top:12px}
+.pmx details[open] summary{border-bottom:1px solid var(--bd);margin-bottom:6px}
+.pmx .alert{background:#060a12;border-color:color-mix(in srgb,var(--g) 40%,transparent);line-height:1.9}
+.rpc .dgb h2{margin:0;cursor:pointer}.rpc .dgb h2 .sub{font-weight:500;margin-inline-start:4px}
+.rpn{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:6px}.rpn li{background:#060a12;border:1px solid var(--bd);border-inline-start:3px solid var(--g);border-radius:9px;padding:8px 10px;font-size:.84em;line-height:1.8}
+.rpc .dgb h3{margin:0}.rpc .dgb .sub{font-weight:500;margin-inline-start:4px}.row>.dgb{flex:1;width:auto}
+.fh{display:flex;align-items:center;gap:8px;margin:0}.fh>.dgb{flex:1;min-width:0;height:auto;display:block;font-size:inherit;text-align:start}.fh>button.tgl{flex:none;width:24px;height:24px;padding:0;border-radius:50%;font-size:1.1em;line-height:1;display:grid;place-items:center;background:var(--g);color:#030712;border:0}.fh+div{margin-top:6px}
+/* ---- fight ---- */
+.fgc{background:linear-gradient(165deg,color-mix(in srgb,var(--g2) 22%,var(--s1)),var(--s1) 70%);border-color:color-mix(in srgb,var(--g) 28%,var(--bd))}
+.fgh{display:flex;align-items:center;gap:12px;margin-bottom:8px}.ini{flex:none;min-width:74px;text-align:center;background:#060a12;border:1px solid var(--g);border-radius:12px;padding:6px 8px;box-shadow:0 0 14px color-mix(in srgb,var(--g) 25%,transparent)}.ini small{display:block;color:var(--m);font-size:.68em}.ini b{font-size:1.8em;color:var(--g);line-height:1.2}
+.fgi{display:flex;flex-wrap:wrap;gap:6px;flex:1}
+.fgl{font-size:.74em;color:var(--m);margin:12px 0 4px;letter-spacing:.04em;display:flex;align-items:center;gap:8px}.fgl::after{content:'';flex:1;height:1px;background:var(--bd)}
+.at{background:#060a12;border:1px solid var(--bd);border-radius:10px;padding:8px 4px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:3px}.at small{color:var(--m);font-size:.74em}.at b{font-size:1.5em;line-height:1.1;color:var(--g)}.at.z b{color:var(--m);opacity:.6}.at button{height:22px;min-width:0;padding:0 10px;font-size:.72em}.at.inf{border-color:color-mix(in srgb,var(--g) 40%,var(--bd));background:color-mix(in srgb,var(--g) 7%,#060a12)}
+.spg{display:grid;grid-template-columns:1fr 1fr;gap:6px}.spb{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:2px;height:auto;padding:8px 10px 8px;text-align:start;background:var(--s2);color:var(--t);border:1px solid var(--bd);border-radius:9px;font-weight:500}.spb b{font-size:.88em;color:var(--g)}.spb small{color:var(--m);font-size:.72em;line-height:1.5;font-weight:400}.spb i{position:absolute;top:6px;inset-inline-end:8px;font-style:normal;font-size:.62em;color:var(--m);border:1px solid var(--bd);border-radius:8px;padding:0 6px}.spb:hover:not(:disabled){border-color:var(--g)}
+.dfg{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.dfb{display:flex;flex-direction:column;align-items:center;gap:2px;height:auto;padding:10px 4px;background:var(--s2);color:var(--t);border:1px solid var(--bd);border-radius:10px}.dfb span{font-size:1.5em;line-height:1}.dfb b{font-size:.92em;color:var(--g)}.dfb small{font-size:.66em;color:var(--m);font-weight:400}.dfb:hover:not(:disabled){border-color:var(--g)}
+.cmp{background:#060a12;border:1px solid var(--bd);border-radius:10px;padding:4px 10px 8px;margin-top:10px}
+.hlb{grid-column:1/-1;background:var(--s2);border:1px solid var(--bd);border-radius:10px;padding:6px 10px 8px}.hlb .row{margin:4px 0}.hlb .sub{margin:4px 0 0;line-height:1.7}
+.fmw{display:flex;background:#060a12;border:1px solid var(--bd);border-radius:11px;padding:3px;margin:10px 0}.fmb{flex:1;height:32px;background:transparent;color:var(--m);border:0;border-radius:9px;font-weight:600;font-size:.85em}.fmb.on{background:linear-gradient(135deg,var(--g),var(--g2));color:#030712}
+.tl{display:grid;gap:5px;margin:8px 0}.tr{display:flex;align-items:center;gap:8px;background:#060a12;border:1px solid var(--bd);border-radius:9px;padding:5px 8px}.tr.on{border-color:var(--g);box-shadow:0 0 10px color-mix(in srgb,var(--g) 30%,transparent)}.tr b{flex:1;font-weight:500}.tr em{font-style:normal;font-size:.68em;color:var(--g)}.ti{min-width:30px;text-align:center;font-weight:700;color:var(--g);background:var(--s3);border-radius:7px;padding:1px 4px}.tr button{padding:0 8px;height:22px}
+.dtp{background:#060a12;border:1px solid var(--bd);border-inline-start:3px solid var(--r);border-radius:9px;padding:8px 10px;margin-top:8px;font-size:.82em;line-height:1.8}.dtp b{color:#ff7a80}.dtp .row{margin:6px 0 0}
+.pnl{background:linear-gradient(165deg,color-mix(in srgb,var(--g2) 14%,var(--s2)),var(--s2));border-color:color-mix(in srgb,var(--g) 25%,var(--bd));padding:10px}
+.pnh{display:flex;align-items:center;gap:8px;margin-bottom:8px}.pnh span{width:26px;height:26px;display:grid;place-items:center;border-radius:8px;background:var(--s3);color:var(--g)}.pnh b{font-size:.92em}
+.mdi{background:#060a12;border:1px solid var(--bd);border-inline-start:3px solid var(--g);border-radius:9px;padding:8px 10px;margin-top:8px;font-size:.78em;line-height:1.8;color:var(--m)}
+.pnr{display:grid;gap:7px;margin-top:8px}@media(min-width:560px){.pnr{grid-template-columns:1fr 1fr}}
+.pnc{background:#060a12;border:1px solid var(--bd);border-radius:10px;padding:7px 9px}.pnc small{color:var(--m);font-size:.72em}.pnc .row{margin:4px 0 0;flex-wrap:nowrap}.pnc .row input{flex:0 0 56px!important;width:56px!important;min-width:0!important}.pnc .row button{flex:1}
+.tp{height:3px;background:var(--s3);border-radius:2px;margin:7px 0 2px;overflow:hidden}.tp i{display:block;height:100%;background:var(--ac);border-radius:2px;opacity:.85;transition:width .4s}
+.tb{font-size:.58em;letter-spacing:2px;color:var(--ac);text-shadow:0 0 8px var(--ac)}
+.ab{transition:.3s}
+.ab.t1{border-color:color-mix(in srgb,var(--ac) 45%,var(--bd))}.ab.t1 .ah em{font-size:1.3em}
+.ab.t2{border-color:color-mix(in srgb,var(--ac) 60%,var(--bd));background:linear-gradient(160deg,color-mix(in srgb,var(--ac) 9%,var(--s2)),var(--s2));box-shadow:0 0 14px color-mix(in srgb,var(--ac) 18%,transparent)}.ab.t2 .ah em{font-size:1.45em;text-shadow:0 0 10px color-mix(in srgb,var(--ac) 60%,transparent)}
+.ab.t3{border-right-width:6px;border-color:color-mix(in srgb,var(--ac) 75%,var(--bd));background:linear-gradient(160deg,color-mix(in srgb,var(--ac) 15%,var(--s2)),var(--s2) 80%);box-shadow:0 0 20px color-mix(in srgb,var(--ac) 28%,transparent)}.ab.t3 .ah em{font-size:1.6em;text-shadow:0 0 14px var(--ac)}
+.ab.t4{border-right-width:7px;border-color:var(--ac);background:linear-gradient(160deg,color-mix(in srgb,var(--ac) 22%,var(--s2)),var(--s2) 75%);box-shadow:0 0 26px color-mix(in srgb,var(--ac) 38%,transparent),inset 0 0 22px color-mix(in srgb,var(--ac) 10%,transparent)}.ab.t4 .ah em{font-size:1.75em;text-shadow:0 0 16px var(--ac)}
+.ab.t5{border-right-width:8px;border-color:var(--ac);background:linear-gradient(160deg,color-mix(in srgb,var(--ac) 30%,var(--s2)),var(--s2) 70%);box-shadow:0 0 34px color-mix(in srgb,var(--ac) 50%,transparent),inset 0 0 28px color-mix(in srgb,var(--ac) 14%,transparent);animation:abp 3s ease-in-out infinite}.ab.t5 .ah em{font-size:1.9em;text-shadow:0 0 20px var(--ac)}
+@keyframes abp{50%{box-shadow:0 0 44px color-mix(in srgb,var(--ac) 65%,transparent),inset 0 0 30px color-mix(in srgb,var(--ac) 18%,transparent)}}
+/* ---- custom checkbox ---- */
+input[type=checkbox]{-webkit-appearance:none;appearance:none;flex:none;width:20px!important;height:20px!important;margin:0;padding:0;border-radius:6px;background:#060a12;border:1.5px solid color-mix(in srgb,var(--g) 40%,var(--bd));display:inline-grid;place-items:center;cursor:pointer;transition:.15s;position:relative}
+input[type=checkbox]::after{content:'';width:5px;height:10px;border:solid #030712;border-width:0 2.2px 2.2px 0;transform:rotate(45deg) scale(0);margin-top:-2px;transition:transform .15s ease}
+input[type=checkbox]:hover:not(:disabled){border-color:var(--g)}
+input[type=checkbox]:checked{background:linear-gradient(135deg,var(--g),var(--g2));border-color:var(--g);box-shadow:0 0 10px color-mix(in srgb,var(--g) 45%,transparent)}
+input[type=checkbox]:checked::after{transform:rotate(45deg) scale(1)}
+input[type=checkbox]:disabled{opacity:.45;cursor:not-allowed}
+input[type=checkbox]:focus-visible{outline:2px solid var(--g);outline-offset:2px}
+
+#auth{position:fixed;inset:0;z-index:100;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:16px}
+.acard{width:100%;max-width:340px;background:var(--s1);border:1px solid var(--bd);border-radius:16px;padding:20px 18px;text-align:center}
+.acard h1{justify-content:center;font-size:1.2em;margin-bottom:14px}.acard input{display:block;width:100%;height:38px;margin:6px 0;font-size:.9em;padding:0 12px;border-radius:9px;background:#060a12}
+.acard button{width:100%;height:38px;margin-top:8px;font-size:.9em;border-radius:9px}.acard button#asub{background:linear-gradient(135deg,var(--g),var(--g2));color:#030712;border:0}
+#aerr{color:#ff7a80;font-size:.8em;min-height:1.4em;margin-top:6px}#anm{display:none}
+</style></head><body><header><h1>☾ لورد الغوامض</h1><select id="sel"></select><button id="new">+ جديدة</button><button id="exp" title="تصدير الشخصيات">⬇ تصدير</button><button id="imp" title="استيراد الشخصيات">⬆ استيراد</button><span id="who" class="tag"></span><button id="mode" style="display:none"></button><button id="edt" style="display:none"></button><button id="out" title="تسجيل الخروج">خروج</button></header><main id="m"></main><p id="uidb" class="sub" style="text-align:center;margin:6px 0 14px"></p><nav id="nav"></nav><div id="dr"></div><input type="file" id="impf" accept=".json,application/json" hidden>
+<script>
+const $=s=>document.querySelector(s),AD=s=>String(s??'').replace(/[٠-٩۰-۹]/g,d=>{const i='٠١٢٣٤٥٦٧٨٩'.indexOf(d);return i>=0?i:'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)}),esc=s=>AD(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const A=[['str','القوة'],['agi','الرشاقة'],['con','البنية الجسدية'],['wil','الإرادة'],['ins','الإلهام'],['edu','التعليم'],['cha','الكاريزما'],['luck','الحظ'],['mys','الغموض']],AN=Object.fromEntries(A);
+const PATHS=[['الأحمق','العراف'],['الباب','المتدرب'],['الخطأ','اللص'],['الشمس','الشاعر'],['الطاغية','البحار'],['المتخيل','المتفرج'],['الرجل المعلق','ملتمس الأسرار'],['البرج الأبيض','القارئ'],['عمالق الشفق','المحارب'],['الظلام','عديم النوم'],['الموت','جامع الجثث'],['المثالي','المتعلم'],['الناسك','باحث الغوامض'],['الأم','الزارع'],['القمر','الصيدلي'],['المقيّد','السجين'],['الهاوية','المجرم'],['الشيطانة','المغتال'],['الكاهن الأحمر','الصياد'],['الإمبراطور الأسود','المحامي'],['الحاكم','المحكم'],['عجلة الحظ','الوحش']];
+const LV=['غير مدرَّب','مدرَّب','ماهر','متقدم','متقن','عارف','خبير'],LVV=[-2,2,4,5,6,7,8];
+const LEARN=[[7,30,90,180,365,1825],[14,60,150,240,547,2555],[30,150,300,730,1825,3650]];
+const DIGA=[7,14,30,90,182,365,1095,2190,5475],DIGN=[60,182,304,730,1825,7300,14600,29200,73000];
+const LOSS={9:['0','1'],8:['1','1d2'],7:['1d2','1d4'],6:['1d4','1d8'],5:['1d6','1d12'],4:['1d8','2d8'],3:['1d10','2d10'],2:['2d6','2d12'],1:['2d8','3d10'],0:['2d10','3d12']};
+const ARM={'بلا':[0,0,0,0],'قطني/جلدي':[5,10,0,0],'حديدي':[8,15,2,0],'نصفي':[15,20,4,6],'كامل':[20,30,4,8],'كامل مسحور':[30,50,2,10]};
+const RACES={'بشري':[{}, 'الخيار الموصى به في الكتيب.'],'عِرق الدم':[{cha:1}, 'يتطلب 1d100 (> 90 حسب الكتيب)؛ متجاوز طبيعي تسلسل 7، كاريزما بحد أدنى 4، العمر 70–100 للبلوغ.'],'أحفاد عِرق الدم':[{cha:1},'كاريزما +1، لست متجاوزًا بالفطرة.'],'الفيزاسيون':[{str:1,con:1,hp:50},'قوة +1، بنية +1، صحة +50، كائن كبير الحجم.'],'أحفاد الطاغية':[{},'شعر أزرق، مزاج حاد، غضب: قوة +1 ورشاقة +1 مع فقدان العقل.'],'أحفاد الجان':[{agi:1},'رشاقة +1، المراقبة والاستماع متقنتان، الرماية بالقوس +1 مستوى، التاريخ +1 مستوى، فوائد أحفاد الطاغية.'],'أحفاد العمالقة':[{str:1,con:1,hp:90},'قوة +1، بنية +1، صحة +90، القتال والتاريخ +1 مستوى.']};
+const GROUPS={'القتال':['القتال (القتال القريب)','القتال (السيف)','القتال (السلاح الطويل)','القتال (السلاح العملاق)','القتال (خاص)'],'الأسلحة النارية':['الرماية (المسدس)','الرماية (البندقية)','الرماية (البندقية ذات الخرطوش)'],'الأسلحة ذات السهام':['الرماية (القوس والسهم)','الرماية (القوس والنشاب)'],'الارتباط الاجتماعي':['الإغراء','مهارات الكلام','الإقناع','الخداع','التخويف','علم النفس'],'الارتباط النفسي':['علم النفس','التوجيه العقلي'],'الارتباط بالأدوية':['الكيمياء','الصيدلة'],'الارتباط بالغوامض':['علم الغوامض','الدين','الهيرمسية','الهيرمسية القديمة','الفيساك القديمة','لغة التنانين','لغة العمالقة','لغة الجان'],'الارتباط التاريخي':['التاريخ','علم الآثار'],'الارتباط اللغوي (الشمال)':['لوين','إنتيس','الفيساك','الفيساك القديمة'],'الارتباط اللغوي (الجنوب)':['دوتان','المرتفعات'],'الارتباط بالاستطلاع':['الاستطلاع','قراءة الشفاه','علم النفس','التتبع'],'علم الفلك':['الملاحة','علم الفلك','علم التنجيم'],'الارتباط بالآلات':['صناعة الحرف','صيانة الآلات'],'الارتباط الطبي':['الطب','الصيدلة','الأحياء'],'الارتباط بالتاريخ الطبيعي':['الزراعة','علم النبات','الأحياء','التاريخ الطبيعي'],'الارتباط بنظرية الموسيقى':['الغناء','نظرية الموسيقى'],'الارتباط بالأداء':['الأداء','التنكر'],'الارتباط بالكتابة':['استخدام المكتبة','الكتابة']};
+const dAttr=n=>/^القتال/.test(n)?'str':/^الرماية|المراوغة/.test(n)?'agi':/الإغراء|الكلام|الإقناع|الخداع|التخويف|الأداء|التنكر/.test(n)?'cha':/علم النفس|الاستطلاع|الشفاه|التتبع/.test(n)?'ins':n=='التوجيه العقلي'?'cha':'edu';
+const BOOK={
+str:['التسلق','الرمي','القتال (القتال القريب)','القتال (السيف)','القتال (السلاح الطويل)','القتال (السلاح العملاق)','القتال (خاص)','التخويف','القفز','ترويض الوحوش','حمل الأجسام','كسر القيود'],
+agi:['السرعة','التسلل','خفة اليد','السباحة','الرماية (المسدس)','الرماية (البندقية)','الرماية (البندقية ذات الخرطوش)','الرماية (القوس والنشاب)','الرماية (القوس والسهم)','المدفعية','فتح الأقفال','المراوغة','القيادة (مركبات وخيول)','الآلات الثقيلة','التوازن','الغوص','الدقة'],
+con:[],wil:[],luck:[],mys:[],
+ins:['الاستماع','الاستطلاع','صيانة الآلات','علم الغوامض','علم النفس','التحقيق','الطبخ','الغناء','نظرية الموسيقى','الرسم','صناعة الحرف','التتبع','قراءة الشفاه','الذاكرة','التركيز','التقدير','تقليد الأصوات','تمييز الروائح','حفظ الوجوه','جمع الشائعات','ألعاب الورق','ضبط النفس','الانتباه'],
+edu:['الملاحة','التجارة','الطب','استخدام المكتبة','الكتابة','التفجير','النجاة','القانون','علم الآثار','الدين','الكيمياء','الأحياء','الصيدلة','علم الاجتماع','علم الفلك','علم النبات','الزراعة','التاريخ','الهندسة','التاريخ الطبيعي','فك الشيفرات','صناعة الأقفال','صناعة الحبر','النجارة الدقيقة','صناعة السموم','المحاسبة','السياسة','علم الأنساب','علم اللعنات','حفظ الطعام','تنقية الماء','الترجمة الفورية','علم الأرصاد','علم التنجيم','الهيرمسية','الهيرمسية القديمة','الفيساك القديمة','لغة العمالقة','لغة التنانين','لغة الجان','اللغة القديمة','لوين','إنتيس','الفيساك','دوتان','المرتفعات'],
+cha:['الإغراء','الخداع','مهارات الكلام','الإقناع','التوجيه العقلي','الأداء','التنكر','فن الأداء','التمثيل المسرحي','القيادة (قيادة الناس)','التفاوض','الوساطة','الاستجواب','التهدئة','كسب الثقة','البروتوكول','إدارة الحشود','حفظ الأسرار','إدارة السمعة','التحفيز']};
+const mkSkills=()=>{const o={};for(const k in BOOK)BOOK[k].forEach(n=>o[n]??={a:k,lv:n=='المراوغة'?1:0});Object.values(GROUPS).flat().forEach(n=>o[n]??={a:dAttr(n),lv:0});return o};
+const bookFix=c=>{for(const k in BOOK)BOOK[k].forEach(n=>{const x=c.skills[n];if(x&&!x.lv&&!x.u&&x.a!=k)x.a=k})};
+const RAR=[['عادي','#9aa4b2'],['جيد','#3ecf8e'],['ممتاز','#4c8dff'],['نادر','#a855f7'],['أسطوري','#f5a623'],['خرافي','#ef4444']],RC=Object.fromEntries(RAR);
+const BT=[['المنخفضة','#9aa4b2'],['البسيطة','#3ecf8e'],['المتوسطة','#4c8dff'],['النادرة','#a855f7'],['الاستثنائية','#f5a623'],['العليا','#ef4444'],['الغامضة','#22d3ee'],['المصير الخارجي','#f472b6']],BC=Object.fromEntries(BT);
+const SYM=['الميول العنيفة','السلوك التجنبي','فقدان الذاكرة','الإغماء','الهستيريا','جنون الارتياب','العجز الوهمي','الاعتماد على الآخرين'];
+const STATES=[['مستقر','Stable'],['فقدان سيطرة جزئي','Partial Control Loss'],['جنون غير مؤكد','Uncertain Madness'],['جنون دائم / فقدان سيطرة','Permanent Madness']];
+const SDMG=[[0,'-2'],[1,'-1'],[2,'0'],[3,'1'],[4,'1d2'],[5,'1d4'],[6,'1d6'],[7,'1d8'],[8,'1d10'],[9,'1d12'],[10,'2d6'],[11,'2d8'],[12,'2d10'],[13,'2d12'],[14,'3d8'],[15,'3d10'],[20,'3d12'],[25,'4d10'],[30,'4d12']];
+const COND={'الخوف':[-4,'−4 لاختبارات مصدر الخوف؛ الحركة تبعدك عنه (بأس DC15)'],'الغضب/الاستفزاز':[-4,'−4 لكل الاختبارات؛ استعادة الهدوء ببأس DC20 أو تأمل كامل'],'فقدان التوازن':[0,'الرشاقة نصف مؤقتًا؛ حركة واحدة للوقوف'],'العمى':[0,'تذكّر الموقع بمعرفة DC15'],'الصمم':[0,'فحص السمع يفشل'],'الصمت':[0,'مهارات الصوت واللغة معطلة'],'التقييد':[0,'لا حركة'],'الصدمة':[0,'تفقد هجوم/إلقاء/حركة أو سريعين'],'العجز':[0,'بلا دفاع'],'الاختفاء':[0,'يحتاج فحص إدراك ضد التخفي'],'الإمساك':[0,'عيب لاختبارات الطرفين؛ تحرر باختبار قوة']};
+const REP={1:['1d20',null],2:['1d5','1d10'],3:['1d20','2d50'],4:['2d50','4d100'],5:['40d100','20d400'],6:['50d200','40d500'],7:['100d500',null]},REPMIN=[0,0,3,50,200,1000,10000,10000];
+const SPEC={'الهجوم الخفي':['atk','غارة مصغّرة: +5 للمغير'],'التدخل المفاجئ':['atk','هجوم مفاجئ من كائن لم يكن في المعركة'],'الاستعداد':['quick','+2 للاختبار المقابل'],'التأمل النصفي':['quick','بأس +1 مؤقتًا، يخفض التأثير العاطفي للنصف'],'التأمل الكامل':['cast','اختبار تأمل: بأس +2 وإزالة التأثير العاطفي'],'الإمساك':['atk','اختبار مناسب، يقيّد الخصم'],'الضربة المزدوجة':['atk','الرشاقة + المهارة، اختباران'],'فعل الاستعداد':['ready','يتحقق بعد شرط معين']};
+/* ===== Dice ===== */
+const Dice={n:s=>1+Math.floor(crypto.getRandomValues(new Uint32Array(1))[0]/4294967296*s),roll(e){e=String(e).replace(/\s/g,'');if(/^-?\d+$/.test(e))return{e,d:[],k:0,t:+e};const m=/^(\d*)d(\d+)([+-]\d+)?$/i.exec(e);if(!m)return{e,d:[],k:0,t:0};const n=Math.min(+(m[1]||1),200),s=+m[2],k=+(m[3]||0),d=[];for(let i=0;i<n;i++)d.push(Dice.n(s));return{e,d,k,t:d.reduce((a,b)=>a+b,0)+k}}};
+/* ===== Engines ===== */
+const E={
+ race(c){const b={...(RACES[c.race]?.[0]||{})};if(c.race=='عِرق الدم'){const y=Math.min(3,Math.floor((+AD(c.age)||0)/50));if(y)b.edu=y}return b},ga(c,n){let v=(c.attr[n]||0)+(E.race(c)[n]||0);if(n=='edu')v+=E.eduB(c);if(n=='agi'&&(c.st||[]).includes('فقدان التوازن'))v=Math.floor(v/2);return v},
+ li:(c,n)=>c.skills[n]?.lv??0,sv:(c,n)=>n&&c.skills[n]?LVV[c.skills[n].lv]:0,
+ eduB(c){const l=Object.values(c.skills).map(s=>s.lv),f=k=>l.filter(x=>x>=k).length;return Math.floor(f(4)/5)+2*Math.floor(f(5)/3)+Math.floor(f(6)/2)},
+ dig(c){if(c.seq>9||c.seq<1&&false)return 0;const i=9-c.seq;return Math.min(20,Math.floor((c.dig.act||0)/DIGA[i])+Math.floor((c.dig.idle||0)/DIGN[i])+(c.dig.bonus||0))},
+ stats(c){const a=c.a0,r=n=>(a[n]||0)+(E.race(c)[n]||0),d=E.dig(c),pen=ARM[c.armor][2];
+  let hp=r('con')*r('str')*2+10,sp=r('wil')+r('ins'),en=(r('con')+r('wil'))*2;
+  c.hist.forEach((h,i)=>{const lv=i==c.hist.length-1&&h.seq==c.seq,cn=lv?E.ga(c,'con'):h.con,ins=lv?E.ga(c,'ins'):h.ins,m=IMM[h.seq]||1,k=ADDK[h.seq]||1;hp=Math.floor(hp*m)+cn*k;sp=Math.floor(sp*m)+ins*k;en+=cn});
+  hp=Math.round(hp+(E.race(c).hp||0)+d);sp=Math.round(sp+d);const g=n=>E.ga(c,n),rm=g('wil')+10+5*(E.li(c,'علم النفس')+E.li(c,'التوجيه العقلي'));
+  return{hp,sp,en,pd:10+Math.max(0,g('agi')-pen)+ARM[c.armor][0]+E.sv(c,'المراوغة'),wd:10+g('wil'),cd:10+g('con'),md:g('mys')+sp,rm,dig:d,pen}},
+ rat(c){return Math.max(0,E.stats(c).rm-c.m.lost+c.m.extra)},rh:c=>Math.max(1,Math.min(8,+c.restH||8)),
+ state(c){if(c.m.forced!=null)return c.m.forced;const r=E.rat(c);if(r<=0)return 3;if(c.m.partial&&c.m.partial.rounds>0)return 1;return r<Math.ceil(E.stats(c).rm/2)?2:0},
+ mod(c){let m=0;(c.st||[]).forEach(s=>m+=E.cv(c,s));return m+(c.cb?.raid||0)+(c.cb?.prep||0)},
+ test(c,a,sk,mod,dc,label){const r=Dice.n(20),av=a?E.ga(c,a):0,sv=E.sv(c,sk),auto=E.mod(c),t=r+av+sv+(+mod||0)+auto;if(c.cb)c.cb.prep=0;
+  const o={t:Date.now(),label,r,av,sv,mod:(+mod||0)+auto,total:t,dc,res:r==20?'نجاح كبير':r==1?'فشل كبير':t>=dc?'نجاح':'فشل'};const blk=E.blocked(c,sk,label);if(blk){o.res='فشل';o.note=blk;if(/عاجز/.test(blk))o.total=0}c.rolls=[o,...c.rolls].slice(0,40);return o},
+ ev:(c,type,txt,b,a)=>c.log.unshift({t:Date.now(),type,txt,b,a}),
+ loss(c,mn,mx,unf,why){const pre=E.rat(c),r=Dice.n(20),fail=r+(+unf||0)>pre||r==20,x=Dice.roll(fail?mx:mn).t,eff=Math.max(0,x-c.m.prot),b=E.state(c);c.m.lost+=eff;
+  if(eff>=3){c.m.partial={rounds:Dice.n(2),sym:Dice.n(8)-1};E.ev(c,'فقدان السيطرة','شبه فقدان سيطرة: '+SYM[c.m.partial.sym])}
+  if(E.rat(c)<=0)c.m.forced=3;E.ev(c,'فقدان العقلانية',`${why||''} د20=${r}${(+unf)?'+'+unf:''} ضد ${pre}: ${fail?'فشل':'نجاح'} → خسارة ${eff}`,pre,E.rat(c));if(E.state(c)!=b&&E.state(c)>=2)E.ev(c,'الجنون',STATES[E.state(c)][0]);return{r,fail,eff}},
+ promo(c){const pm=c.pm,t=c.seq-1,mod=E.pmod(c),base=pm.n2?40:20,rat=E.rat(c),r=Dice.n(20),tot=r+base+mod,ok=tot<=rat,prot=E.prot(c),mad=E.state(c)>=2&&!pm.hiMad,half=x=>mad?Math.ceil(x/2):x,[mn,mx]=LOSS[t],H=[];
+  const rt=c.seq<=6,rr=Dice.roll(ok?mn:mx);let l=Math.max(0,rr.t-prot);if(rt&&!pm.ritual)l*=2;l=half(l);const b=c.m.lost;c.m.lost+=l;let sum=l,res=ok,ctl=false;
+  H.push(`🎲 د20 = <b>${r}</b> + ${base}${mod?(mod>0?' + ':' − ')+Math.abs(mod):''} = <b>${tot}</b> ضد عقلانية ${rat} ← <b class="${ok?'good':'bad'}">${ok?'نجاح':'فشل'}</b>`);
+  H.push(`خسارة العقلانية: رمي ${rr.t}${prot?` − حماية ${prot}`:''}${rt&&!pm.ritual?' × 2 (بلا طقس)':''}${mad?' ÷ 2 (جنون)':''} = <b>${l}</b>`);
+  if(sum>=5)ctl=true;
+  else if(sum>=3){const w=Dice.n(20)+E.ga(c,'wil');H.push(`شبه فقدان سيطرة — اختبار إرادة ${w} ضد 15`);
+   if(w>=15){res=true;H.push('<b class="good">نجح ← تنجح الترقية</b>')}
+   else{const t2=Dice.n(20),tot2=t2+base+mod,ra=E.rat(c),k=tot2<=ra,l2=half(Dice.roll(k?'1':'1d2').t);c.m.lost+=l2;sum+=l2;H.push(`فشل ← اختبار عقلانية إضافي: ${tot2} ضد ${ra} (${k?'نجاح':'فشل'}) · خسارة ${l2} · المجموع ${sum}`);if(sum>=5)ctl=true;else res=true}}
+  if(ctl){const w=Dice.n(20)+E.ga(c,'wil');res=false;c.m.forced=3;H.push(`فقدان السيطرة — اختبار إرادة ${w} ضد 20`);
+   if(w>=20)H.push('نجح ← تصبح متجاوزًا لكن الترقية فشلت');
+   else{const d=Dice.n(2);if(d==1)H.push('<b class="bad">1d2 = 1: فقدت السيطرة</b>');else{c.dead=1;H.push('<b class="bad">1d2 = 2: ماتت الشخصية</b>')}}}
+  E.ev(c,'اختبار الترقية',`د20=${r}+${base}${mod?(mod>0?'+':'')+mod:''}=${tot} ضد ${rat} (${ok?'نجح':'فشل'}) · خسارة ${sum}`,b,E.rat(c));
+  if(res){const ph=c.hist[c.hist.length-1];if(ph){ph.con=E.ga(c,'con');ph.ins=E.ga(c,'ins')}c.hist.push({seq:c.seq-1,con:E.ga(c,'con'),ins:E.ga(c,'ins')});c.seq--;c.dig={act:0,idle:0,bonus:0};c.fail=null;Object.assign(pm,{n2:0,help:0,direct:0,imp:'n',under:0,hi:0,moon:0,animal:0,hiMad:0});E.ev(c,'الترقية','أصبح التسلسل '+c.seq+' · فيضان روحي 72 ساعة (القدرات −2)',c.seq+1,c.seq);H.push(`<b class="good">✔ نجحت الترقية إلى التسلسل ${c.seq}</b> — خلال 72 ساعة: فيضان روحي وقدراتك −2`)}
+  else{c.fail={t:c.seq-1,tot,extracted:false};E.ev(c,'فشل الترقية','إلى التسلسل '+(c.seq-1));H.push('<b class="bad">✘ فشلت الترقية</b>')}
+  return{html:H.join('<br>')}},
+ pmod(c){const p=c.pm;return -E.dig(c)-(+p.help||0)+(p.direct?5:0)+(p.imp=='s'?-2:p.imp=='o'?4:0)+(+p.under||0)-2*(+p.hi||0)-(p.moon==1?2:p.moon==2?4:0)+(p.animal?4:0)},
+ prot(c){const p=c.pm,f=+p.fol||0;const rt=c.seq<=6&&p.ritual;return(rt?5:0)+(c.seq<=2?Math.floor(f/(rt?1000:5000)):0)},
+
+ sdmg(s){let o='-2';SDMG.forEach(([k,v])=>{if(s>=k)o=v});return o},
+ hit(c,dmg,phys,df,dn){const s=E.stats(c),dr=ARM[c.armor][1],lo=df!=null&&dmg<df,eff=lo?Math.floor(dmg/2):Math.max(0,dmg-dr);let v=0,br=false;if(phys&&eff>=10){br=true;v=Dice.roll('1d6').t}const b=s.hp-c.dmg;c.dmg+=eff+v;E.ev(c,'المعارك',`ضرر ${dmg}${lo?` أقل من ${dn} ${df} ← يُحتسب نصفه`:` − تقليل ${dr}`} = ${eff}${br?` · تحطم الدرع + ضربة حيوية ${v}`:''}`,b,s.hp-c.dmg);return{eff,v,br}},
+ hpState(c){const h=E.stats(c).hp-c.dmg,con=E.ga(c,'con');return h>0?['سليم','good']:h>=-con*(c.seq<9?2:1)?['محتضر','bad']:['ميت','bad']},
+ pts:m=>(m.l||0)*240+(m.s||0)*12+(m.p||0),money:p=>`${Math.floor(p/240)} جنيه · ${Math.floor(p%240/12)} سولي · ${p%12} بنس`,
+ luckAv(c){const e=Date.now()-(c.luck.at||0);return Math.max(0,E.ga(c,'luck')-Math.ceil(c.luck.burned*Math.max(0,1-e/864e5)))},
+ assets(c){let tries=0,f,s=0;do{tries++;if(c.rep==1){f=Dice.roll(REP[1][0]).t;break}f=Dice.roll(REP[c.rep][0]).t;s=REP[c.rep][1]?Dice.roll(REP[c.rep][1]).t:0}while((c.rep==7?f:f+s)<REPMIN[c.rep]&&tries<40);
+  if(c.rep==1){c.money={l:0,s:f,p:0};c.saved={l:0,s:0,p:0}}else{c.money={l:f,s:0,p:0};c.saved={l:s,s:0,p:0}}return tries}
+};
+const LK=l=>l>=2?Math.min(l-1,2):0;
+const RP={
+'عِرق الدم':{n:['متجاوز طبيعي من التسلسل 7، ولا يُعتبر بالغًا حتى يهضم الجرعة بالكامل ويتقن قوته.','بعد البلوغ يثبت المظهر ولا يتقدم في العمر 300 سنة؛ العمر المطلوب للبلوغ 70–100 سنة تقريبًا.','الحد الأدنى للكاريزما 4 لا 3: كاريزما +1 (مطبّقة).','لكل 50 سنة من العمر: التعليم +1 (مطبّق تلقائيًا من خانة العمر، حتى 3 مرات) ومهارة واحدة تختارها وترفعها مستوى واحدًا من وضع التعديل.','لا يمكنه عادةً الانضمام إلى فريق رسمي؛ الترقية من التسلسل 7 تعتمد على الطابور والإنجازات لأن خصائص مسار القمر محتكرة.','عداء مع مدرسة الورد ومصاصي الدماء الاصطناعيين.','مظهر مميز وجمال خالص، وأطراف أذنين أحدّ، وعينان قرمزيتان.']},
+'أحفاد عِرق الدم':{n:['كاريزما +1 (مطبّقة).','لست متجاوزًا ولا تملك مسار تسلسل، لكن لديك بعض خصائص مصاص الدماء ويمكنك اختيار مسارات أخرى.','عيناك حمراوان.','قد تبقى عائلتك على اتصال بعائلة من عِرق الدم أو تنقطع عنها.']},
+'الفيزاسيون':{n:['القوة +1 والبنية الجسدية +1 (مطبّقتان).','كائن كبير الحجم (طول يتجاوز مترين).','الحد الأعلى للصحة +50 (مطبّق).','تراكب جرعات التسلسل 9 لا يمنح فائدة الحجم إلا مرة واحدة.']},
+'أحفاد الطاغية':{n:['شعر أزرق، وقد تكون البشرة داكنة وتواجه تمييزًا في بعض الأماكن.','مزاج أكثر حدة: تحدد هدفًا وتدخل حالة الغضب.','في الغضب: تفقد عقلك وتصر على القضاء على الهدف، وترتفع القوة +1 والرشاقة +1.','لا يتكدس مع فوائد الهائج من التسلسل 8 لمسار الطاغية.']},
+'أحفاد الجان':{g:[['الاستماع','min4'],['الاستطلاع','min4'],['الرماية (القوس والسهم)','up'],['التاريخ','up']],n:['الرشاقة +1 (مطبّقة).','المراقبة (الاستطلاع) والاستماع متقنتان افتراضيًا (مطبّق).','مهارة الرماية بالقوس +1 مستوى (مطبّق).','مهارة التاريخ +1 مستوى من معرفة عائلتك (مطبّق).','فوائد أحفاد مسار الطاغية، دون تأثير في لون البشرة أو الشعر.','لست متجاوزًا فطريًا لمسار الطاغية.']},
+'أحفاد العمالقة':{g:[['*cmb','up'],['التاريخ','up']],ch:['cmb','مهارة القتال التي ترتفع مستوى'],n:['القوة +1 والبنية الجسدية +1 (مطبّقتان).','طولك يقترب من ثلاثة أمتار؛ كائن كبير الحجم لا ضخم.','الحد الأعلى للصحة +90 (مطبّق).','مهارة التاريخ +1 مستوى (مطبّق).','مهارة القتال +1 مستوى حسب اختيارك، مع فوائد الحجم أمام الكائنات متوسطة الحجم.','قد تكون من مسار حاكم الحرب أو تختار مسارك.']}
+};
+function applyRace(c){c.rg=c.rg||[];c.rch=c.rch||{};c.rg.forEach(([n,d])=>{if(c.skills[n])setLv(c,n,Math.max(0,c.skills[n].lv-d))});c.rg=[];const p=RP[c.race];if(!p||!p.g)return;p.g.forEach(([n,m])=>{if(n[0]=='*')n=c.rch[n.slice(1)];if(!n||!c.skills[n])return;const l=c.skills[n].lv,v=m=='up'?Math.min(6,l+1):Math.max(l,4);if(v>l){setLv(c,n,v);c.rg.push([n,v-l])}});E.ev(c,'مميزات العرق',c.race)}
+function pRace(c){const p=RP[c.race]||{n:[]},b=E.race(c),ch=Object.entries(b).filter(([k,v])=>v).map(([k,v])=>`<span class="tag good">${k=='hp'?'الصحة':AN[k]} +${v}</span>`).join(' '),gr=(c.rg||[]).map(([n,d])=>`<span class="tag good">${esc(n)} +${d} مستوى</span>`).join(' '),cv=p.ch?(c.rch||{})[p.ch[0]]||'':'';
+ return`<div class="card rpc"><button class="dgb" data-a="rptoggle"><h2>مميزات الأعراق <span class="sub">· ${esc(c.race)} ${rpo?'▴':'▾'}</span></h2></button>${rpo?`<div class="dgp"><div class="row" style="margin-top:0">${ch||''} ${gr}${ch||gr?'':'<span class="sub">لا تعديلات رقمية</span>'}</div>${p.ch?`<div class="pmo"><span><b>${p.ch[1]}</b><small>يُطبَّق فورًا؛ التغيير لاحقًا من وضع التعديل</small></span><select data-rch="${p.ch[0]}"${editMode||!cv?'':' disabled'}>${opts([['','اختر مهارة'],...GROUPS['القتال'].map(x=>[x,x])],cv)}</select></div>`:''}<ul class="rpn">${p.n.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}</div>`}
+const IMM={4:2,2:2,1:1.5,0:2},ADDK={4:2,3:2,2:3,1:3,0:4};
+const CI={'الخوف':'😨','الغضب/الاستفزاز':'😡','فقدان التوازن':'🌀','العمى':'🕶','الصمم':'🔇','الصمت':'🤐','التقييد':'⛓','الصدمة':'⚡','العجز':'🛑','الاختفاء':'👁','الإمساك':'✊'};
+const CAUTO={'الخوف':'يُطبَّق تلقائيًا: −4 على كل الاختبارات والمبادرة','الغضب/الاستفزاز':'يُطبَّق تلقائيًا: −4 على كل الاختبارات والمبادرة','فقدان التوازن':'يُطبَّق تلقائيًا: الرشاقة نصف قيمتها (الدفاع والمبادرة والاختبارات)','الصمت':'يُطبَّق تلقائيًا: اختبارات الصوت واللغة تفشل','الصمم':'يُطبَّق تلقائيًا: اختبار الاستماع يفشل','التقييد':'يُطبَّق تلقائيًا: الحركة = 0 في القتال','الصدمة':'يُطبَّق تلقائيًا: الهجوم والإلقاء والحركة = 0 في القتال','العجز':'يُطبَّق تلقائيًا: اختبارات الدفاع تفشل وإجراءات القتال = 0'};
+const SILENT=['مهارات الكلام','الإقناع','التوجيه العقلي','الغناء','الترجمة الفورية','لغة التنانين','لغة العمالقة','لغة الجان','لوين','إنتيس','الفيساك','الفيساك القديمة','دوتان','المرتفعات','اللغة القديمة','الهيرمسية','الهيرمسية القديمة'];
+E.cv=(c,s)=>{const v=COND[s]?.[0]||0;return c.cb&&c.cb.half&&(s=='الخوف'||s=='الغضب/الاستفزاز')?Math.ceil(v/2):v};E.cmod=c=>(c.st||[]).reduce((m,s)=>m+E.cv(c,s),0);E.eff=(c,k)=>{const cp=E.actCap(c),v=c.cb.act[k];return k in cp?Math.min(v,cp[k]):v};
+E.blocked=(c,sk,lb)=>{const s=c.st||[];if(s.includes('العجز')&&['مراوغة','صد','تحمّل'].includes(lb))return'عاجز: بلا دفاع';if(s.includes('الصمت')&&SILENT.includes(sk))return'صمت: مهارة صوت/لغة معطلة';if(s.includes('الصمم')&&sk=='الاستماع')return'صمم: فحص السمع يفشل';return''};
+E.actCap=c=>{const s=c.st||[],o={},hp=E.stats(c).hp-c.dmg,dead=hp<-E.ga(c,'con')*(c.seq<9?2:1);if(c.dmg>0&&hp<=0&&c.seq>=9){o.atk=0;o.cast=0;o.move=0;o.full=0;o.quick=1;o.ready=0}if(dead){o.atk=0;o.cast=0;o.move=0;o.full=0;o.quick=0;o.ready=0;o.parry=0}if(s.includes('التقييد'))o.move=0;if(s.includes('الصدمة')){o.atk=0;o.cast=0;o.move=0}if(s.includes('العجز')){o.atk=0;o.cast=0;o.move=0;o.parry=0;o.full=0}return o};
+E.capActs=c=>{const o=E.actCap(c);for(const k in o)if(c.cb.act[k]>o[k])c.cb.act[k]=o[k]};
+const condUI=c=>`<div class="cg">${Object.keys(COND).map(k=>`<button class="cb${c.st.includes(k)?' on':''}" data-a="cond" data-k="${k}"><span class="ci">${CI[k]}</span><span class="n">${k}</span></button>`).join('')}</div>${c.st.length?`<div class="fx">${c.st.map(k=>`<div><b>${CI[k]} ${k}</b><br>${COND[k][1]}<br><span class="good">${CAUTO[k]||'يطبّقه DM يدويًا'}</span></div>`).join('')}</div>`:'<p class="sub">لا حالات مفعّلة.</p>'}`;
+const inj=c=>{const s=E.stats(c),hp=s.hp-c.dmg;if(c.dmg<=0)return null;return hp<2?['خطيرة',20]:c.dmg*2<s.hp?['طفيفة',10]:['متوسطة',15]};
+const medInfo=c=>{const j=inj(c),con=E.ga(c,'con');return j?`إصابة ${j[0]} ← صعوبة الاختبار الطبي ${j[1]} · علاج ناجح: +${con} صحة كل 12 ساعة · بلا علاج: +${Math.floor(con/2)} · التعافي: عادية 1-2 أسبوع، متوسطة شهر، كسور 3 أشهر`:'لا إصابات حالية.'};
+function setLv(c,n,v){const b=c.skills[n].lv;c.skills[n].lv=v;E.ev(c,'التقدم في المهارات',n,LV[b],LV[v]);
+ if(v>b){for(const g in GROUPS)if(GROUPS[g].includes(n)&&v>=2){const t=LK(v);GROUPS[g].forEach(o=>{if(o!=n&&c.skills[o]&&c.skills[o].lv<t){E.ev(c,'مهارة مرتبطة',o,LV[c.skills[o].lv],LV[t]);c.skills[o].lv=t}})}}
+ else if(v<b){const old=LK(b),seen=new Set();for(const g in GROUPS)if(GROUPS[g].includes(n))GROUPS[g].forEach(o=>{const k=c.skills[o];if(o==n||seen.has(o)||!k||k.lv==0||k.lv>old)return;seen.add(o);let fl=0;for(const g2 in GROUPS)if(GROUPS[g2].includes(o))GROUPS[g2].forEach(m=>{if(m!=o&&c.skills[m])fl=Math.max(fl,LK(c.skills[m].lv))});if(k.lv>fl){E.ev(c,'مهارة مرتبطة',o,LV[k.lv],LV[fl]);k.lv=fl}})}}
+/* ===== State ===== */
+let spo=false,dfV='pd',dtyV='جسدي',hlo=false,crc=false,rpo=false,fo={rep:0,inv:0,bl:0,cnd:0},dgo=false,ia=false,ie=-1,editMode=false,ed=null,drawer=null,lrn=null,dan=0,inChange=false,down=false,pendR=false;
+function schedR(an){if(down)pendR=an||pendR||'p';else setTimeout(()=>R(an),0)}
+addEventListener('pointerdown',()=>{down=true},true);['pointerup','pointercancel'].forEach(ev=>addEventListener(ev,()=>{down=false;setTimeout(()=>{if(pendR){const a=pendR===true;pendR=false;R(a)}},60)},true));
+let lsp='',db=null,user=null,uid='local',isOwner=true,dmView=true,chars={},cur=null,tab='char',draft=null,last='';
+const mkChar=()=>{const attr=Object.fromEntries(A.map(a=>[a[0],3]));return{id:'c'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),owner:uid,cid:'',name:'',gender:'',age:'',race:'بشري',job:'',affil:'',path:0,seq:9,potion:'',pname:'',attr,a0:{...attr},skills:mkSkills(),luck:{burned:0,at:0},dig:{act:0,idle:0,bonus:0},hist:[],mult:{4:2,2:2,1:1.5,0:2},m:{lost:0,extra:0,prot:0,forced:null,partial:null,unc:0,rc:{g:0,r:0,e:0}},avatar:'',rep:1,money:{l:0,s:0,p:0},saved:{l:0,s:0,p:0},armor:'بلا',dmg:0,spu:0,inv:[],bless:[],log:[],rolls:[],cb:{init:null,round:0,raid:0,prep:0,pa:1,act:{atk:1,cast:1,quick:3,move:1,full:1,parry:1,ready:1}},st:[],fail:null,dead:0,rg:[],rch:{},rp:0,restH:8,pm:{n2:0,ritual:1,help:0,direct:0,imp:'n',under:0,hi:0,moon:0,animal:0,hiMad:0,fol:0},target:60,rr:3,rolled:0}};
+const BOOKA={};for(const k in BOOK)BOOK[k].forEach(n=>BOOKA[n]=k);
+const norm=c=>{const d=mkChar();for(const k in d)c[k]??=d[k];c.pm={...d.pm,...c.pm};c.skills={...mkSkills(),...c.skills};bookFix(c);c.a0??={...c.attr};if(!c._sv){for(const n in c.skills){const k=c.skills[n];if(!k.u&&!k.lv&&BOOKA[n])k.a=BOOKA[n]}c._sv=2}return c};
+const store={set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
+async function save(c){c.owner=c.owner||uid;store.set('lom_'+c.id,JSON.stringify(c));if(db)try{if(!rs[c.owner]){rs[c.owner]=1;db.doc('roster/'+c.owner).set({t:Date.now()}).catch(()=>{})}await db.doc('pc/'+c.owner+'/chars/'+c.id).set({cid:c.cid||'',name:c.name||'',json:JSON.stringify(c)});saveErr=0}catch(e){saveErr=1;if(tab=='camp')R()}}
+let camps={},names={},saveErr=0,cdel='';const rs={};
+async function loadAll(reset){const old=reset?{}:{...chars};camps={};
+ if(!db){try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k.startsWith('cmp_'))try{const x=JSON.parse(localStorage.getItem(k));camps[x.id]=x}catch(e){}}}catch(e){}return}
+ try{(await db.collection('camp').get()).docs.forEach(d=>{const x=d.data();if(x&&x.name)camps[d.id]=x})}catch(e){}
+ const ch={},add=d=>{try{const c=norm(JSON.parse(d.data().json));ch[c.id]=c}catch(e){}};let ids=[uid];
+ try{(await db.collection('roster').get()).docs.forEach(d=>ids.push(d.id))}catch(e){}
+ for(const o of new Set(ids)){try{(await db.collection('pc/'+o+'/chars').get()).docs.forEach(add)}catch(e){}}
+ if(isOwner)for(const id in old)if(!ch[id]){const c=old[id];if(!c.owner||c.owner=='local')c.owner=uid;ch[id]=c;save(c)}
+ chars=ch;try{const ps=await user.profiles([...new Set(Object.values(chars).map(c=>c.owner))]);for(const k in ps)names[k]=ps[k].name||''}catch(e){}}
+async function init(){try{const U=await claude.use('user');if(U){user=U;isOwner=!!(await U.isOwner())||!!(await U.canEdit());try{uid=(await U.id())||'local'}catch(e){}}}catch(e){}
+ try{db=await claude.use('db')}catch(e){}
+ if(db){try{const q=await db.collection('chars').get();q.docs.forEach(d=>{try{const c=norm(JSON.parse(d.data().json));if(isOwner||c.owner==uid)chars[c.id]=c}catch(e){}})}catch(e){}}
+ else try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k.startsWith('lom_'))try{const c=norm(JSON.parse(localStorage.getItem(k)));chars[c.id]=c}catch(e){}}}catch(e){}
+ await loadAll();cur=Object.keys(chars)[0]||null;if(!cur)draft=mkChar();R(true)}
+const C=()=>chars[cur],DM=()=>isOwner&&dmView,RO=c=>!!c&&!!c.owner&&c.owner!=uid&&!DM(),dis=()=>DM()?'':' disabled',dsE=()=>editMode?'':' disabled';
+/* ===== UI ===== */
+const fmt=t=>new Date(t).toLocaleString('ar-u-nu-latn',{dateStyle:'short',timeStyle:'short'}),pct=(v,m)=>m>0?Math.max(0,Math.min(100,v/m*100)):0;
+const opts=(arr,sel)=>arr.map(([v,l])=>`<option value="${esc(v)}"${String(v)==String(sel)?' selected':''}>${esc(l)}</option>`).join('');
+const st=(l,v,s)=>`<div class="st"><small>${l}</small><b>${v}</b>${s?`<small>${s}</small>`:''}</div>`;
+const ring=(l,v,m,c)=>`<div class="sr"><div class="sh"><span>${l}</span><b>${v}<small> / ${m}</small></b></div><div class="bar"><i style="width:${pct(v,m)}%;background:${c}"></i></div></div>`;
+const rollTxt=o=>`🎲 <b>${o.r}</b> + سمة ${o.av} + مهارة ${o.sv}${o.mod?` + معدلات ${o.mod}`:''} = <b>${o.total}</b> ضد ${o.dc} — <b class="${o.res.includes('نجاح')?'good':'bad'}">${o.res}</b>${o.note?' ('+o.note+')':''}`;
+const ROM=['9','8','7','6','5','4','3','2','1','0'];
+const avHTML=(o,ro)=>`<div class="avw"><div class="av${ro?' ro':''}"${o.avatar?` style="background-image:url('${esc(o.avatar)}')"`:''}>${o.avatar?'':'☾'}${ro?'':`<small>${o.avatar?'تغيير':'إضافة صورة'}</small><input type="file" class="avin" data-av="1" accept="image/*" title="اختيار صورة">`}</div>${o.avatar&&!ro?'<button class="avx" data-a="avdel" title="حذف الصورة">✕</button>':''}</div>`;
+function avatarFrom(f,cb){const fr=new FileReader();fr.onload=()=>{const im=new Image();im.onload=()=>{const S=256,cv=document.createElement('canvas');cv.width=cv.height=S;const m=Math.min(im.width,im.height);cv.getContext('2d').drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,S,S);cb(cv.toDataURL('image/jpeg',.82))};im.onerror=()=>alert('تعذّر قراءة الصورة');im.src=fr.result};fr.readAsDataURL(f)}
+const TABS=[['camp','🏰','الحملات'],['char','☉','الشخصية'],['test','✦','اختبار'],['path','⚗','المسار'],['mind','☾','العقل'],['fight','⚔','القتال'],['log','✎','السجل']];
+function wizard(){const d=draft,tot=Object.values(d.attr).reduce((a,b)=>a+b,0),ok=tot==d.target&&d.name.trim()&&d.gender&&(d.cid||!Object.keys(camps).length);
+ return`<div class="card hero">${avHTML(d)}<input class="nm" data-d="name" placeholder="اسم الشخصية" value="${esc(d.name)}"></div><div class="card"><h3>المعلومات</h3><div class="ig">
+ <div class="ii"><small>الجنس</small><select data-d="gender"><option value="" disabled hidden${d.gender?'':' selected'}>اختر الجنس</option>${opts([['ذكر','ذكر'],['أنثى','أنثى']],d.gender)}</select></div>
+ <div class="ii"><small>العمر</small><input data-d="age" placeholder="العمر" value="${esc(d.age)}"></div>
+ <div class="ii"><small>العرق</small><select data-d="race">${opts(Object.keys(RACES).map(r=>[r,r]),d.race)}</select></div>
+ <div class="ii"><small>المهنة</small><input data-d="job" placeholder="المهنة" value="${esc(d.job)}"></div>
+ <div class="ii" style="grid-column:1/-1"><small>الانتساب</small><input data-d="affil" placeholder="الانتساب" value="${esc(d.affil)}"></div>
+ <div class="ii" style="grid-column:1/-1"><small>الحملة</small>${Object.keys(camps).length?`<select data-d="cid"><option value="" disabled hidden${d.cid?'':' selected'}>اختر الحملة</option>${opts(Object.entries(camps).map(([k,v])=>[k,v.name]),d.cid)}</select>`:'<b class="sub">لا توجد حملات بعد — اطلب من DM إنشاء حملة</b>'}</div>
+ <div class="ii" style="grid-column:1/-1"><small>المسار</small><select data-d="path">${opts(PATHS.map((p,i)=>[i,`${p[1]} · ${p[0]}`]),d.path)}</select></div></div>
+ <p class="sub">${esc(RACES[d.race][1])}</p>
+ ${d.race=='عِرق الدم'?`<div class="row"><button data-a="d100">1d100</button><b>${d.d100??''}</b></div>`:''}
+ <h3>السمات (3d3 لكل سمة)</h3><div class="grid">${A.map(([k,l])=>`<div class="st"><small>${l}</small><b>${d.attr[k]+(RACES[d.race][0][k]||0)}</b><button data-a="adj" data-k="${k}" data-v="1">+</button> <button data-a="adj" data-k="${k}" data-v="-1">−</button></div>`).join('')}</div>
+ <p>المجموع <b class="${tot==d.target?'good':'bad'}">${tot}</b> / ${d.target} <span class="sub">(الكتيب: 45)</span> · الحد الأدنى 3 · الرميات ${d.rolled}/${d.rr}</p>
+ <div class="row"><button data-a="rollattr"${!DM()&&d.rolled>=d.rr?' disabled':''}>🎲 ارمِ السمات</button>${DM()?`المجموع <input type="text" data-num="1" autocomplete="off" data-d="target" value="${d.target}"> الإعادات <input type="text" data-num="1" autocomplete="off" data-d="rr" value="${d.rr}">`:''}</div>${d.rl?`<div class="sub">${esc(d.rl)}</div>`:''}
+ <div class="row"><button data-a="drep"${d.rep&&!DM()?' disabled':''}>🎲 السمعة (1d7) والأصول</button>${d.rep?`<span class="tag">سمعة ${d.rep}: ${E.money(E.pts(d.money))} · مدخرات ${E.money(E.pts(d.saved))}</span>`:''}</div>
+ <div class="row"><button data-a="create"${ok?'':' disabled'}>إنشاء الشخصية</button></div></div>`}
+const SC={str:'#e5484d',agi:'#3ecf8e',con:'#f08a3c',wil:'#6ea8ff',ins:'#4c8dff',edu:'#2fc4d8',cha:'#ee6aa7',luck:'#f5b942',mys:'#38bdf8'};
+const learnPanel=(c,n,s)=>{if(s.lv>=6)return'<div class="lp sub">المهارة في أقصى مستوى (خبير).</div>';const L=lrn,to=Math.max(s.lv+1,Math.min(6,L.to||s.lv+1)),cs=Math.max(0,L.cs-Math.floor((L.ins||0)/6));let d=0;for(let i=s.lv;i<to;i++)d+=LEARN[cs][i];if(L.self)d*=2;
+ return`<div class="lp"><div class="row"><select data-lrn="to">${opts(LV.slice(s.lv+1).map((l,i)=>[s.lv+1+i,'إلى '+l]),to)}</select><select data-lrn="cs">${opts([[0,'دراسة يومية'],[1,'3–5 أيام أسبوعيًا'],[2,'1–2 يوم أسبوعيًا']],L.cs)}</select></div><div class="row"><label><input type="checkbox" data-lrn="self"${L.self?' checked':''}> تعلم ذاتي ×2</label>إلهام إضافي <input type="text" data-num="1" autocomplete="off" data-lrn="ins" value="${L.ins||0}" style="width:60px"></div><div class="lr">المدة: <b>${d}</b> يوم ≈ ${(d/30).toFixed(1)} شهر <span class="sub">(حالة ${cs+1}، مرة واحدة يوميًا)</span></div></div>`};
+const skRow=(c,n,s,av)=>{const v=LVV[s.lv];return`<div class="rw"><div class="l1"><b>${esc(n)}</b><span class="lvl">${LV[s.lv]}</span><span class="tot">${av+v}</span><button class="lb" data-a="sklearn" data-n="${esc(n)}" title="وقت التعلم">⏱</button>${editMode?`<button class="lb rmv" data-a="rmsk" data-n="${esc(n)}" title="إزالة المهارة">✕</button>`:''}</div>${DM()&&editMode?`<div class="l2"><div class="pips">${[1,2,3,4,5,6].map(k=>`<i class="${k<=s.lv?'f':''}"></i>`).join('')}</div><select data-sk="${esc(n)}">${opts(LV.map((l,k)=>[k,l]),s.lv)}</select><select data-skattr="${esc(n)}" title="تغيير السمة">${opts(A,s.a)}</select></div>`:`<div class="pips">${[1,2,3,4,5,6].map(k=>`<i class="${k<=s.lv?'f':''}"></i>`).join('')}</div>`}${lrn&&lrn.n==n?learnPanel(c,n,s):''}</div>`};
+const attrBlock=(c,k,l)=>{const av=E.ga(c,k),tr=Math.min(5,Math.floor(av/10)),vis=Object.entries(c.skills).filter(([n,s])=>s.a==k&&(s.lv>0||s.u));
+ return`<div class="ab t${tr}" style="--ac:${SC[k]}"><div class="ah"><b>${l}</b>${tr?`<span class="tb">${'◆'.repeat(tr)}</span>`:''}${DM()&&editMode?`<span class="stp"><button class="mn" data-a="attrp" data-k="${k}" data-v="-1">−</button><em>${av}</em><button class="mn" data-a="attrp" data-k="${k}" data-v="1">+</button></span>`:`<em>${av}</em>`}${editMode?`<button class="pl" data-a="addfor" data-k="${k}">+ مهارة</button>`:''}</div><div class="tp" title="التقدم نحو المستوى التالي"><i style="width:${tr>=5?100:(av%10)*10}%"></i></div>${vis.map(([n,s])=>skRow(c,n,s,av)).join('')||'<div class="sub" style="margin-top:6px">لا مهارات بعد</div>'}</div>`};
+const drawerHTML=c=>{if(!drawer||!c)return'';const an=dan?' ani':'';dan=0;const k=drawer,list=Object.entries(c.skills).filter(([n,s])=>s.a==k&&!(s.lv>0||s.u));
+ return`<button class="ov${an}" data-a="close" aria-label="إغلاق"></button><aside class="dw${an}" style="--ac:${SC[k]}"><div class="dh"><b>مهارات ${AN[k]}</b><button data-a="close">✕</button></div><p class="sub">اختر مهارة لإضافتها (غير مدرَّبة).</p>${list.map(([n])=>`<button class="it" data-a="pick" data-n="${esc(n)}">${esc(n)}<span>+</span></button>`).join('')||'<p class="sub">لا مهارات أخرى في هذه السمة.</p>'}${DM()?`<div class="row"><input id="nsk" placeholder="مهارة مخصصة" style="flex:1"><button data-a="addsk" data-k="${k}">إضافة</button></div>`:''}</aside>`};
+function dgPanel(c){const i=9-c.seq;return`<div class="dgp"><div class="grid">${st('أيام التمثيل',c.dig.act)}${st('أيام بلا تمثيل',c.dig.idle)}${st('نقاط إنجاز',c.dig.bonus)}</div><p class="sub">يوم لكل نقطة هضم: بتمثيل يومي ${DIGA[i]} · دون تمثيل ${DIGN[i]}</p>${DM()?`<div class="row"><button data-a="dg" data-k="act" data-v="1">+ يوم تمثيل</button><button data-a="dg" data-k="act" data-v="7">+7 أيام</button><button data-a="dg" data-k="idle" data-v="30">+30 بلا تمثيل</button><button data-a="crit" data-v="6">تمثيل حاسم (1d6)</button><button data-a="crit" data-v="4">حاسم (1d4)</button></div>`:'<p class="sub">يسجّلها DM.</p>'}</div>`}
+function pChar(c){const s=E.stats(c),r=E.rat(c),hp=s.hp-c.dmg,sp=s.sp-c.spu,S=E.state(c),hs=E.hpState(c);
+ return`${RO(c)?`<div class="alert">👁 عرض فقط — شخصية ${esc(names[c.owner]||'لاعب آخر')}، لا يعدّلها إلا صاحبها وDM.</div>`:''}<div class="card hero">${avHTML(c,!editMode)}${editMode?`<input class="nm" data-e="name" placeholder="اسم الشخصية" value="${esc(ev(c,'name'))}">`:`<h2>${esc(c.name)}</h2>`}</div><div class="card hero2"><div class="sig"><b>${c.seq}</b><small>تسلسل</small></div><div class="hb">
+ <div class="row"><select data-seq="1"${dis()||dsE()}>${opts([9,8,7,6,5,4,3,2,1,0].map(i=>[i,'التسلسل '+i+(i==9?' — '+PATHS[c.path][1]:'')]),c.seq)}</select></div>
+ <p class="sub">${c.seq==9?esc(PATHS[c.path][1]):esc(c.pname||'التسلسل '+c.seq)} · الحالة العقلية: <b class="${S?'bad':'good'}">${STATES[S][0]}</b> · الجسد: <b class="${hs[1]}">${hs[0]}</b></p>${c.st.length?'<div class="row" style="justify-content:center">'+c.st.map(k=>'<span class="tag bad">'+CI[k]+' '+k+'</span>').join('')+'</div>':''}</div></div>
+ <div class="card"><h3>المعلومات</h3><div class="ig">${[['الجنس',`<select data-e="gender">${opts([['ذكر','ذكر'],['أنثى','أنثى']],ev(c,'gender'))}</select>`,c.gender],['العمر',`<input data-e="age" placeholder="—" value="${esc(ev(c,'age'))}">`,c.age],['العرق',`<select data-e="race">${opts(Object.keys(RACES).map(r=>[r,r]),ev(c,'race'))}</select>`,c.race],['المهنة',`<input data-e="job" placeholder="—" value="${esc(ev(c,'job'))}">`,c.job],['الانتساب',`<input data-e="affil" placeholder="—" value="${esc(ev(c,'affil'))}">`,c.affil,1],['المسار',`<select data-e="path">${opts(PATHS.map((p,i)=>[i,`${p[1]} · ${p[0]}`]),ev(c,'path'))}</select>`,PATHS[c.path][1]+' · '+PATHS[c.path][0],1]].map(([l,h,dv,fu])=>`<div class="ii"${fu?' style="grid-column:1/-1"':''}><small>${l}</small>${editMode?h:`<b>${esc(dv||'—')}</b>`}</div>`).join('')}</div></div>
+ <div class="card"><div class="rings"><button class="dgb" data-a="hltoggle">${ring('الصحة '+(hlo?'▴':'▾'),hp,s.hp,'#c2415a')}</button>${hlo?`<div class="hlb pnl"><div class="pnh"><span>🩺</span><b>العلاج والتعافي</b></div><div class="dfg"><button class="dfb" data-a="heal" data-v="1"${dis()}><span>💊</span><b>علاج ناجح</b><small>تُستعاد البنية / 12س</small></button><button class="dfb" data-a="heal" data-v="0"${dis()}><span>🛏</span><b>بلا علاج</b><small>نصف البنية / 12س</small></button><button class="dfb" data-a="medt"${dis()}><span>🩺</span><b>اختبار طبي</b><small>د20 + التعليم + الطب</small></button></div><div class="mdi">${medInfo(c)}</div>${last&&tab=='char'?`<div class="alert">${last}</div>`:''}</div>`:''}<button class="dgb" data-a="sptoggle">${ring('الروحانية '+(spo?'▴':'▾'),sp,s.sp,'#4f7fd6')}</button>${spo?`<div class="hlb pnl"><div class="pnh"><span>✦</span><b>الروحانية والاستعادة</b></div><div class="grid">${st('استعادة / ساعة',Math.floor(s.sp/E.rh(c)))}${st('الراحة الكاملة',E.rh(c)+' س')}${st('المستهلك',c.spu)}</div><div class="pnr"><div class="pnc"><small>استهلاك روحانية</small><div class="row"><input type="text" data-num="1" autocomplete="off" id="spv" value="1"><button data-a="spspend">استهلاك</button></div></div><div class="pnc"><small>راحة (عدد الساعات)</small><div class="row"><input type="text" data-num="1" autocomplete="off" id="sph" value="8"><button data-a="sprest">😴 راحة كافية</button></div></div></div><p class="sub" style="margin:8px 0 0">لا نشاط بدني عنيف أثناء الراحة.</p>${DM()?`<div class="row">ساعات الراحة الكاملة (تختصرها بعض المسارات كالظلام) <input type="text" data-num="1" autocomplete="off" data-f="restH" value="${E.rh(c)}"></div>`:''}${lsp?`<div class="alert">${lsp}</div>`:''}</div>`:''}${ring('العقلانية',r,s.rm,'#f5b942')}<button class="dgb" data-a="dgtoggle">${ring('الهضم '+(dgo?'▴':'▾'),s.dig,20,'#3b82f6')}</button></div>${dgo?dgPanel(c):''}
+ <div class="grid" style="margin-top:12px">${st('التحمل',s.en)}${st('دفاع جسدي',s.pd)}${st('دفاع الإرادة',s.wd)}${st('دفاع البنية',s.cd)}${st('الدفاع الغامض',s.md)}${st('مكافأة ضرر القوة',E.sdmg(E.ga(c,'str')))}</div></div>
+ <div class="card"><h2>السمات والمهارات</h2><p class="sub" style="margin-top:-4px">المجموع = قيمة السمة + قيمة المهارة، وهو ما تضيفه إلى رمية 1d20.</p>${A.map(([k,l])=>attrBlock(c,k,l)).join('')}</div>${pRace(c)}${pBag(c)}`}
+const skOpts=c=>{const mine=Object.entries(c.skills).filter(([n,x])=>x.lv>0||x.u),rest=Object.entries(c.skills).filter(([n,x])=>!(x.lv>0||x.u)),f=([n,x])=>[n,`${n} (${LVV[x.lv]>0?'+':''}${LVV[x.lv]})`];return`<option value="">— بلا مهارة —</option><optgroup label="مهاراتي">${opts(mine.map(f),'')}</optgroup><optgroup label="غير مدرَّبة (−2)">${opts(rest.map(f),'')}</optgroup>`};
+function pTest(c){const av=E.luckAv(c),can=Date.now()>=(c.luck.at||0)+864e5,mod=E.mod(c),lo=!!c._lo&&!c._lb,why=!c._lo?'أجرِ اختبارًا أولًا':c._lb?'حُرق الحظ لهذا الاختبار':!can?'متاح بعد '+fmt((c.luck.at||0)+864e5):!av?'لا حظ متاح':'';
+ return`<div class="card"><h2>اختبار</h2><div class="row"><select id="ta">${opts([['','— بلا سمة —'],...A],'str')}</select><select id="tk">${skOpts(c)}</select></div><div class="row">معدل <input type="text" data-num="1" autocomplete="off" id="tm" value="0"> الصعوبة <input type="text" data-num="1" autocomplete="off" id="td" value="15"><button data-a="test">🎲 اختبار 1d20</button></div>${mod?`<p class="sub">معدلات تلقائية من الحالات/الغارة/الاستعداد: ${mod}</p>`:''}${last?`<div class="alert">${last}</div>`:''}
+ <div class="lk"><div class="t"><span>🔥 حرق الحظ</span><em>${av} / ${E.ga(c,'luck')}</em></div><small>${why||'أضف حظًا إلى نتيجة آخر اختبار'}${c.luck.burned?' · محروق '+c.luck.burned:''}</small><div class="row"><input type="text" data-num="1" autocomplete="off" id="lkv" value="1"><button data-a="burn"${can&&av&&lo?'':' disabled'}>🔥 احرق الحظ</button></div></div>
+ <details><summary>قواعد الحظ</summary><p class="sub">إجراء حر، مرة كل 24 ساعة، لا يتجاوز قيمة الحظ، يُضاف لاختبار مهارة أساسي ولا يغيّر النجاح/الفشل الكبير، ويتعافى خلال 24 ساعة.</p></details>
+ <div class="row">نرد حر <input id="tx" value="1d20" style="width:90px"><button data-a="free">ارمِ</button></div></div>
+ 
+ <div class="card log"><h3>سجل الرميات</h3>${c.rolls.map(o=>`<div>${fmt(o.t)} · ${esc(o.label||'')} ${o.res?rollTxt(o):esc(o.txt)}</div>`).join('')||'<span class="sub">لا رميات</span>'}</div>`}
+function pTestOld(c){const av=E.luckAv(c),can=Date.now()>=(c.luck.at||0)+864e5,mod=E.mod(c);
+ return`<div class="card"><h2>اختبار</h2><div class="row"><select id="ta">${opts([['','— بلا سمة —'],...A],'str')}</select><select id="tk">${skOpts(c)}</select></div><div class="row">معدل <input type="text" data-num="1" autocomplete="off" id="tm" value="0"> الصعوبة <input type="text" data-num="1" autocomplete="off" id="td" value="15"><button data-a="test">🎲 اختبار 1d20</button></div>${mod?`<p class="sub">معدلات تلقائية من الحالات/الغارة/الاستعداد: ${mod}</p>`:''}
+ <div class="row">نرد حر <input id="tx" value="1d20" style="width:90px"><button data-a="free">ارمِ</button></div>${last?`<div class="alert">${last}</div>`:''}</div>
+ <div class="card"><h3>الحظ</h3><div class="grid">${st('الحظ',E.ga(c,'luck'))}${st('المتاح',av)}${st('المحروق',c.luck.burned)}${st('الحرق التالي',can?'متاح':fmt((c.luck.at||0)+864e5))}</div><p class="sub">إجراء حر، مرة كل 24 ساعة، لا يتجاوز قيمة الحظ، يُضاف لاختبار مهارة أساسي ولا يغيّر النجاح/الفشل الكبير، ويتعافى خلال 24 ساعة.</p>
+ <div class="row"><input type="text" data-num="1" autocomplete="off" id="lkv" value="1" min="1" max="${av}"><button data-a="burn"${can&&av&&c._lo&&!c._lb?'':' disabled'}>🔥 أضف إلى آخر اختبار</button></div></div>
+ <div class="card"><h3>الحالات</h3><div class="row">${Object.keys(COND).map(k=>`<label class="tag"><input type="checkbox" data-cond="${k}"${c.st.includes(k)?' checked':''}> ${k}</label>`).join('')}</div>${c.st.map(k=>`<div class="sub">${k}: ${COND[k][1]}</div>`).join('')}</div>
+ <div class="card log"><h3>سجل الرميات</h3>${c.rolls.map(o=>`<div>${fmt(o.t)} · ${esc(o.label||'')} ${o.res?rollTxt(o):esc(o.txt)}</div>`).join('')||'<span class="sub">لا رميات</span>'}</div>`}
+function pPromo(c){const t=c.seq-1;if(t<0)return'<div class="card"><h3>الترقية</h3><p>بلغت التسلسل 0.</p></div>';
+ const pm=c.pm,mod=E.pmod(c),base=pm.n2?40:20,r=E.rat(c),need=r-base-mod,ch=Math.round(Math.max(0,Math.min(20,need))/20*100),prot=E.prot(c),mad=E.state(c)>=2,ds=DM()?'':' disabled',blk=c.dead||(c.fail&&!c.fail.extracted);
+ const sw=(k,l,h)=>`<label class="pmo"><span><b>${l}</b><small>${h}</small></span><input type="checkbox" data-pm="${k}"${pm[k]?' checked':''}${ds}></label>`,
+ stp=(k,l,h)=>`<div class="pmo"><span><b>${l}</b><small>${h}</small></span><span class="stp" style="--ac:var(--g)"><button class="mn" data-a="pmstep" data-k="${k}" data-v="-1"${ds}>−</button><em>${+pm[k]||0}</em><button class="mn" data-a="pmstep" data-k="${k}" data-v="1"${ds}>+</button></span></div>`,
+ sel=(k,l,h,o,s)=>`<div class="pmo"><span><b>${l}</b><small>${h}</small></span><select data-pm="${k}"${s?' data-str="1"':''}${ds}>${opts(o,pm[k])}</select></div>`;
+ const chips=[[`هضم ${E.dig(c)}`,-E.dig(c)],['مواد مساعدة',-(+pm.help||0)],['خاصية مباشرة',pm.direct?5:0],['بصمة',pm.imp=='s'?-2:pm.imp=='o'?4:0],['جرعات غير مهضومة',+pm.under||0],['مساعد أعلى',-2*(+pm.hi||0)],['القمر',-(pm.moon==1?2:pm.moon==2?4:0)],['حيوان',pm.animal?4:0]].filter(x=>x[1]).map(x=>`<span class="tag ${x[1]<0?'good':'bad'}">${x[0]} ${x[1]>0?'+':'−'}${Math.abs(x[1])}</span>`).join(' ')||'<span class="sub">لا معدلات</span>';
+ return`<div class="card pmc pmh"><h2>اختبار الترقية إلى التسلسل ${t}</h2>
+ <div class="grid">${st('العقلانية الحالية',r)}${st('المعدل الكلي',(mod>0?'+':mod<0?'−':'')+Math.abs(mod),'سالب = لصالحك')}${st('فرصة النجاح',ch+'%')}</div>
+ <div class="pmr"><div>النتيجة = <bdi dir="ltr">1d20 + ${base}${mod?(mod>0?' + ':' − ')+Math.abs(mod):''}</bdi> وتنجح إذا كانت ≤ ${r}</div><div class="sub">${need>=20?'نجاح مضمون':need<1?'فشل مضمون':`يكفي أن يظهر النرد ${need} أو أقل`} · لا نجاح كبير ولا فشل كبير في الترقية</div><div style="margin-top:6px">${chips}</div></div>
+ ${c.dead?`<div class="alert">ماتت الشخصية في الترقية.${DM()?' <button data-a="revive">إلغاء الوفاة</button>':''}</div>`:''}
+ ${c.fail&&!c.fail.extracted&&!c.dead?'<div class="alert">فشل سابق: لا محاولة جديدة قبل فصل الخاصية. القدرات بنصف التأثير، ومرض عضال خلال 5 سنوات (عمر متبقٍّ سنة).</div>':''}</div>
+ <div class="card pmc"><h3>١ · الجرعة والمعدلات</h3><div class="pmo"><span><b>نقاط الهضم الحالية</b><small>تلقائي من صفحة الهضم · −1 لكل نقطة</small></span><b class="good">−${E.dig(c)}</b></div>
+ ${stp('help','مواد مساعدة في الجرعة','−1 لكل مادة')}${sw('direct','تناول الخاصية مباشرة','+5 غير مواتية (بلا جرعة)')}
+ ${sel('imp','بصمة الخاصية الروحية','تشابه شخصيتك معها',[['n','لا تأثير'],['s','مشابهة (−2)'],['o','معاكسة (+4)']],1)}
+ ${sw('n2','جرعة ثانية من نفس التسلسل','تغيّر +20 إلى +40 حتى يكتمل الهضم')}${stp('under','جرعات غير مهضومة أدنى تسلسلًا','+1 لكل جرعة')}
+ ${sel('hi','خارق أعلى يهيّئ بيئة الترقية','ترانيم/قوانين/إيحاءات · −2 لكل مستوى',[[0,'بلا'],[1,'مساوٍ أو أعلى (−2)'],[2,'أعلى بمستوى (−4)'],[3,'أعلى بمستويين (−6)'],[4,'أعلى بثلاثة (−8)'],[5,'أعلى بأربعة (−10)']])}
+ ${sel('moon','ظاهرة سماوية','لا تُجمع مع المساعد الأعلى',[[0,'لا شيء'],[1,'قمر مكتمل (−2)'],[2,'قمر دموي (−4)']])}${sw('animal','المتناوِل حيوان غير ذكي','+4 غير مواتية')}
+ ${mad?sw('hiMad','الخارق الأعلى يؤثر عليك','يلغي تخفيض الخسارة إلى النصف في الجنون'):''}</div>
+ ${c.seq<=6?`<div class="card pmc"><h3>٢ · الطقس والحماية</h3>${sw('ritual','أُقيم طقس الترقية','+5 حماية؛ وبدونه تتضاعف الخسارة')}
+ ${c.seq<=2?`<div class="pmo"><span><b>عدد الأتباع</b><small>${pm.ritual?'1 حماية لكل 1000':'1 حماية لكل 5000'} تابع</small></span><input type="text" data-num="1" autocomplete="off" data-pm="fol" value="${+pm.fol||0}" style="width:80px"${ds}></div>`:''}
+ <p class="sub">الحماية الحالية: <b>${prot}</b> · خسارة العقلانية: ${LOSS[t][0]} عند النجاح / ${LOSS[t][1]} عند الفشل${pm.ritual?' − الحماية':' × 2'}${mad&&!pm.hiMad?' ثم ÷ 2 (جنون)':''}</p></div>`:''}
+ <div class="card pmc pmx"><h3>٣ · التنفيذ</h3>${c.seq>6?`<p class="sub">خسارة العقلانية: ${LOSS[t][0]} عند النجاح / ${LOSS[t][1]} عند الفشل${mad&&!pm.hiMad?' ثم ÷ 2 (جنون)':''} (لا طقس في هذا المستوى)</p>`:''}${DM()?`<div class="row"><button data-a="promo"${blk?' disabled':''}>⚗️ نفّذ اختبار الترقية</button>${c.fail?`<label><input type="checkbox" data-fx="1"${c.fail.extracted?' checked':''}> الخاصية مفصولة</label>`:''}</div>`:'<p class="sub">يجري DM الاختبار.</p>'}
+ ${last&&tab=='path'?`<div class="alert">${last}</div>`:''}
+ <details><summary>كيف تُحسم النتيجة؟</summary><div class="sub" style="line-height:1.9">• خسارة 3 أو 4: شبه فقدان سيطرة ← اختبار إرادة 15: نجاح = تنجح الترقية، فشل = اختبار عقلانية 1/1d2 (مجموع الخسارة 5 أو أكثر = فقدان سيطرة وإلا تنجح).<br>• خسارة 5 أو أكثر: فقدان سيطرة ← اختبار إرادة 20: نجاح = تفشل الترقية وتبقى حيًا، فشل = 1d2 (1 تفقد السيطرة، 2 تموت).<br>• عند النجاح: فيضان روحي 72 ساعة وقدراتك −2.</div></details></div>`}
+function pPath(c){const t=c.seq-1,pm=c.pm,mod=t>=0?E.pmod(c):0,base=pm.n2?40:20,r=E.rat(c),i=9-c.seq;
+ return`<div class="card pth"><div class="pth-k">المسار الحالي</div><h2>${esc(PATHS[c.path][1])} · ${esc(PATHS[c.path][0])}</h2><div class="pth-s">التسلسل <b>${c.seq}</b> من 9 ← 0</div><div class="seq">${ROM.map((x,j)=>`<span class="${9-j==c.seq?'on':9-j>c.seq?'past':''}">${9-j}</span>`).join('')}</div>
+ <div class="row"><input data-f="pname" placeholder="اسم التسلسل" value="${esc(c.seq==9?PATHS[c.path][1]:c.pname)}"${dis()}><input data-f="potion" placeholder="اسم الجرعة / مبدأ التمثيل" value="${esc(c.potion)}"${dis()}></div>
+ ${c.seq<=4?`<div class="alert">التسلسل ${c.seq}: ${c.seq<=2?'رتبة الملائكة؛ الشكل الأسطوري مكتمل.':'قديس: بدء الشكل الأسطوري (غير مكتمل). مشاهدته تؤثر في العقلانية.'}${c.seq==0?' التسلسل 0 يتطلب طقس التأليه.':''} القدرات يحددها DM.</div>`:''}</div>
+ ${pPromo(c)}
+ <div class="card dgc"><h3>الهضم والتمثيل</h3><div class="bar"><i style="width:${pct(E.dig(c),20)}%"></i></div><p>الهضم ${E.dig(c)}/20 (يبدأ بـ0 بعد كل ترقية؛ كل نقطة +1 صحة +1 روحانية)<br><span class="sub">يوم لكل نقطة: بتمثيل يومي ${DIGA[i]} · دون تمثيل ${DIGN[i]}</span></p>
+ <div class="row">جرعات مكررة <input type="text" data-num="1" autocomplete="off" data-f="rp" value="${c.rp}" min="0" style="width:60px"${dis()}></div><p class="sub">${c.rp==1?'+2 لصالح القدرات في تحديد/صعوبة الهروب.':c.rp==2?'قدرة التسلسل ترتفع مستوى تسلسل واحدًا.':c.rp>=3?'الفوائد يحددها DM.':''}</p></div>`}
+function pMind(c){const s=E.stats(c),r=E.rat(c),S=E.state(c),p=c.m.partial,now=Date.now();
+ const rcb=(k,l)=>`<button data-a="rec" data-k="${k}"${now<c.m.rc[k]+864e5?' disabled':''}>${l}</button>`;
+ return`<div class="card"><h2>العقلانية</h2><div class="rings">${ring('العقلانية',r,s.rm,'#f5b942')}</div><div class="grid" style="margin-top:10px">${st('القصوى',s.rm)}${st('المفقودة',c.m.lost)}${st('الحماية',c.m.prot)}${st('الإضافية',c.m.extra)}</div>
+ <p>الحالة: <b class="${S?'bad':'good'}">${STATES[S][0]}</b> <span class="sub">${STATES[S][1]}</span></p>
+ ${S==3&&r<=0?'<div class="alert">العقلانية 0: فقدان السيطرة نهائي، الشخصية تحت تحكم DM.</div>':''}
+ ${p&&p.rounds>0?`<div class="alert">شبه فقدان سيطرة: ${p.rounds} جولة · الميل: <b>${SYM[p.sym]}</b>. كل جولة اختبار إرادة DC20 وإلا خسارة 0/1؛ مقاومة الميل DC15.</div>`:''}
+ ${S==2?`<div class="alert">جنون غير مؤكد منذ ${c.m.unc} يوم. 1d8 كل 12 ساعة؛ اختبار خسارة 0/1 كل 24 ساعة. ${c.m.unc>=7?'ظهرت الشخصية الثانية (أسبوع).':''}${c.m.unc>=30?' الشهر: يُسمع صوتها.':''} ينتهي بعودة العقلانية فوق النصف.</div>`:''}
+ <p class="sub">العقلانية = الإرادة + 10 + 5 × (مستوى علم النفس + التوجيه العقلي). الحالات الناتجة آليًا لا يغيّرها إلا DM.</p></div>
+ ${DM()?`<div class="card"><h3>اختبار خسارة العقلانية</h3><div class="row">خسارة <input id="lmn" value="0" style="width:70px"> / <input id="lmx" value="1d3" style="width:70px"> غير مواتٍ + <input type="text" data-num="1" autocomplete="off" id="lun" value="0" style="width:60px"></div>
+ <div class="row"><select id="lpre"><option value="">— مشاهدة هيئة أسطورية —</option><option value="0|1|0">منخفض/متوسط 0/1</option><option value="1d8|2d8|4">أعلى بمستوى 1d8/2d8 (+4)</option><option value="1d12|2d12|6">أعلى بمستويين 1d12/2d12 (+6)</option><option value="2d12|3d12|0">أعلى بثلاثة 2d12/3d12</option><option value="3d10|4d10|0">أعلى بأربعة 3d10/4d10</option></select><button data-a="lpre">تعبئة</button></div>
+ <div class="row"><button class="r" data-a="loss">رمي 1d20 ضد العقلانية وتطبيق الخسارة</button></div><p class="sub">نجاح = الأدنى، فشل (أو 20) = الأقصى. تُخصم الحماية من الخسارة.</p>${last&&tab=='mind'?`<div class="alert">${last}</div>`:''}
+ <div class="row">حماية <input type="text" data-num="1" autocomplete="off" data-f="m.prot" value="${c.m.prot}"> إضافية <input type="text" data-num="1" autocomplete="off" data-f="m.extra" value="${c.m.extra}"> حالة يدوية <select data-m="forced">${opts([['','آلي'],...STATES.map((x,i)=>[i,x[0]])],c.m.forced??'')}</select></div>
+ <div class="row"><button data-a="pround"${p&&p.rounds>0?'':' disabled'}>انتهت جولة (شبه فقدان)</button><button data-a="udays">+ يوم جنون غير مؤكد</button></div></div>`:''}
+ 
+ <div class="card"><h3>استعادة العقلانية</h3><p class="sub">+1 لكل مصدر مرة كل 24 ساعة (حتى 3 يوميًا).</p>${DM()?`<div class="row">${rcb('g','توجيه نفسي')}${rcb('r','راحة (8 ساعات)')}${rcb('e','ترفيه (ساعتان)')}</div>`:'<p class="sub">يسجّلها DM.</p>'}</div>`}
+function pFight(c){const cb=c.cb,N={atk:'هجوم',cast:'إلقاء',quick:'سريع',move:'حركة',full:'جولة كاملة',parry:'صد/تفادي',ready:'استعداد'},s=E.stats(c),ar=ARM[c.armor],str=E.ga(c,'str'),hs=E.hpState(c);
+ return`<div class="card"><h2>القتال</h2><div class="row"><button data-a="init">🎲 مبادرة (1d20 + الرشاقة)</button>${cb.init!=null?`<span class="tag">المبادرة ${cb.init}</span>`:''}<span class="tag">الجولة ${cb.round}</span>${cb.raid?`<span class="tag">غارة ${cb.raid>0?'+5':'−5'}</span>`:''}</div>
+ <div class="row"><button data-a="raid" data-v="5">جولة غارة (مغير)</button><button data-a="raid" data-v="-5">جولة غارة (مداهَم)</button><button data-a="raid" data-v="0">إنهاء الغارة</button><button data-a="nround">جولة جديدة</button></div>
+ <div class="grid">${Object.entries(N).map(([k,l])=>`<div class="st"><small>${l}</small><b>${cb.act[k]}</b><button data-a="use" data-k="${k}"${cb.act[k]>0?'':' disabled'}>استهلك</button></div>`).join('')}<div class="st"><small>حرة</small><b>∞</b></div></div>
+ <div class="row"><button data-a="conv">هجوم/إلقاء ← سريعان</button><span class="sub">واحد في المرة، في دورك فقط، ولا يُحتفظ بإجراء للجولة التالية. السريع يصلح لأدوار الآخرين.</span></div>
+ <div class="row">${Object.entries(SPEC).map(([k,v])=>`<button data-a="spec" data-k="${esc(k)}" title="${esc(v[1])}">${k}</button>`).join('')}</div>${cb.prep?'<p class="good">استعداد: +2 للاختبار التالي</p>':''}</div>
+ <div class="card"><h3>الدفاع</h3><div class="row"><button data-a="def" data-at="agi" data-sk="المراوغة" data-l="مراوغة">مراوغة</button><button data-a="def" data-at="str" data-sk="القتال (القتال القريب)" data-l="صد">صد</button><button data-a="def" data-at="con" data-sk="" data-l="تحمّل">تحمّل</button></div>
+ <div class="row">نتيجة المهاجم <input type="text" data-num="1" autocomplete="off" id="atk" value="10"> فارق الهجوم المضاد <input type="text" data-num="1" autocomplete="off" id="cth" value="10"><button data-a="cmp">قارن</button></div>${last&&tab=='fight'?`<div class="alert">${last}</div>`:''}<p class="sub">تفوّق الدفاع نجاح، التعادل صراع (رشاقة د20، الأعلى يتحرك أولًا)، والفارق الكبير يتيح هجومًا مضادًا (يحدد DM الفارق).</p></div>
+ <div class="card"><h3>الدرع والضرر</h3><select data-f="armor"${dis()}>${opts(Object.keys(ARM).map(a=>[a,`${a} — درع ${ARM[a][0]} / تقليل ${ARM[a][1]}`]),c.armor)}</select><p class="sub">عقوبة الرشاقة ${ar[2]?'−'+ar[2]:'لا'} · ${ar[3]?'حد القوة '+ar[3]+(c.armor=='كامل'?' للارتداء':' للحركة'):''}${ar[3]&&str<ar[3]?' <b class="bad">القوة غير كافية</b>':''}</p>
+ <div class="row">الضرر <input type="text" data-num="1" autocomplete="off" id="dmg" value="0"><button class="r" data-a="hit" data-p="1">جسدي</button><button class="r" data-a="hit" data-p="0">آخر</button><button data-a="heal" data-v="1">علاج 12س (ناجح)</button><button data-a="heal" data-v="0">12س (بلا علاج)</button><button data-a="medt">🩺 اختبار طبي (د20 + التعليم + الطب)</button></div><p class="sub">${medInfo(c)}</p>
+ <div class="grid">${st('الصحة',s.hp-c.dmg+' / '+s.hp)}${st('الحالة',`<span class="${hs[1]}">${hs[0]}</span>`)}${st('الدفاع الجسدي',s.pd)}${st('ضرر القوة',E.sdmg(str))}</div><p class="sub">ضرر فعلي ≥10 من الجسدي: تحطم الدرع + ضربة حيوية 1d6. النجاح الكبير يضمن نصف أقصى الضرر. الموت عند الصحة تحت −(البنية)، وللمتجاوز تحت −2×البنية.</p></div>`}
+function pBag(c){const M=(k,l)=>`<div class="row">${l}: <input type="text" data-num="1" autocomplete="off" data-f="${k}.l" value="${c[k].l}"${dsE()}> جنيه <input type="text" data-num="1" autocomplete="off" data-f="${k}.s" value="${c[k].s}"${dsE()}> سولي <input type="text" data-num="1" autocomplete="off" data-f="${k}.p" value="${c[k].p}"${dsE()}> بنس</div><div class="sub">= ${E.money(E.pts(c[k]))}</div>`;
+ return`<div class="card rpc"><button class="dgb" data-a="fold" data-k="rep"><h2>السمعة والأصول <span class="sub">${fo.rep?'▴':'▾'}</span></h2></button>${fo.rep?`<div class="dgp"><div class="row">مستوى السمعة <select data-f="rep"${dis()||dsE()}>${opts([1,2,3,4,5,6,7].map(i=>[i,i]),c.rep)}</select>${DM()&&editMode?'<button data-a="arep">🎲 ارمِ الأصول الابتدائية</button>':''}</div>${c.rep==1?'<p class="sub">السمعة 1: بنية جسدية −1 (بلا مأوى).</p>':''}${M('money','الأصول الحرة (قابلة للإنفاق)')}${M('saved','المدخرات المتراكمة')}<p class="sub">12 بنس = 1 سولي · 20 سولي = 1 جنيه. يُعاد الرمي إن لم يبلغ الحد الأدنى للسمعة.</p></div>`:''}</div>
+ <div class="card rpc"><div class="fh"><button class="dgb" data-a="fold" data-k="inv"><h3 style="margin:0">الممتلكات <span class="sub">${fo.inv?'▴':'▾'}</span></h3></button>${editMode&&fo.inv?`<button class="tgl" data-a="itoggle" title="${ia?'إخفاء النموذج':'إضافة غرض'}">${ia?'−':'+'}</button>`:''}</div>${fo.inv?`<div>${ia&&editMode?`<div class="itf"><input id="in" placeholder="اسم الغرض"><input id="idm" class="idmi" placeholder="مقدار الضرر (مثال: 1d8+2)"><textarea id="ids" rows="6" placeholder="وصف الغرض: المظهر، الخصائص، التاريخ، القدرات، الشروط..."></textarea><div class="row"><span class="ico">◆</span><select id="irr">${opts(RAR.map(r=>[r[0],'الندرة: '+r[0]]),'عادي')}</select><input id="iq" type="text" data-num="1" autocomplete="off" value="1" style="width:60px"><input id="iv" placeholder="القيمة"><button data-a="additem">إضافة</button></div></div>`:''}${c.inv.map((x,i)=>ie==i?`<div class="itm itf" style="--rc:${RC[x.r]||RC['عادي']}"><input id="ein" value="${esc(x.n)}" placeholder="اسم الغرض"><input id="edm" class="idmi" value="${esc(x.dm||'')}" placeholder="مقدار الضرر"><textarea id="eds" rows="6" placeholder="وصف الغرض">${esc(x.ds||'')}</textarea><div class="row"><span class="ico">◆</span><select id="err">${opts(RAR.map(r=>[r[0],'الندرة: '+r[0]]),x.r||'عادي')}</select><input id="eiq" type="text" data-num="1" autocomplete="off" value="${x.q}" style="width:60px"><input id="eiv" placeholder="القيمة" value="${esc(x.v||'')}"></div><div class="row"><button data-a="itsave" data-i="${i}">حفظ</button><button data-a="itcancel">إلغاء</button></div></div>`:`<div class="itm" style="--rc:${RC[x.r]||RC['عادي']}"><div class="l1"><span class="ico">◆</span><b>${esc(x.n)}</b><span class="rar">${esc(x.r||'عادي')}</span><span class="fm">×${x.q}</span><button class="lb" data-a="itedit" data-i="${i}" title="تعديل">✎</button><button class="r" data-a="deli" data-i="${i}">✕</button></div>${x.dm?`<div class="idm">⚔ الضرر: <bdi dir="ltr">${esc(x.dm)}</bdi></div>`:''}${x.v?`<div class="sub">القيمة: ${esc(x.v)}</div>`:''}${x.ds?`<div class="ids">${esc(x.ds)}</div>`:''}</div>`).join('')||'<span class="sub">لا ممتلكات</span>'}</div>`:''}</div>
+ <div class="card rpc"><button class="dgb" data-a="fold" data-k="bl"><h3>البركات <span class="sub">${fo.bl?'▴':'▾'}</span></h3></button>${fo.bl?`<div>${c.bless.map((b,i)=>`<div class="itm" style="--rc:${BC[b.ty]||'#9aa4b2'}"><div class="l1"><span class="ico">◆</span><b>${esc(b.n)}</b>${b.ty?`<span class="rar">${esc(b.ty)}</span>`:''}${DM()&&editMode?`<button class="r" data-a="delb" data-i="${i}">✕</button>`:''}</div>${b.d?`<div class="ids"><span class="sub">التأثير:</span> ${esc(b.d)}</div>`:''}</div>`).join('')||'<span class="sub">لا بركات</span>'}${DM()&&editMode?`<div class="itf"><input id="bn" placeholder="اسم البركة"><div class="row"><span class="ico">◆</span><select id="bty">${opts(BT.map(r=>[r[0],'نوع البركة: '+r[0]]),'المنخفضة')}</select></div><textarea id="bd" rows="4" placeholder="تأثير البركة: الدرجة، الشروط، المدة، المصدر..."></textarea><div class="row"><button data-a="addb">إضافة</button></div></div>`:''}</div>`:''}</div>`}
+const DF={'جسدي':'pd','النار':'pd','البارد':'pd','البرق':'pd','العقلي':'wd','السموم':'cd','اللعنة':'md','المقدس':'md','الغامض':'md'};
+const DT={'جسدي':'ضرر عادي لهجوم قريب أو ضربة مادية؛ قيوده قليلة ويخضع لتقليل الدرع.','اللعنة':'الأكثر استخدامًا في المجالات الشريرة؛ تقليله أقل ونادرًا ما توجد مقاومة له. جرحه أسود بلا دم، ويحدّ من الاستعادة الطبيعية للحياة.','النار':'مفيد في المراحل المتقدمة ما لم توجد مقاومة أو حصانة؛ يتضاعف ضد شبكات العنكبوت والخشب والكروم.','البارد':'ضرره منخفض عادة، مع تأثيرات إبطاء: تيبس العضلات وبلورات جليدية تسبب عقوبة على الحركة أو الفحص التالي.','المقدس':'تطهير مطلق؛ قلة من الكائنات تقاومه وهو أوسع الأنواع تغطية. مستخدموه وحدهم قد يملكون مناعة منه.','البرق':'سرعة وقوة: ضرر عالٍ ومعدل إصابة مرتفع ومقاومة منخفضة، وتأثير إضافي واضح ضد الكائنات غير الميتة.','العقلي':'يصحبه صدمة وخوف تقلل أفعال العدو؛ مناسب للأهداف ذات الدفاع العقلي المنخفض.','السموم':'أقل الأنواع امتلاكًا، ولذلك له خصوصية معينة.','الغامض':'يُستخدم ضد القدرات الخارقة التي لا يمكن تصنيفها ضمن أنواع الضرر الأخرى، مثل سرقة هويتك أو تضريرك بالفراغ أو مخالفة قانون فيُطبّق عليك عقاب غامض. يُقابَل بالدفاع الغامض.'};
+function dyInfo(c,hp){const con=E.ga(c,'con'),tr=c.seq<9,lim=con*(tr?2:1);return `<div class='dtp'><b>${hp<-lim?'ميت':'محتضر'}</b> — حد الموت: تحت −${lim} (${tr?'متجاوز: ضعف البنية':'شخص عادي: البنية'}).<br>${tr?'يتصرف طبيعيًا إن كانت جرعته تمنح تحسينًا جسديًا، وإلا فيُعامل كالعادي؛ وبعد موته تترسب خصائصه بعد 5 دقائق.':'أقصى ما يفعله 3 أفعال حرة وفعل سريع واحد في الجولة، ويحوّلها إلى هجوم/إلقاء/حركة واحد بفحص إرادة 15 مع نصف قوة الحركة؛ وفي بداية كل جولة فحص بنية 15 وإلا يموت.'}<div class='row'><button data-a='dyrt'${dis()}>🎲 فحص بنية (15)</button></div></div>`}
+function teamCard(c){const cb=c.cb,t=cb.team||[],tn=cb.turn||0;return `<div class='card fgc'><h3>معركة الفرق</h3><p class='sub'>معركة يشارك فيها أكثر من 3 أشخاص (لاعبين أو NPC). يرمي الجميع المبادرة في البداية، ثم يعطي DM نتائج الأفعال بترتيبها.</p><div class='row'><input id='tmn' placeholder='اسم المشارك'>رشاقة <input type='text' data-num='1' autocomplete='off' id='tmb' value='0'><button data-a='tadd'>+ رمي مبادرة</button><button data-a='tself'>أضف شخصيتي</button></div><div class='tl'>${t.map((x,i)=>`<div class='tr${i==tn?' on':''}'><span class='ti'>${x.i}</span><b>${esc(x.n)}</b>${i==tn?'<em>الدور الحالي</em>':''}<button class='r' data-a='tdel' data-i='${i}'>✕</button></div>`).join('')||'<span class="sub">لا مشاركين بعد</span>'}</div><div class='row'><button data-a='tnext'${t.length?'':' disabled'}>⏭ الدور التالي</button><button data-a='tclr'${t.length?'':' disabled'}>مسح القائمة</button></div><div class='fgl'>هجومان متزامنان</div><div class='row'>رشاقة الأول <input type='text' data-num='1' autocomplete='off' id='tsa' value='0'> رشاقة الثاني <input type='text' data-num='1' autocomplete='off' id='tsb' value='0'><button data-a='tsim'>قارن</button></div>${last&&tab=='fight'?`<div class='alert'>${last}</div>`:''}<details><summary>قواعد معارك الفرق</summary><div class='sub' style='line-height:1.9'>• يؤدي الجميع RP لأفعالهم في الوقت نفسه، ويعطي DM النتائج وردود الفعل بترتيب المبادرة.<br>• الفريق منسَّق مسبقًا: مهاجم رئيسي ومساعدون وتغطية متكاملة.<br>• قدرة تحكم جماعي تقاطع هجومًا جاريًا: يجري المقيَّد اختبار الإجراءات المضادة، وإن فشل انقطع هجومه، وإن لم يستطع استخدام أفعاله انتقل للجولة التالية.<br>• هجومان متزامنان: الترتيب بـ 1d20 + الرشاقة، وعند التساوي يُنفَّذان معًا.</div></details></div>`}
+function pFight2(c){const cb=c.cb,N={atk:'هجوم',cast:'إلقاء',quick:'سريع',move:'حركة',full:'جولة كاملة',ready:'استعداد'},I={atk:'⚔',cast:'✦',quick:'⚡',move:'👣',full:'⏳',ready:'🎯'},CT={atk:'هجوم',cast:'إلقاء',quick:'سريع',ready:'استعداد'},s=E.stats(c),ar=ARM[c.armor],str=E.ga(c,'str'),hs=E.hpState(c),hp=s.hp-c.dmg,hl=E.actCap(c).parry===0,tm=cb.mode=='team';
+ return`<div class="fmw"><button class="fmb${tm?'':' on'}" data-a="fmode" data-v="solo">⚔ قتال فردي</button><button class="fmb${tm?' on':''}" data-a="fmode" data-v="team">👥 قتال فريق</button></div>${tm?teamCard(c):''}<div class="card fgc"><div class="fgh"><div class="ini"><small>المبادرة</small><b>${cb.init??'—'}</b></div><div class="fgi"><span class="tag">⚔ الجولة ${cb.round}</span>${cb.raid?`<span class="tag ${cb.raid>0?'good':'bad'}">غارة ${cb.raid>0?'+5':'−5'}</span>`:''}<span class="tag ${hs[1]}">الجسد: ${hs[0]}</span>${cb.half?'<span class="tag good">🧘 تأمل نصفي</span>':''}${(c.st||[]).map(k=>`<span class="tag bad">${CI[k]} ${k}</span>`).join('')}${E.mod(c)?`<span class="tag ${E.mod(c)>0?'good':'bad'}">معدلات ${E.mod(c)>0?'+':''}${E.mod(c)}</span>`:''}</div></div>
+<div class="row"><button data-a="init">🎲 مبادرة (1d20 + الرشاقة)</button><button data-a="nround">⏭ جولة جديدة</button><button class="r" data-a="creset">${crc?'⚠ اضغط للتأكيد':'↺ تصفير القتال'}</button></div>
+<div class="fgl">الغارة</div><div class="row"><button data-a="raid" data-v="5">جولة غارة (مغير)</button><button data-a="raid" data-v="-5">جولة غارة (مداهَم)</button><button data-a="raid" data-v="0">إنهاء الغارة</button></div></div>
+<div class="card"><h3>الإجراءات</h3><div class="grid">${Object.entries(N).map(([k,l])=>`<div class="at${E.eff(c,k)<1?' z':''}"><small>${I[k]} ${l}</small><b>${E.eff(c,k)}</b>${E.eff(c,k)<cb.act[k]?'<span class="sub">🔒 مقيّد بحالة</span>':''}<button data-a="use" data-k="${k}"${E.eff(c,k)>0?'':' disabled'}>استهلاك</button></div>`).join('')}<div class="at inf"><small>🛡 صد / تفادي</small><b>${hl?0:'∞'}</b><span class="sub">${hl?'عاجز':'غير محدود'}</span></div><div class="at inf"><small>✋ حرة</small><b>∞</b><span class="sub">غير محدودة</span></div></div>
+<div class="row"><button data-a="conv">هجوم/إلقاء ← سريعان</button></div><p class="sub">واحد في المرة، في دورك فقط، ولا يُحتفظ بإجراء للجولة التالية. السريع يصلح لأدوار الآخرين.</p>
+<div class="fgl">إجراءات خاصة</div><div class="spg">${Object.entries(SPEC).map(([k,v])=>`<button class="spb" data-a="spec" data-k="${esc(k)}"${E.eff(c,v[0])<1&&!(k=='التأمل النصفي'&&cb.half)?' disabled':''}><b>${k}</b><small>${esc(v[1])}</small><i>${CT[v[0]]}</i></button>`).join('')}</div>${cb.prep?'<p class="good">استعداد: +2 للاختبار التالي</p>':''}</div>
+<div class="card"><h3>الحالات الخاصة</h3>${condUI(c)}</div>
+<div class="card"><h3>الدفاع</h3><div class="dfg"><button class="dfb" data-a="def" data-at="agi" data-sk="المراوغة" data-l="مراوغة"><span>🌀</span><b>مراوغة</b><small>رشاقة + مراوغة</small></button><button class="dfb" data-a="def" data-at="str" data-sk="القتال (القتال القريب)" data-l="صد"><span>🛡</span><b>صد</b><small>قوة + قتال قريب</small></button><button class="dfb" data-a="def" data-at="con" data-sk="" data-l="تحمّل"><span>💪</span><b>تحمّل</b><small>بنية جسدية</small></button></div>
+<p class="sub">الصد والتفادي بلا حد لعدد المحاولات في الجولة.</p>
+<div class="cmp"><div class="fgl">مقارنة الهجوم بالدفاع</div><div class="row">نتيجة المهاجم <input type="text" data-num="1" autocomplete="off" id="atk" value="10"> فارق الهجوم المضاد <input type="text" data-num="1" autocomplete="off" id="cth" value="10"><button data-a="cmp">قارن</button></div>${last&&tab=='fight'?`<div class="alert">${last}</div>`:''}</div><p class="sub">تفوّق الدفاع نجاح، التعادل صراع (رشاقة د20، الأعلى يتحرك أولًا)، والفارق الكبير يتيح هجومًا مضادًا (يحدد DM الفارق).</p></div>
+<div class="card"><h3>الدرع والضرر</h3><select data-f="armor"${dis()}>${opts(Object.keys(ARM).map(a=>[a,`${a} — درع ${ARM[a][0]} / تقليل ${ARM[a][1]}`]),c.armor)}</select><p class="sub">عقوبة الرشاقة ${ar[2]?'−'+ar[2]:'لا'} · ${ar[3]?'حد القوة '+ar[3]+(c.armor=='كامل'?' للارتداء':' للحركة'):''}${ar[3]&&str<ar[3]?' <b class="bad">القوة غير كافية</b>':''}</p>
+<div class="rings" style="margin:10px 0">${ring('الصحة',hp,s.hp,'#c2415a')}</div><div class="grid">${st('الحالة',`<span class="${hs[1]}">${hs[0]}</span>`)}${st('الدفاع الجسدي',s.pd)}${st('ضرر القوة',E.sdmg(str))}</div>
+<div class="fgl">تطبيق الضرر</div><div class="row">الضرر <input type="text" data-num="1" autocomplete="off" id="dmg" value="0"><select id="dty">${opts(Object.keys(DT).map(k=>[k,k]),dtyV)}</select><button class="r" data-a="hit">تطبيق الضرر</button></div><div class="dtp"><b>${dtyV}</b> — ${DT[dtyV]}<br><span class="good">الدفاع المقابل (تلقائي): ${{pd:'الدفاع الجسدي',wd:'دفاع الإرادة',cd:'دفاع البنية',md:'الدفاع الغامض'}[DF[dtyV]||'pd']} ${s[DF[dtyV]||'pd']}</span></div>${hp<=0?dyInfo(c,hp):''}
+<p class="sub">الضرر الأقل من الدفاع المقابل لنوعه يُحتسب نصفه؛ وإلا يُخصم تقليل الدرع. ضرر فعلي ≥10 من الجسدي: تحطم الدرع + ضربة حيوية 1d6. النجاح الكبير يضمن نصف أقصى الضرر. الموت عند الصحة تحت −(البنية)، وللمتجاوز تحت −2×البنية.</p></div>`}
+function pCamp(){const dm=DM(),ids=Object.keys(camps).sort((a,b)=>(camps[a].t||0)-(camps[b].t||0)),all=Object.values(chars),nm=c=>c.owner==uid?'أنت':(names[c.owner]||'لاعب'),
+ row=c=>`<div class='itm'><div class='l1'><b>${esc(c.name||'—')}</b><span class='lvl'>${esc(PATHS[c.path][1])} · ${c.seq}</span>${`<span class='tag'>${esc(nm(c))}</span>`}<button class='lb' data-a='copen' data-id='${c.id}'>فتح</button>${dm||c.owner==uid?`<button class='r' data-a='cdelch' data-id='${c.id}'>${cdel=='h'+c.id?'تأكيد؟':'✕'}</button>`:''}</div></div>`;
+ return `<div class='card'><h2>الحملات</h2>${dm?`<div class='row'><input id='cnm' placeholder='اسم الحملة'></div><textarea id='cds' rows='2' placeholder='وصف الحملة (اختياري)' style='width:100%'></textarea><div class='row'><button data-a='cmake'>+ إنشاء حملة</button><button data-a='cref'>↻ تحديث</button></div>`:`<p class='sub'>اختر حملة لإنشاء شخصيتك فيها. يرى الجميع شخصيات الحملة للاطلاع فقط، ولا يعدّلها إلا صاحبها ومدير اللعبة.</p><div class='row'><button data-a='cref'>↻ تحديث</button></div>`}${saveErr?`<div class='alert'>تعذّر الحفظ في قاعدة البيانات: تأكد من تسجيل الدخول ومن أن DM منحك صلاحية المساهمة.</div>`:''}${db?'':`<div class='alert'>وضع محلي: لا توجد قاعدة بيانات متصلة، البيانات محفوظة في هذا المتصفح فقط.</div>`}</div>`+
+ ids.map(id=>{const k=camps[id],cs=all.filter(c=>c.cid==id);return `<div class='card'><div class='l1'><h2 style='margin:0;flex:1'>${esc(k.name)}</h2>${dm?`<button class='r' data-a='cdelc' data-id='${id}'>${cdel=='c'+id?'تأكيد الحذف؟':'حذف الحملة'}</button>`:''}</div>${k.ds?`<p class='sub'>${esc(k.ds)}</p>`:''}<div class='sub'>${cs.length} شخصية</div>${cs.map(row).join('')}<div class='row'><button data-a='cnew' data-id='${id}'>+ شخصية جديدة في الحملة</button></div></div>`}).join('')+
+ (all.filter(c=>!camps[c.cid]).length?`<div class='card'><h2>بلا حملة</h2>${all.filter(c=>!camps[c.cid]).map(row).join('')}</div>`:'')}
+const pLog=c=>`<div class="card log"><h2>سجل الشخصية</h2>${c.log.map(e=>`<div><span class="sub">${fmt(e.t)}</span> <b>${esc(e.type)}</b> — ${esc(e.txt)}${e.b!=null?` <span class="sub">(${esc(e.b)} ← ${esc(e.a)})</span>`:''}</div>`).join('')||'<span class="sub">فارغ</span>'}</div>`;
+const THM=[['#e0c27a','#8a6a2a'],['#2dd4bf','#0f766e'],['#94a3b8','#475569'],['#fbbf24','#b45309'],['#3b82f6','#1d4ed8'],['#f0abfc','#a21caf'],['#b45f5f','#7a2a2a'],['#e2e8f0','#64748b'],['#fdba74','#c2410c'],['#818cf8','#3730a3'],['#a7b8a0','#3f5a4a'],['#d6a15c','#8a5a22'],['#c4b5fd','#6d28d9'],['#22c55e','#14532d'],['#fda4af','#be123c'],['#8fb4cc','#334e63'],['#d6336c','#5b0f2e'],['#f472b6','#9d174d'],['#ef4444','#991b1b'],['#d4d4d8','#3f3f46'],['#bef264','#4d7c0f'],['#34d399','#047857']];
+function thm(){const o=draft||C(),t=o&&THM[o.path],r=document.documentElement.style,x=(c,k,b)=>t?`color-mix(in srgb,${c} ${k}%,${b})`:b;r.setProperty('--g',x(t&&t[0],9,'#5aa9ff'));r.setProperty('--g2',x(t&&t[1],9,'#2563eb'));r.setProperty('--bg',x(t&&t[1],2,'#05070d'));r.setProperty('--s1',x(t&&t[1],3,'#0a0f1a'));r.setProperty('--s2',x(t&&t[1],3,'#0f1626'));r.setProperty('--s3',x(t&&t[1],4,'#16203a'));r.setProperty('--bd',x(t&&t[1],6,'#1f2d4d'));r.setProperty('--m',x(t&&t[0],5,'#8fa3c4'))}
+function R(an){if(inChange){schedR(an);return}closeDD();thm();const y=scrollY,ae=document.activeElement,fi=ae&&ae.matches&&ae.matches('input,select')?[...document.querySelectorAll('#m input,#m select')].indexOf(ae):-1;$('#m').classList.toggle('an',!!an);$('#sel').innerHTML=Object.values(chars).map(c=>`<option value="${c.id}"${c.id==cur?' selected':''}>${esc((c.name||'—')+(camps[c.cid]?' · '+camps[c.cid].name:'')+(c.owner&&c.owner!=uid?' ('+(names[c.owner]||'لاعب')+')':''))}</option>`).join('');$('#who').textContent=isOwner?'DM':'لاعب';const mb=$('#mode');mb.style.display=isOwner?'':'none';mb.textContent=dmView?'👁 لاعب':'👁 DM';const eb=$('#edt');eb.style.display=(!draft&&C()&&!RO(C()))?'':'none';eb.textContent=editMode?'👤 بروفايل':'✏ تعديل';eb.classList.toggle('on',editMode);
+ $('#nav').innerHTML=TABS.map(([k,i,l])=>`<button data-tab="${k}" class="${k==tab?'on':''}"><span>${i}</span>${l}</button>`).join('');const c=C();$('#dr').innerHTML=tab=='char'&&!draft?drawerHTML(c):'';
+  $('#m').innerHTML=tab=='camp'?pCamp():draft?wizard():!c?'<div class="card">لا شخصيات بعد.</div>':{char:pChar,test:pTest,path:pPath,mind:pMind,fight:pFight2,log:pLog}[tab](c);enh();fixNums($('#m'));fixNums($('#dr'));sbUpd();scrollTo(0,an?0:y);if(fi>=0){const el=document.querySelectorAll('#m input,#m select')[fi];if(el)el.focus({preventScroll:true})}}
+const ev=(c,f)=>ed&&f in ed?ed[f]:c[f];
+const sb=document.createElement('div');sb.id='sb';sb.innerHTML='<span>تعديلات غير محفوظة</span><button class="sv" data-a="edsave">💾 حفظ</button><button data-a="edcancel">تراجع</button>';document.body.appendChild(sb);
+const sbUpd=()=>sb.classList.toggle('on',!!(ed&&Object.keys(ed).length&&!draft));
+const setEd=(f,v)=>{ed=ed||{};ed[f]=v;sbUpd()};
+document.addEventListener('input',e=>{const t=e.target;if(editMode&&t.dataset&&t.dataset.e)setEd(t.dataset.e,t.value)});
+const done=c=>{if(c){save(c)}R()},setp=(o,p,v)=>{const k=p.split('.');while(k.length>1)o=o[k.shift()];o[k[0]]=v};
+/* ===== Events ===== */
+document.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)return;if(t.dataset.tab){tab=t.dataset.tab;draft=null;last='';ie=-1;ia=false;if(tab=='camp'&&db)loadAll(1).then(()=>{if(!chars[cur])cur=Object.keys(chars)[0]||null;R()});return R(true)}
+ if(t.id=='edt'){if(editMode&&ed&&Object.keys(ed).length&&!confirm('لديك تعديلات غير محفوظة، تجاهلها؟'))return;editMode=!editMode;ia=false;ed=null;drawer=null;lrn=null;return R()}
+ if(t.id=='exp'){const all=Object.values(chars);if(!all.length)return alert('لا شخصيات للتصدير');const b=new Blob([JSON.stringify({app:'lom',v:1,chars:all})],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='lord-of-mysteries-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),2000);return}
+ if(t.id=='imp'){$('#impf').click();return}
+ if(t.id=='new'){draft=mkChar();editMode=false;return R(true)}if(t.id=='mode'){dmView=!dmView;return R(true)}const a=t.dataset.a,c=C(),d=draft,g=id=>$('#'+id)?.value;if(!a)return;
+ if(a=='cref'){loadAll(1).then(()=>{if(!chars[cur])cur=Object.keys(chars)[0]||null;R()});return}
+ if(a=='cmake'){if(!isOwner)return;const nm=($('#cnm').value||'').trim();if(!nm)return;const id='k'+Date.now().toString(36)+Math.random().toString(36).slice(2,4),o={id,name:nm,ds:($('#cds').value||'').trim(),owner:uid,t:Date.now()};camps[id]=o;if(db)db.doc('camp/'+id).set(o).catch(()=>{saveErr=1;R()});else store.set('cmp_'+id,JSON.stringify(o));return R()}
+ if(a=='cdelc'||a=='cdelch'){const id=t.dataset.id,key=(a=='cdelc'?'c':'h')+id;if(cdel!=key){cdel=key;setTimeout(()=>{if(cdel==key){cdel='';if(tab=='camp')R()}},4000);return R()}cdel='';
+  if(a=='cdelc'){if(!isOwner)return;delete camps[id];if(db)db.doc('camp/'+id).delete().catch(()=>{});else try{localStorage.removeItem('cmp_'+id)}catch(e){}}
+  else{const x=chars[id];if(!x||!(isOwner||x.owner==uid))return;delete chars[id];if(db)db.doc('pc/'+x.owner+'/chars/'+id).delete().catch(()=>{});try{localStorage.removeItem('lom_'+id)}catch(e){}if(cur==id)cur=Object.keys(chars)[0]||null}
+  return R()}
+ if(a=='cnew'){draft=mkChar();draft.cid=t.dataset.id;editMode=false;tab='char';return R(true)}
+ if(a=='copen'){cur=t.dataset.id;draft=null;tab='char';editMode=false;ed=null;return R(true)}
+ if(a=='avdel'){const tg=d||c;if(tg){tg.avatar='';if(!d){E.ev(tg,'الملف الشخصي','حذف الصورة');save(tg)}R()}return}
+ if(d){if(a=='rollattr'){const rs=A.map(()=>Dice.roll('3d3'));A.forEach((x,i)=>d.attr[x[0]]=rs[i].t);d.rolled++;d.rl=A.map((x,i)=>`${x[1]} [${rs[i].d}]=${rs[i].t}`).join(' · ');return R()}
+  if(a=='adj'){const v=d.attr[t.dataset.k]+ +t.dataset.v;if(v>=3)d.attr[t.dataset.k]=v;return R()}if(a=='d100'){d.d100=Dice.n(100);return R()}
+  if(a=='drep'){d.rep=Dice.n(7);const tr=E.assets(d);d.rl=`السمعة ${d.rep}، محاولات الأصول ${tr}`;return R()}
+  if(a=='create'){d.a0={...d.attr};d.owner=uid;applyRace(d);E.ev(d,'إنشاء الشخصية',`${d.name} — ${d.race}`);E.ev(d,'الحصول على المسار',`${PATHS[d.path][1]} · التسلسل 9`);chars[d.id]=d;cur=d.id;draft=null;editMode=false;tab='char';save(d);return R(true)}return}
+ if(!c)return;if(RO(c)&&!['fold','rptoggle','dgtoggle','hltoggle','sptoggle','close','sklearn'].includes(a))return;const L=(ty,tx,b,af)=>E.ev(c,ty,tx,b,af);
+ if(!editMode&&['addfor','pick','addsk','rmsk','attrp','addb','delb','arep','edsave'].includes(a))return;
+ if(a=='edsave'){if(!ed)return;let rc=0;const lb={name:'الاسم',gender:'الجنس',age:'العمر',race:'العرق',job:'المهنة',affil:'الانتساب',path:'المسار'};for(const k in ed){let v=ed[k];if(k=='path')v=+v;if(k=='name'&&!String(v).trim())continue;if(String(c[k]??'')!=String(v)){L('تعديل المعلومات',lb[k],k=='path'?PATHS[c[k]][1]:c[k],k=='path'?PATHS[v][1]:v);c[k]=v;if(k=='race')rc=1}}if(rc)applyRace(c);ed=null;return done(c)}
+ if(a=='edcancel'){ed=null;return R()}
+ if(a=='addfor'){drawer=t.dataset.k;dan=1;return R()}if(a=='close'){drawer=null;return R()}if(a=='dgtoggle'){dgo=!dgo;return R()}if(a=='rptoggle'){rpo=!rpo;return R()}if(a=='fold'){fo[t.dataset.k]=!fo[t.dataset.k];return R()}if(a=='hltoggle'){hlo=!hlo;return R()}if(a=='sptoggle'){spo=!spo;return R()}
+ if(a=='sklearn'){const n=t.dataset.n;lrn=lrn&&lrn.n==n?null:{n,to:c.skills[n].lv+1,cs:0,self:0,ins:0};return R()}
+ if(a=='pick'){const n=t.dataset.n;if(c.skills[n]&&!c.skills[n].u&&!c.skills[n].lv){c.skills[n].u=1;L('التقدم في المهارات','إضافة مهارة: '+n+' (غير مدرَّبة)');}return done(c)}
+ if(a=='rmsk'){const n=t.dataset.n,k=c.skills[n];if(!k)return;if(k.lv>0&&!confirm('إزالة المهارة وخفض مستواها؟'))return;if(k.lv>0)setLv(c,n,0);if(n in mkSkills()){k.u=0;k.lv=0}else delete c.skills[n];if(lrn&&lrn.n==n)lrn=null;L('التقدم في المهارات','إزالة مهارة: '+n);return done(c)}
+ if(a=='addsk'){if(!DM())return;const n=(g('nsk')||'').trim(),k=t.dataset.k;if(n&&!c.skills[n]){c.skills[n]={a:k,lv:0,u:1};L('التقدم في المهارات','مهارة مخصصة: '+n+' ('+AN[k]+')');done(c)}return}
+
+ if(a=='test'||a=='def'){const df=a=='def',at=df?t.dataset.at:g('ta'),sk=df?t.dataset.sk:g('tk'),o=E.test(c,at,sk,df?0:g('tm'),df?0:+g('td'),df?t.dataset.l:`${AN[at]||''} ${sk}`);last=df?`🎲 ${t.dataset.l}: ${o.r} + ${o.av} + ${o.sv}${o.mod?' + '+o.mod:''} = <b>${o.total}</b>${o.note?' — '+o.note:''}`:rollTxt(o);c._lr=o.total;c._lo=o;c._lb=0;return done(c)}
+ if(a=='free'){const r=Dice.roll(g('tx'));c.rolls.unshift({t:Date.now(),label:r.e,txt:`[${r.d}]${r.k?' '+r.k:''} = ${r.t}`});last=`🎲 ${r.e}: [${r.d}] = <b>${r.t}</b>`;return done(c)}
+ if(a=='burn'&&c._lo&&!c._lb){const o=c._lo,x=Math.min(Math.max(1,Math.floor(+g('lkv'))||1),E.luckAv(c));if(x<1)return;const ap=q=>{q.total+=x;q.mod=(q.mod||0)+x;if(!q.note&&q.res!='نجاح كبير'&&q.res!='فشل كبير')q.res=q.total>=q.dc?'نجاح':'فشل'};ap(o);const r0=c.rolls.find(q=>q.t==o.t);if(r0&&r0!==o)ap(r0);c._lr=o.total;c._lb=1;c.luck={burned:x,at:Date.now()};last=(o.dc?rollTxt(o):`🎲 ${o.label}: الإجمالي <b>${o.total}</b>`)+` · 🔥 حُرق ${x} من الحظ`;L('الحظ','حرق '+x);return done(c)}
+ if(a=='burn'){const x=Math.min(Math.max(1,+g('lkv')||1),E.luckAv(c));c.luck={burned:x,at:Date.now()};c._lr+=x;last=`🔥 حُرق ${x} من الحظ — الإجمالي <b>${c._lr}</b>`;L('الحظ','حرق '+x);return done(c)}
+ if(a=='learn'){const f=+g('la'),to=+g('lb');if(to<=f)return $('#lo').textContent='اختر مستوى أعلى';const cs=Math.max(0,+g('ls')-Math.floor((+g('lins')||0)/6));let dd=0;for(let i=f;i<to;i++)dd+=LEARN[cs][i];if($('#lself').checked)dd*=2;return $('#lo').innerHTML=`<b>${dd}</b> يوم (≈ ${(dd/30).toFixed(1)} شهر) — حالة ${cs+1}. التعلم مرة واحدة يوميًا.`}
+ 
+ if(a=='cond'){const k=t.dataset.k,on=!c.st.includes(k);c.st=on?[...c.st,k]:c.st.filter(x=>x!=k);L('الحالات',(on?'تفعيل: ':'إزالة: ')+k);return done(c)}
+ if(a=='spspend'){const x=Math.max(0,+g('spv')||0),mx=E.stats(c).sp,b=mx-c.spu;c.spu=Math.min(mx,c.spu+x);lsp='استهلاك '+Math.min(x,b)+' روحانية';L('الروحانية','استهلاك '+x,b,mx-c.spu);return done(c)}
+ if(a=='sprest'){const h=Math.max(0,+g('sph')||0),mx=E.stats(c).sp,rh=E.rh(c),per=Math.floor(mx/rh),b=mx-c.spu,add=h>=rh?Math.max(0,c.spu):Math.max(0,Math.min(c.spu,per*h));c.spu-=add;lsp='راحة '+h+' ساعة: استعادة '+add+' روحانية';L('الروحانية','راحة '+h+' ساعة (+'+add+')',b,mx-c.spu);return done(c)}
+ if(a=='additem'){const n=g('in').trim();if(n){c.inv.push({n,q:+g('iq')||1,v:g('iv'),dm:(g('idm')||'').trim(),ds:(g('ids')||'').trim(),r:g('irr')||'عادي'});L('الحصول على الممتلكات',n);ia=false;done(c)}return}
+ if(a=='itoggle'){ia=!ia;return R()}if(a=='itedit'){ie=+t.dataset.i;return R()}if(a=='itcancel'){ie=-1;return R()}
+ if(a=='itsave'){const x=c.inv[+t.dataset.i];if(x){const n=(g('ein')||'').trim();if(n){x.n=n;x.dm=(g('edm')||'').trim();x.ds=(g('eds')||'').trim();x.r=g('err')||'عادي';x.q=+g('eiq')||1;x.v=g('eiv')||'';L('تعديل الممتلكات',n)}}ie=-1;return done(c)}
+ if(a=='deli'){c.inv.splice(+t.dataset.i,1);ie=-1;return done(c)}if(a=='addb'){const n=g('bn').trim();if(n){c.bless.push({n,ty:g('bty')||'المنخفضة',d:(g('bd')||'').trim()});L('الحصول على البركة',n);done(c)}return}if(a=='delb'){c.bless.splice(+t.dataset.i,1);return done(c)}
+ if(a=='fmode'){c.cb.mode=t.dataset.v;return done(c)}
+ if(['tadd','tself','tdel','tnext','tclr','tsim','dyrt'].includes(a)){const cb=c.cb;cb.team=cb.team||[];
+  if(a=='tadd'){cb.team.push({n:(g('tmn')||'').trim()||'مشارك '+(cb.team.length+1),i:Dice.n(20)+(+g('tmb')||0)});cb.team.sort((x,y)=>y.i-x.i);cb.turn=0}
+  if(a=='tself'){if(cb.init==null)cb.init=Dice.n(20)+E.ga(c,'agi')+E.cmod(c);cb.team.push({n:c.name||'أنا',i:cb.init});cb.team.sort((x,y)=>y.i-x.i);cb.turn=0}
+  if(a=='tdel'){cb.team.splice(+t.dataset.i,1);if((cb.turn||0)>=cb.team.length)cb.turn=0}
+  if(a=='tclr'){cb.team=[];cb.turn=0}
+  if(a=='tnext'&&cb.team.length){cb.turn=((cb.turn||0)+1)%cb.team.length;if(!cb.turn){cb.round++;cb.act={atk:1,cast:1,quick:3,move:1,full:1,parry:1,ready:1};cb.raid=0;if(cb.half)cb.act.quick--}}
+  if(a=='tsim'){const x=Dice.n(20)+(+g('tsa')||0),y=Dice.n(20)+(+g('tsb')||0);last=`🎲 الأول ${x} · الثاني ${y} — ${x>y?'الأول ينفّذ أولًا':x<y?'الثاني ينفّذ أولًا':'تنفيذ متزامن'}`}
+  if(a=='dyrt'){const o=E.test(c,'con','',0,15,'اختبار احتضار');last=rollTxt(o)}
+  return done(c)}
+ if(a=='creset'){if(!crc){crc=true;setTimeout(()=>{if(crc){crc=false;if(tab=='fight')R()}},4000);return R()}crc=false;const cb=c.cb;cb.init=null;cb.round=0;cb.raid=0;cb.prep=0;cb.team=[];cb.turn=0;cb.half=0;cb.act={atk:1,cast:1,quick:3,move:1,full:1,parry:1,ready:1};last='';L('المعارك','تصفير حالة القتال');return done(c)}
+ if(['init','nround','use','conv','spec','cmp','raid'].includes(a)){const cb=c.cb;
+  if(a=='init'){cb.init=Dice.n(20)+E.ga(c,'agi')+E.cmod(c);L('المعارك','مبادرة '+cb.init)}
+  if(a=='nround'){cb.round++;cb.act={atk:1,cast:1,quick:3,move:1,full:1,parry:cb.pa||1,ready:1};cb.raid=0;if(cb.half&&cb.act.quick>0)cb.act.quick--}
+  if(a=='raid'){const v=+t.dataset.v;cb.raid=v;cb.round=0;cb.act=v>0?{atk:1,cast:0,quick:2,move:1,full:0,parry:0,ready:0}:v<0?{atk:0,cast:0,quick:0,move:0,full:0,parry:0,ready:0}:{atk:1,cast:1,quick:3,move:1,full:1,parry:1,ready:1};if(!v)cb.round=1}
+  if(a=='use'&&E.eff(c,t.dataset.k)>0)cb.act[t.dataset.k]--;
+  if(a=='conv'){if(E.eff(c,'atk')>0)cb.act.atk--;else if(E.eff(c,'cast')>0)cb.act.cast--;else return;cb.act.quick+=2}
+  if(a=='spec'){const k=t.dataset.k,[cost]=SPEC[k];if(k=='التأمل النصفي'&&cb.half){cb.half=0;L('المعارك','إنهاء التأمل النصفي');return done(c)}if(E.eff(c,cost)<1)return;cb.act[cost]--;if(k=='الاستعداد')cb.prep=2;if(k=='الإمساك'&&!c.st.includes('الإمساك')){c.st=[...c.st,'الإمساك'];L('الحالات','تفعيل: الإمساك')}if(k=='التأمل النصفي'){cb.half=1;L('الحالات','تأمل نصفي: التأثيرات العاطفية إلى النصف')}if(k=='التأمل الكامل'){const em=['الخوف','الغضب/الاستفزاز'].filter(x=>c.st.includes(x)),o=E.test(c,'wil','التركيز',0,c.st.includes('الغضب/الاستفزاز')?20:15,'تأمل كامل');cb.ml=' — '+rollTxt(o);if(em.length&&o.res.includes('نجاح')){c.st=c.st.filter(x=>!em.includes(x));L('الحالات','إزالة بالتأمل: '+em.join(' و '))}}if(k=='الضربة المزدوجة'){const x=E.test(c,'agi','القتال (القتال القريب)',0,0,k),y=E.test(c,'agi','القتال (القتال القريب)',0,0,k);last=`ضربة مزدوجة: ${x.total} و ${y.total}`}else last=k+': '+SPEC[k][1]+(cb.ml||'');cb.ml='';L('المعارك',k)}
+  if(a=='cmp'){const o=c.rolls[0],atk=+g('atk');if(!o)return;const df=o.total;last=df>atk?(df-atk>=+g('cth')?`مراوغة/صد ناجح (${df} > ${atk}) — فارق كبير: هجوم مضاد`:`نجاح (${df} > ${atk})`):df==atk?`صراع (${df} = ${atk}): ارمِ د20 + الرشاقة`:`فشل (${df} < ${atk})`}return done(c)}
+ if(!DM())return;
+ if(a=='pmstep'){const k=t.dataset.k;c.pm[k]=Math.max(0,(+c.pm[k]||0)+ +t.dataset.v);return done(c)}if(a=='revive'){c.dead=0;return done(c)}
+ if(a=='attrp'){const k=t.dataset.k,v=Math.max(3,c.attr[k]+ +t.dataset.v);L('تعديل سمة',AN[k],c.attr[k],v);c.attr[k]=v;if(!c.hist.length)c.a0[k]=v;return done(c)}
+ if(a=='dg'){const k=t.dataset.k,b=E.dig(c);c.dig[k]+=+t.dataset.v;L('زيادة الهضم',k=='act'?'تمثيل يومي':'بلا تمثيل',b,E.dig(c));return done(c)}
+ if(a=='crit'){const b=E.dig(c),r=Dice.roll('1d'+t.dataset.v).t;c.dig.bonus+=r;L('زيادة الهضم','تمثيل حاسم +'+r,b,E.dig(c));return done(c)}
+ if(a=='lpre'){const[v1,v2,u]=g('lpre').split('|');if(v1){$('#lmn').value=v1;$('#lmx').value=v2;$('#lun').value=u}return}
+ if(a=='loss'){const o=E.loss(c,g('lmn'),g('lmx'),g('lun'));last=`د20 = ${o.r} → ${o.fail?'فشل':'نجاح'}، خسارة ${o.eff}`;return done(c)}
+ if(a=='rec'){const k=t.dataset.k,b=E.rat(c);c.m.lost=Math.max(0,c.m.lost-1);c.m.rc[k]=Date.now();L('العلاج','استعادة +1',b,E.rat(c));return done(c)}
+ if(a=='pround'){if(c.m.partial){c.m.partial.rounds--;if(c.m.partial.rounds<=0)L('العلاج','انتهى شبه فقدان السيطرة')}return done(c)}if(a=='udays'){c.m.unc++;return done(c)}
+ if(a=='promo'){last=E.promo(c).html;return done(c)}
+ if(a=='hit'){const ty=g('dty')||'جسدي',k=DF[ty]||'pd',df=E.stats(c)[k],dn={pd:'الدفاع الجسدي',wd:'دفاع الإرادة',cd:'دفاع البنية',md:'الدفاع الغامض'}[k],o=E.hit(c,+g('dmg')||0,ty=='جسدي',df,dn);L('المعارك','نوع الضرر: '+ty);last=`ضرر فعلي ${o.eff}${o.br?` + ضربة حيوية ${o.v} (تحطم الدرع)`:''}`;return done(c)}
+ if(a=='medt'){const j=inj(c);if(!j){last='لا إصابات للعلاج';return done(c)}const cn=E.ga(c,'con'),o=E.test(c,'edu','الطب',0,j[1],'اختبار طبي — إصابة '+j[0]),h=o.res.includes('نجاح')?cn:Math.floor(cn/2);last=rollTxt(o)+` · إصابة ${j[0]}: تُستعاد ${h} صحة كل 12 ساعة (${h==cn?'علاج ناجح':'بلا علاج فعّال'})`;return done(c)}
+ if(a=='heal'){const con=E.ga(c,'con'),h=+t.dataset.v?con:Math.floor(con/2);c.dmg=Math.max(0,c.dmg-h);L('العلاج','استعادة صحة '+h);return done(c)}
+ if(a=='arep'){const tr=E.assets(c);L('تغير السمعة',`رمي أصول (${tr} محاولة)`);return done(c)}});
+const CH=e=>{const t=e.target,c=C(),d=draft;if(t.id=='irr'||t.id=='err'||t.id=='bty'){const b=t.closest('.itf');if(b)b.style.setProperty('--rc',(t.id=='bty'?BC:RC)[t.value]||'#9aa4b2');return}if(t.id=='dty'){dtyV=t.value;dfV=DF[t.value]||'pd';return R()}if(t.id=='ddf'){dfV=t.value;return R()}if(t.id=='sel'){cur=t.value;draft=null;ed=null;editMode=false;return R(true)}
+ if(t.dataset.av){const f=t.files&&t.files[0],tg=d||c;if(!f||!tg||RO(tg))return;avatarFrom(f,u=>{tg.avatar=u;if(!d){E.ev(tg,'الملف الشخصي','تغيير الصورة');save(tg)}R()});return}
+ if(t.dataset.d){const k=t.dataset.d;d[k]=t.dataset.num?+t.value:t.value;if(['name','age','job','affil'].includes(k)){const b=document.querySelector('[data-a=create]');if(b)b.disabled=!(Object.values(d.attr).reduce((x,y)=>x+y,0)==d.target&&d.name.trim()&&d.gender);return}return R()}if(!c)return;if(RO(c)&&!t.dataset.lrn)return;
+ if(!editMode&&(t.dataset.e||t.dataset.sk||t.dataset.skattr||t.dataset.seq))return;
+ if(t.dataset.e){setEd(t.dataset.e,t.value);return}
+ if(t.dataset.f){const n=t.dataset.num?+t.value:t.value;setp(c,t.dataset.f,t.dataset.f=='rep'?+n:n);if(t.dataset.f=='rep')L2(c,'تغير السمعة','المستوى '+n);if(['pname','potion'].includes(t.dataset.f)){save(c);return}return done(c)}
+ if(t.dataset.attr){const v=Math.max(3,+t.value||3);E.ev(c,'تعديل سمة',AN[t.dataset.attr],c.attr[t.dataset.attr],v);c.attr[t.dataset.attr]=v;if(!c.hist.length)c.a0[t.dataset.attr]=v;return done(c)}
+ if(t.dataset.seq){const v=+t.value;E.ev(c,'تعديل التسلسل','التسلسل',c.seq,v);c.seq=v;return done(c)}
+ if(t.dataset.sk){setLv(c,t.dataset.sk,+t.value);return done(c)}
+ if(t.dataset.skattr){const n=t.dataset.skattr;E.ev(c,'تصنيف المهارة',n,AN[c.skills[n].a],AN[t.value]);c.skills[n].a=t.value;return done(c)}
+ if(t.dataset.rch){c.rch=c.rch||{};c.rch[t.dataset.rch]=t.value;applyRace(c);return done(c)}if(t.dataset.lrn){lrn[t.dataset.lrn]=t.type=='checkbox'?(t.checked?1:0):+t.value;return R()}if(t.dataset.m){c.m.forced=t.value===''?null:+t.value;return done(c)}
+ if(t.dataset.cond){c.st=t.checked?[...new Set([...c.st,t.dataset.cond])]:c.st.filter(x=>x!=t.dataset.cond);return done(c)}
+ if(t.dataset.pm){c.pm[t.dataset.pm]=t.type=='checkbox'?(t.checked?1:0):(t.dataset.str?t.value:+t.value);return done(c)}if(t.dataset.fx){c.fail.extracted=t.checked;return done(c)}
+ if(t.dataset.pr){const[i,j]=t.dataset.pr.split('.');c.pm.rows[i][j]=+t.value;return done(c)}};
+document.addEventListener('change',e=>{inChange=true;try{CH(e)}finally{inChange=false}});
+const L2=(c,a,b)=>E.ev(c,a,b);
+
+/* ===== Numbers: Latin digits + LTR isolation ===== */
+const NR=/[+−\-–]?\d+(?:\.\d+)?(?:d\d+)?(?:\s*[+−\-–/×÷:]\s*\d+(?:\.\d+)?(?:d\d+)?)*%?/gi;
+function fixNums(root){if(!root)return;const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentElement&&/\d|[٠-٩۰-۹]/.test(n.nodeValue)&&!n.parentElement.closest('script,style,textarea,select,option,bdi,[dir=ltr],.fm')?1:2}),L=[];while(w.nextNode())L.push(w.currentNode);
+ L.forEach(n=>{const t=AD(n.nodeValue);NR.lastIndex=0;if(!NR.test(t)){if(t!==n.nodeValue)n.nodeValue=t;return}NR.lastIndex=0;const f=document.createDocumentFragment();let i=0,m;while((m=NR.exec(t))){if(m.index>i)f.append(t.slice(i,m.index));const b=document.createElement('bdi');b.dir='ltr';b.textContent=m[0];f.append(b);i=m.index+m[0].length}if(i<t.length)f.append(t.slice(i));n.replaceWith(f)})}
+/* ===== Custom dropdown ===== */
+let ddCur=null;
+const ddP=document.createElement('div');ddP.id='ddp';document.body.appendChild(ddP);
+function ddl(sl){const w=sl._w;if(!w)return;const o=sl.selectedOptions[0];w.querySelector('span').textContent=o?o.textContent:'';w.classList.toggle('ph',!!(o&&o.hidden));w.querySelector('button').disabled=sl.disabled}
+function enh(){document.querySelectorAll('select:not(.hid)').forEach(sl=>{sl.classList.add('hid');const w=document.createElement('div');w.className='dd';w.style.cssText=sl.style.cssText;w.innerHTML='<button type="button" class="ddt"><span></span><i>▾</i></button>';sl.after(w);w._s=sl;sl._w=w});document.querySelectorAll('select.hid').forEach(ddl)}
+function closeDD(){ddCur=null;ddP.classList.remove('on')}
+function openDD(b){const sl=b.parentNode._s;if(!sl||sl.disabled)return;if(ddCur===sl)return closeDD();ddCur=sl;
+ const it=o=>o.hidden?'':`<button type="button" class="ddo${o.selected?' on':''}" data-v="${esc(o.value)}">${esc(o.textContent)}${o.selected?'<i>✓</i>':''}</button>`;
+ ddP.innerHTML=[...sl.children].map(ch=>ch.tagName=='OPTGROUP'?`<div class="ddg">${esc(ch.label)}</div>`+[...ch.children].map(it).join(''):it(ch)).join('');
+ fixNums(ddP);const r=b.getBoundingClientRect(),vw=innerWidth,vh=innerHeight,w=Math.min(Math.max(r.width,150),vw-16),l=Math.min(Math.max(8,r.left),vw-w-8),below=vh-r.bottom-66,above=r.top-50,mh=Math.min(240,vh*.42),dn=below>=Math.min(mh,160)||below>=above,H=Math.max(90,Math.min(mh,dn?below:above));
+ ddP.style.cssText=`left:${l}px;width:${w}px;max-height:${H}px;${dn?`top:${r.bottom+4}px;bottom:auto`:`bottom:${vh-r.top+4}px;top:auto`}`;ddP.classList.add('on');
+ const on=ddP.querySelector('.on');if(on)ddP.scrollTop=on.offsetTop-ddP.clientHeight/2+on.offsetHeight/2}
+document.addEventListener('click',e=>{const b=e.target.closest('.ddt');if(b)openDD(b)});
+ddP.addEventListener('click',e=>{const o=e.target.closest('.ddo');if(!o||!ddCur)return;const sl=ddCur;closeDD();if(sl.value!==o.dataset.v){sl.value=o.dataset.v;ddl(sl);sl.dispatchEvent(new Event('change',{bubbles:true}))}});
+addEventListener('pointerdown',e=>{if(ddCur&&!e.target.closest('#ddp,.ddt'))closeDD()},true);
+addEventListener('scroll',e=>{if(ddCur&&!(e.target.closest&&e.target.closest('#ddp')))closeDD()},true);
+addEventListener('resize',closeDD);addEventListener('keydown',e=>{if(e.key=='Escape')closeDD()});
+
+$('#impf').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const fr=new FileReader();fr.onload=()=>{try{const j=JSON.parse(fr.result),arr=Array.isArray(j)?j:Array.isArray(j.chars)?j.chars:[j];let n=0;arr.forEach(o=>{if(o&&typeof o=='object'&&o.id&&o.attr){const c=norm(o);if(!c.owner)c.owner=uid;chars[c.id]=c;save(c);n++}});if(!n)throw 0;cur=Object.keys(chars)[0];draft=null;editMode=false;ed=null;R(true);alert('تم استيراد '+n+' شخصية')}catch(x){alert('ملف غير صالح')}e.target.value=''};fr.readAsText(f)});
+document.addEventListener('input',e=>{const t=e.target;if(t.dataset&&t.dataset.num){const v=t.value.replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٫،]/g,'.').replace(/[^0-9.\-]/g,'');if(v!==t.value)t.value=v}},true);
+document.addEventListener('input',e=>{const t=e.target;if(t.matches&&t.matches('input:not([type=checkbox]):not([type=file]),textarea')&&!(t.dataset&&t.dataset.num)){const v=AD(t.value);if(v!==t.value){const p=t.selectionStart;t.value=v;try{t.setSelectionRange(p,p)}catch(x){}}}},true);
+</script>
+<div id="auth"><div class="acard"><h1>☾ لورد الغوامض</h1><input id="anm" placeholder="اسمك الظاهر للجميع"><input id="aem" type="email" placeholder="البريد الإلكتروني" dir="ltr"><input id="apw" type="password" placeholder="كلمة المرور (6 أحرف على الأقل)" dir="ltr"><div id="aerr"></div><button id="asub">دخول</button><button id="aswap">إنشاء حساب جديد</button></div></div>
+<script type="module">
+import {initializeApp} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import {getAuth,onAuthStateChanged,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,updateProfile} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import {getFirestore,collection,doc,getDocs,getDoc,setDoc,deleteDoc} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+const cfg={apiKey:"AIzaSyBnq8eGPB3g2S4rl6gIQ21AAgASNRMr98Y",authDomain:"lord-of-mysteries-22279.firebaseapp.com",projectId:"lord-of-mysteries-22279",storageBucket:"lord-of-mysteries-22279.firebasestorage.app",messagingSenderId:"963643684376",appId:"1:963643684376:web:12735bd7dbc0460ed1356d"};
+const app=initializeApp(cfg),auth=getAuth(app),fs=getFirestore(app),seg=p=>p.split('/'),NM={},Q=s=>document.querySelector(s);
+let admin=false,started=false,mode='in';
+const ERR={'auth/invalid-credential':'البريد أو كلمة المرور غير صحيحة','auth/wrong-password':'كلمة المرور غير صحيحة','auth/user-not-found':'الحساب غير موجود','auth/email-already-in-use':'هذا البريد مسجّل مسبقًا','auth/weak-password':'كلمة المرور ضعيفة (6 أحرف على الأقل)','auth/invalid-email':'البريد الإلكتروني غير صالح','auth/missing-password':'أدخل كلمة المرور','auth/network-request-failed':'تعذّر الاتصال بالإنترنت','auth/too-many-requests':'محاولات كثيرة، حاول لاحقًا','auth/unauthorized-domain':'هذا النطاق غير مضاف في Firebase (Authorized domains)'};
+const msg=t=>{Q('#aerr').textContent=t||''};
+window.claude={use:async n=>{
+ if(n=='user')return{isOwner:async()=>admin,canEdit:async()=>admin,id:async()=>auth.currentUser.uid,profiles:async ids=>{const o={};[].concat(ids).forEach(i=>{o[i]={id:i,name:NM[i]||(i==auth.currentUser.uid?auth.currentUser.displayName:'')||''}});return o}};
+ if(n=='db')return{collection:p=>({get:async()=>{const s=await getDocs(collection(fs,...seg(p)));if(p=='roster')s.docs.forEach(d=>{NM[d.id]=d.data().n||''});return{docs:s.docs.map(d=>({id:d.id,data:()=>d.data()}))}}}),doc:p=>({set:async x=>{if(p=='roster/'+auth.currentUser.uid)x={...x,n:auth.currentUser.displayName||''};await setDoc(doc(fs,...seg(p)),x,{merge:p.startsWith('roster/')})},delete:async()=>deleteDoc(doc(fs,...seg(p)))})};
+ return null}};
+function setMode(m){mode=m;Q('#anm').style.display=m=='up'?'block':'none';Q('#asub').textContent=m=='up'?'إنشاء الحساب':'دخول';Q('#aswap').textContent=m=='up'?'لدي حساب بالفعل':'إنشاء حساب جديد';msg()}
+Q('#aswap').onclick=()=>setMode(mode=='in'?'up':'in');
+Q('#asub').onclick=async()=>{msg();const e=Q('#aem').value.trim(),p=Q('#apw').value;try{if(mode=='up'){const n=Q('#anm').value.trim();if(!n)return msg('اكتب اسمك');const u=await createUserWithEmailAndPassword(auth,e,p);await updateProfile(u.user,{displayName:n})}else await signInWithEmailAndPassword(auth,e,p)}catch(x){msg(ERR[x.code]||x.code)}};
+document.addEventListener('click',e=>{if(e.target.closest('#out'))signOut(auth).then(()=>location.reload())});
+onAuthStateChanged(auth,async u=>{if(!u){Q('#auth').style.display='flex';return}
+ admin=false;try{admin=(await getDoc(doc(fs,'admins',u.uid))).exists()}catch(e){}
+ if(!admin){try{await setDoc(doc(fs,'admins',u.uid),{t:Date.now()});admin=true}catch(e){}}
+ Q('#auth').style.display='none';Q('#uidb').innerHTML='معرّف حسابك: <bdi dir="ltr">'+u.uid+'</bdi>';
+ if(!started){started=true;await init()}});
+</script>
+</body></html>
