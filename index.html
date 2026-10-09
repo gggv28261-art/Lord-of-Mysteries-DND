@@ -305,6 +305,51 @@ body.lnd{padding-bottom:20px}
 .landing{min-height:66vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center}
 .landing .mo{font-size:3.6em;color:var(--g);line-height:1;text-shadow:0 0 24px color-mix(in srgb,var(--g) 55%,transparent)}
 .landing h1{margin:0;font-size:1.7em}
+
+/* ---- compact pass ---- */
+:root{--h:30px}
+html,body{font-size:13.8px}
+.card{padding:11px}
+input,select{height:30px}
+button{padding:5px 12px;font-size:.85em}
+.row>.dd,.card>.dd,.ii>.dd{height:30px}
+.row input:not([type=checkbox]),.row select,.row>button{height:30px}
+body{padding-bottom:calc(64px + env(safe-area-inset-bottom,0px))}
+nav{overflow:visible;gap:0;padding:4px 2px calc(4px + env(safe-area-inset-bottom,0px))}
+nav button{min-width:0;flex:1 1 0;font-size:.64em;padding:5px 0;gap:1px;white-space:nowrap}
+nav button span{font-size:1.4em}
+nav button.on::before{top:-4px}
+.nb{position:absolute;top:1px;inset-inline-end:14%;min-width:15px;height:15px;border-radius:8px;background:var(--r);color:#fff;font-size:1.05em;line-height:15px;padding:0 3px;text-align:center}
+#sb{bottom:calc(70px + env(safe-area-inset-bottom,0px))}
+/* ---- trade ---- */
+.tdh{background:linear-gradient(165deg,color-mix(in srgb,var(--g2) 26%,var(--s1)),var(--s1) 72%);border-color:color-mix(in srgb,var(--g) 30%,var(--bd))}
+.tdw{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}
+.tdw>div{background:#060a12;border:1px solid var(--bd);border-radius:10px;padding:7px 4px;text-align:center}.tdw small{display:block;color:var(--m);font-size:.72em}.tdw b{font-size:1.05em;color:var(--g)}
+.tdr{display:flex;align-items:center;gap:10px;background:#060a12;border:1px solid var(--bd);border-inline-start:3px solid var(--g);border-radius:10px;padding:9px 11px;margin-top:8px}
+.av2{width:40px;height:40px;border-radius:50%;background:var(--s3) center/cover;border:2px solid var(--g);display:grid;place-items:center;color:var(--g);flex:none}
+.tdm{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.tdm label{display:block;background:#060a12;border:1px solid var(--bd);border-radius:10px;padding:6px 8px;text-align:center;font-size:.8em;color:var(--m)}
+.tdm input{display:block;width:100%!important;margin-top:3px;text-align:center;height:30px;font-size:1.1em;font-weight:700;color:var(--t)}
+.tdi{display:flex;align-items:center;gap:9px;background:var(--s2);border:1px solid var(--bd);border-inline-start:3px solid var(--rc);border-radius:10px;padding:8px 10px;margin:6px 0;transition:.15s}
+.tdi.on{background:color-mix(in srgb,var(--rc) 11%,var(--s2));border-color:var(--rc)}
+.tdi .ico{color:var(--rc);text-shadow:0 0 8px var(--rc);flex:none}
+.tdn{flex:1;min-width:0}.tdn b{display:block;font-weight:600;font-size:.92em}.tdn small{display:block;color:var(--m);font-size:.72em}
+.tds{background:#060a12;border:1px solid color-mix(in srgb,var(--g) 40%,var(--bd));border-radius:12px;padding:11px 12px;margin:10px 0}
+.tdb{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.tdp{display:inline-flex;align-items:center;gap:5px;padding:2px 10px;border-radius:14px;border:1px solid var(--rc,var(--g));color:var(--t);background:color-mix(in srgb,var(--rc,var(--g)) 12%,transparent);font-size:.8em}.tdp i{font-style:normal;color:var(--rc,var(--g));font-weight:700}.tdp.mon{--rc:#f5b942}
+.tdc{background:var(--s2);border:1px solid var(--bd);border-inline-start:4px solid var(--tc);border-radius:12px;padding:10px 11px;margin:8px 0}
+.tdt{display:flex;align-items:center;gap:9px}.tda{font-size:1.4em;color:var(--tc);line-height:1;flex:none}
+.tds2{font-size:.7em;color:var(--tc);border:1px solid var(--tc);border-radius:10px;padding:1px 9px;white-space:nowrap}
+.tdq{margin-top:6px;padding:6px 10px;background:#060a12;border-radius:8px;font-size:.84em;color:var(--m);line-height:1.7}
+
+/* ---- wizard ---- */
+.wzs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:6px}
+.wzs>div{text-align:center}
+.wzs span{display:grid;place-items:center;width:26px;height:26px;margin:0 auto 3px;border-radius:50%;background:var(--s3);color:var(--m);font-weight:700;font-size:.85em;border:1px solid var(--bd)}
+.wzs .on span{background:var(--g);color:#030712;border-color:var(--g);box-shadow:0 0 12px color-mix(in srgb,var(--g) 45%,transparent)}
+.wzs .dn span{color:var(--g);border-color:var(--g)}
+.wzs small{display:block;font-size:.7em;color:var(--m);line-height:1.3}.wzs .on small{color:var(--t)}
+.wzn{margin:12px 0}.wzn button{height:38px;font-size:.9em}
 </style></head><body><header><h1>☾ لورد الغوامض</h1><select id="sel"></select><button id="new">+ جديدة</button><button id="exp" title="تصدير الشخصيات">⬇ تصدير</button><button id="imp" title="استيراد الشخصيات">⬆ استيراد</button><span id="who" class="tag"></span><button id="mode" style="display:none"></button><button id="edt" style="display:none"></button><button id="out" title="تسجيل الخروج">خروج</button></header><main id="m"></main><p id="uidb" class="sub" style="text-align:center;margin:6px 0 14px"></p><nav id="nav"></nav><div id="dr"></div><input type="file" id="impf" accept=".json,application/json" hidden>
 <script>
 const $=s=>document.querySelector(s),AD=s=>String(s??'').replace(/[٠-٩۰-۹]/g,d=>{const i='٠١٢٣٤٥٦٧٨٩'.indexOf(d);return i>=0?i:'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)}),esc=s=>AD(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -381,7 +426,7 @@ const E={
  pts:m=>(m.l||0)*240+(m.s||0)*12+(m.p||0),money:p=>`${Math.floor(p/240)} جنيه · ${Math.floor(p%240/12)} سولي · ${p%12} بنس`,
  luckAv(c){const e=Date.now()-(c.luck.at||0);return Math.max(0,E.ga(c,'luck')-Math.ceil(c.luck.burned*Math.max(0,1-e/864e5)))},
  assets(c){let tries=0,f,s=0;do{tries++;if(c.rep==1){f=Dice.roll(REP[1][0]).t;break}f=Dice.roll(REP[c.rep][0]).t;s=REP[c.rep][1]?Dice.roll(REP[c.rep][1]).t:0}while((c.rep==7?f:f+s)<REPMIN[c.rep]&&tries<40);
-  if(c.rep==1){c.money={l:0,s:f,p:0};c.saved={l:0,s:0,p:0}}else{c.money={l:f,s:0,p:0};c.saved={l:s,s:0,p:0}}return tries}
+  c.rbd={fe:REP[c.rep][0],se:REP[c.rep][1],f0:f,s0:s};E.rescale(c);return tries}
 };
 const LK=l=>l>=2?Math.min(l-1,2):0;
 const RP={
@@ -444,22 +489,31 @@ const ROM=['9','8','7','6','5','4','3','2','1','0'];
 const avHTML=(o,ro)=>`<div class="avw"><div class="av${ro?' ro':''}"${o.avatar?` style="background-image:url('${esc(o.avatar)}')"`:''}>${o.avatar?'':'☾'}${ro?'':`<small>${o.avatar?'تغيير':'إضافة صورة'}</small><input type="file" class="avin" data-av="1" accept="image/*" title="اختيار صورة">`}</div>${o.avatar&&!ro?'<button class="avx" data-a="avdel" title="حذف الصورة">✕</button>':''}</div>`;
 function avatarFrom(f,cb){const fr=new FileReader();fr.onload=()=>{const im=new Image();im.onload=()=>{const S=256,cv=document.createElement('canvas');cv.width=cv.height=S;const m=Math.min(im.width,im.height);cv.getContext('2d').drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,S,S);cb(cv.toDataURL('image/jpeg',.82))};im.onerror=()=>alert('تعذّر قراءة الصورة');im.src=fr.result};fr.readAsDataURL(f)}
 const TABS=[['camp','🏰','الحملات'],['char','☉','الشخصية'],['test','✦','اختبار'],['path','⚗','المسار'],['mind','☾','العقل'],['fight','⚔','القتال'],['trade','⇄','التبادل'],['log','✎','السجل']];
-function wizard(){const d=draft,tot=Object.values(d.attr).reduce((a,b)=>a+b,0),ok=tot==d.target&&d.name.trim()&&d.gender&&(d.cid||!Object.keys(camps).length);
- return`<div class="card hero">${avHTML(d)}<input class="nm" data-d="name" placeholder="اسم الشخصية" value="${esc(d.name)}"></div><div class="card"><h3>المعلومات</h3><div class="ig">
- <div class="ii"><small>الجنس</small><select data-d="gender"><option value="" disabled hidden${d.gender?'':' selected'}>اختر الجنس</option>${opts([['ذكر','ذكر'],['أنثى','أنثى']],d.gender)}</select></div>
- <div class="ii"><small>العمر</small><input data-d="age" placeholder="العمر" value="${esc(d.age)}"></div>
- <div class="ii"><small>العرق</small><select data-d="race">${opts(Object.keys(RACES).map(r=>[r,r]),d.race)}</select></div>
- <div class="ii"><small>المهنة</small><input data-d="job" placeholder="المهنة" value="${esc(d.job)}"></div>
- <div class="ii" style="grid-column:1/-1"><small>الانتساب</small><input data-d="affil" placeholder="الانتساب" value="${esc(d.affil)}"></div>
- <div class="ii" style="grid-column:1/-1"><small>الحملة</small>${Object.keys(camps).length?`<select data-d="cid"><option value="" disabled hidden${d.cid?'':' selected'}>اختر الحملة</option>${opts(Object.entries(camps).map(([k,v])=>[k,v.name]),d.cid)}</select>`:'<b class="sub">لا توجد حملات بعد — اطلب من DM إنشاء حملة</b>'}</div>
- <div class="ii" style="grid-column:1/-1"><small>المسار</small><select data-d="path">${opts(PATHS.map((p,i)=>[i,`${p[1]} · ${p[0]}`]),d.path)}</select></div></div>
- <p class="sub">${esc(RACES[d.race][1])}</p>
- ${d.race=='عِرق الدم'?`<div class="row"><button data-a="d100">1d100</button><b>${d.d100??''}</b></div>`:''}
- <h3>السمات (3d3 لكل سمة)</h3><div class="grid">${A.map(([k,l])=>`<div class="st"><small>${l}</small><b>${d.attr[k]+(RACES[d.race][0][k]||0)}</b><button data-a="adj" data-k="${k}" data-v="1">+</button> <button data-a="adj" data-k="${k}" data-v="-1">−</button></div>`).join('')}</div>
- <p>المجموع <b class="${tot==d.target?'good':'bad'}">${tot}</b> / ${d.target} <span class="sub">(الكتيب: 45)</span> · الحد الأدنى 3 · الرميات ${d.rolled}/${d.rr}</p>
- <div class="row"><button data-a="rollattr"${!DM()&&d.rolled>=d.rr?' disabled':''}>🎲 ارمِ السمات</button>${DM()?`المجموع <input type="text" data-num="1" autocomplete="off" data-d="target" value="${d.target}"> الإعادات <input type="text" data-num="1" autocomplete="off" data-d="rr" value="${d.rr}">`:''}</div>${d.rl?`<div class="sub">${esc(d.rl)}</div>`:''}
- <div class="row"><button data-a="drep"${d.rep&&!DM()?' disabled':''}>🎲 السمعة (1d7) والأصول</button>${d.rep?`<span class="tag">سمعة ${d.rep}: ${E.money(E.pts(d.money))} · مدخرات ${E.money(E.pts(d.saved))}</span>`:''}</div>
- <div class="row"><button data-a="create"${ok?'':' disabled'}>إنشاء الشخصية</button></div></div>`}
+const WST=['الهوية','العرق والمسار','السمات','السمعة والمراجعة'];
+const wSum=d=>Object.values(d.attr).reduce((a,b)=>a+b,0);
+const wStep=(d,i)=>i==0?!!(d.name.trim()&&d.gender):i==1?!!(d.cid||!Object.keys(camps).length):i==2?wSum(d)==d.target:!!(d.repR||DM());
+const wOk=d=>wStep(d,0)&&wStep(d,1)&&wStep(d,2)&&wStep(d,3);
+E.rescale=c=>{const b=c.rbd,k=(c.rscale==null?100:+c.rscale)/100,f=Math.round(b.f0*k),s=Math.round(b.s0*k);b.f=f;b.s=s;b.k=k;if(c.rep==1){c.money={l:0,s:f,p:0};c.saved={l:0,s:0,p:0}}else{c.money={l:f,s:0,p:0};c.saved={l:s,s:0,p:0}}};
+function wizard(){const d=draft;d.step??=0;const st=d.step,tot=wSum(d),rb=RACES[d.race][0],camp=camps[d.cid],
+ prog=`<div class="bar" style="margin:4px 0 10px"><i style="width:${(st+1)*25}%"></i></div><div class="wzs">${WST.map((l,i)=>`<div class="${i==st?'on':i<st?'dn':''}"><span>${i<st?'✓':i+1}</span><small>${l}</small></div>`).join('')}</div>`,
+ btns=`<div class="row wzn"><button data-a="wprev"${st?'':' disabled'} style="flex:1">السابق</button>${st<3?`<button data-a="wnext" style="flex:2"${wStep(d,st)?'':' disabled'}>التالي</button>`:`<button data-a="create" style="flex:2"${wOk(d)?'':' disabled'}>✓ إنشاء الشخصية</button>`}</div>`;
+ let b='';
+ if(st==0)b=`<div class="card hero">${avHTML(d)}<input class="nm" data-d="name" placeholder="اسم الشخصية" value="${esc(d.name)}"></div><div class="card"><h3>الهوية</h3><div class="ig">
+  <div class="ii"><small>الجنس</small><select data-d="gender"><option value="" disabled hidden${d.gender?'':' selected'}>اختر الجنس</option>${opts([['ذكر','ذكر'],['أنثى','أنثى']],d.gender)}</select></div>
+  <div class="ii"><small>العمر</small><input data-d="age" placeholder="العمر" value="${esc(d.age)}"></div>
+  <div class="ii"><small>المهنة</small><input data-d="job" placeholder="المهنة" value="${esc(d.job)}"></div>
+  <div class="ii"><small>الانتساب</small><input data-d="affil" placeholder="الانتساب" value="${esc(d.affil)}"></div></div></div>`;
+ else if(st==1)b=`<div class="card"><h3>الحملة</h3>${Object.keys(camps).length?`<select data-d="cid"><option value="" disabled hidden${d.cid?'':' selected'}>اختر الحملة</option>${opts(Object.entries(camps).map(([k,v])=>[k,v.name]),d.cid)}</select>`:'<p class="sub">لا توجد حملات بعد — اطلب من DM إنشاء حملة.</p>'}</div>
+  <div class="card"><h3>العرق</h3><select data-d="race">${opts(Object.keys(RACES).map(r=>[r,r]),d.race)}</select><div class="mdi">${esc(RACES[d.race][1])}</div>${Object.keys(rb).length?`<div class="row">${Object.entries(rb).map(([k,v])=>`<span class="tag good">${k=='hp'?'الصحة':AN[k]} +${v}</span>`).join('')}</div>`:''}${d.race=='عِرق الدم'?`<div class="row"><button data-a="d100">🎲 1d100</button><b>${d.d100??''}</b></div>`:''}</div>
+  <div class="card"><h3>المسار</h3><select data-d="path">${opts(PATHS.map((p,i)=>[i,`${p[1]} · ${p[0]}`]),d.path)}</select><p class="sub" style="margin:8px 0 0">تبدأ بالتسلسل 9: <b>${esc(PATHS[d.path][1])}</b></p></div>`;
+ else if(st==2)b=`<div class="card"><h3>السمات</h3><p class="sub">ارمِ 3d3 لكل سمة أو عدّلها بالأزرار حتى يطابق المجموع المطلوب (الحد الأدنى 3).</p><div class="grid">${A.map(([k,l])=>`<div class="st"><small>${l}</small><b>${d.attr[k]+(rb[k]||0)}</b><div class="row" style="justify-content:center;margin:4px 0 0"><button data-a="adj" data-k="${k}" data-v="1">+</button><button data-a="adj" data-k="${k}" data-v="-1">−</button></div></div>`).join('')}</div>
+  <div class="pmr">المجموع <b class="${tot==d.target?'good':'bad'}">${tot}</b> / ${d.target} <span class="sub">· الرميات ${d.rolled}/${d.rr}</span>${Object.keys(rb).length?'<div class="sub">القيم المعروضة تشمل مكافآت العرق.</div>':''}</div>
+  <div class="row"><button data-a="rollattr" style="flex:1"${!DM()&&d.rolled>=d.rr?' disabled':''}>🎲 ارمِ السمات</button></div>${DM()?`<div class="row">المجموع <input type="text" data-num="1" autocomplete="off" data-d="target" value="${d.target}"> الإعادات <input type="text" data-num="1" autocomplete="off" data-d="rr" value="${d.rr}"></div>`:''}${d.rl?`<div class="sub">${esc(d.rl)}</div>`:''}</div>`;
+ else{const x=d.rbd,u=d.rep==1?'سولي':'جنيه';b=`<div class="card"><h3>السمعة والأصول</h3><p class="sub">ارمِ 1d7 لتحديد مستوى السمعة، ثم تُرمى الأصول حسب جدول المستوى.</p><div class="row"><button data-a="drep" style="flex:1"${d.repR&&!DM()?' disabled':''}>🎲 ارمِ السمعة (1d7)</button></div>
+  ${DM()?`<div class="pmo"><span><b>تحديد المستوى يدويًا</b><small>للـ DM فقط</small></span></div><div class="row">${[1,2,3,4,5,6,7].map(n=>`<button data-a="drepset" data-v="${n}" style="flex:1;min-width:34px;${d.repR&&d.rep==n?'background:var(--g);color:#030712':''}">${n}</button>`).join('')}</div><div class="pmo"><span><b>مقياس الأصول %</b><small>100 = حسب الجدول · خفّضه لتقليل المبالغ</small></span><input type="text" data-num="1" autocomplete="off" data-d="rscale" value="${d.rscale??100}" style="width:70px;text-align:center"></div>`:''}
+  ${d.repR&&x?`<div class="pmr"><div>مستوى السمعة: <b>${d.rep}</b></div><div class="sub">الأصول الحرة: <bdi dir="ltr">${x.fe}</bdi> = ${x.f0} ${u}${x.k!=1?` × ${x.k} = ${x.f}`:''}<br>${x.se?`المدخرات: <bdi dir="ltr">${x.se}</bdi> = ${x.s0} جنيه${x.k!=1?` × ${x.k} = ${x.s}`:''}`:'بلا مدخرات'}</div><div style="margin-top:6px">${E.money(E.pts(d.money))} حرة · ${E.money(E.pts(d.saved))} مدخرات</div></div>`:'<p class="sub">لم تُرمَ السمعة بعد.</p>'}</div>
+  <div class="card"><h3>مراجعة الشخصية</h3><div class="ig"><div class="ii"><small>الاسم</small><b>${esc(d.name)}</b></div><div class="ii"><small>الجنس · العمر</small><b>${esc(d.gender)}${d.age?' · '+esc(d.age):''}</b></div><div class="ii"><small>العرق</small><b>${esc(d.race)}</b></div><div class="ii"><small>المهنة</small><b>${esc(d.job||'—')}</b></div><div class="ii"><small>المسار</small><b>${esc(PATHS[d.path][1])}</b></div><div class="ii"><small>الحملة</small><b>${esc(camp?camp.name:'—')}</b></div></div><div class="row" style="margin-top:8px">${A.map(([k,l])=>`<span class="tag">${l} ${d.attr[k]+(rb[k]||0)}</span>`).join('')}</div></div>`}
+ return prog+b+btns}
 const SC={str:'#e5484d',agi:'#3ecf8e',con:'#f08a3c',wil:'#6ea8ff',ins:'#4c8dff',edu:'#2fc4d8',cha:'#ee6aa7',luck:'#f5b942',mys:'#38bdf8'};
 const learnPanel=(c,n,s)=>{if(s.lv>=6)return'<div class="lp sub">المهارة في أقصى مستوى (خبير).</div>';const L=lrn,to=Math.max(s.lv+1,Math.min(6,L.to||s.lv+1)),cs=Math.max(0,L.cs-Math.floor((L.ins||0)/6));let d=0;for(let i=s.lv;i<to;i++)d+=LEARN[cs][i];if(L.self)d*=2;
  return`<div class="lp"><div class="row"><select data-lrn="to">${opts(LV.slice(s.lv+1).map((l,i)=>[s.lv+1+i,'إلى '+l]),to)}</select><select data-lrn="cs">${opts([[0,'دراسة يومية'],[1,'3–5 أيام أسبوعيًا'],[2,'1–2 يوم أسبوعيًا']],L.cs)}</select></div><div class="row"><label><input type="checkbox" data-lrn="self"${L.self?' checked':''}> تعلم ذاتي ×2</label>إلهام إضافي <input type="text" data-num="1" autocomplete="off" data-lrn="ins" value="${L.ins||0}" style="width:60px"></div><div class="lr">المدة: <b>${d}</b> يوم ≈ ${(d/30).toFixed(1)} شهر <span class="sub">(حالة ${cs+1}، مرة واحدة يوميًا)</span></div></div>`};
@@ -647,21 +701,30 @@ async function loadTrades(){const o={};
  if(!db){try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k.startsWith('trd_'))try{const x=JSON.parse(localStorage.getItem(k));o[x.id]=x}catch(e){}}}catch(e){}}
  else try{(await db.collection('trades').get()).docs.forEach(d=>{const x=d.data();if(x&&x.id)o[x.id]=x})}catch(e){}
  trades=o;settle()}
-function pTrade(c){const ro=RO(c),mine=Object.values(trades).filter(t=>t.from.charId==c.id||t.to.charId==c.id).sort((a,b)=>b.t-a.t),pen=mine.filter(t=>t.status=='pending'),his=mine.filter(t=>t.status!='pending').slice(0,12),rc=Object.values(chars).filter(x=>x.id!=c.id&&x.cid==c.cid),SN={done:'مكتمل',rejected:'مرفوض',cancelled:'ملغى'},
- card=t=>{const out=t.from.charId==c.id;return `<div class='itm'><div class='l1'><b>${out?'إلى '+esc(t.to.name):'من '+esc(t.from.name)}</b>${t.status!='pending'?`<span class='lvl'>${SN[t.status]||''}</span>`:''}<span class='sub'>${fmt(t.t)}</span></div><div class='ids'>${esc(tRaw(t))}${t.note?`\n«${esc(t.note)}»`:''}</div>${t.status=='pending'&&!ro?`<div class='row'>${out?`<button class='r' data-a='tcan' data-id='${t.id}'>إلغاء واسترجاع</button>`:`<button data-a='tacc' data-id='${t.id}'>قبول</button><button class='r' data-a='trej' data-id='${t.id}'>رفض</button>`}</div>`:''}</div>`};
- return `${ro?`<div class='alert'>👁 عرض فقط — لا يتبادل بهذه الشخصية إلا صاحبها وDM.</div>`:''}
- <div class='card'><div class='l1'><h2 style='margin:0;flex:1'>⇄ التبادل</h2><button data-a='tref'>↻ تحديث</button></div><p class='sub'>الأغراض والأموال تُخصم من المرسل فور الإرسال وتُسلَّم للمستلم عند القبول. عند الرفض أو الإلغاء تعود للمرسل.</p>${saveErr?`<div class='alert'>تعذّر الحفظ في قاعدة البيانات. تأكد من قواعد مجموعة trades.</div>`:''}${last&&tab=='trade'?`<div class='alert'>${last}</div>`:''}</div>
- ${pen.length?`<div class='card'><h3>عروض معلّقة</h3>${pen.map(card).join('')}</div>`:''}
- ${ro?'':`<div class='card'><h3>إرسال عرض</h3>${rc.length?`<div class='row'><select id='tto'>${opts(rc.map(x=>[x.id,(x.name||'—')+(x.owner!=uid?' ('+(names[x.owner]||'لاعب')+')':'')]),rc[0].id)}</select></div>
- <p class='sub'>الأموال (متاح من الأصول الحرة: ${E.money(E.pts(c.money))})</p><div class='row'><input type='text' data-num='1' autocomplete='off' id='tl' value='0'> جنيه <input type='text' data-num='1' autocomplete='off' id='ts' value='0'> سولي <input type='text' data-num='1' autocomplete='off' id='tp' value='0'> بنس</div>
- <p class='sub'>الأغراض (اكتب الكمية المرسلة)</p>${c.inv.map((x,i)=>`<div class='row'><b style='flex:1;font-weight:500'>${esc(x.n)} <span class='sub'>(لديك ×${x.q})</span></b><input type='text' data-num='1' autocomplete='off' data-tq='${i}' value='0'></div>`).join('')||'<p class="sub">لا ممتلكات لإرسالها.</p>'}
- <div class='row'><input id='tnt' placeholder='ملاحظة (اختياري)'></div><div class='row'><button data-a='tsend' style='width:100%;height:38px'>إرسال العرض</button></div>`:'<p class="sub">لا توجد شخصيات أخرى في هذه الحملة للتبادل معها.</p>'}</div>`}
- <div class='card'><h3>سجل التبادل</h3>${his.map(card).join('')||'<span class="sub">لا عمليات سابقة</span>'}</div>`}
+let tsub='send',tdr={for:'',to:'',l:0,s:0,p:0,note:'',q:{}};
+function pTrade(c){const ro=RO(c);if(tdr.for!=c.id)tdr={for:c.id,to:'',l:0,s:0,p:0,note:'',q:{}};
+ const all=Object.values(trades).filter(t=>t.from.charId==c.id||t.to.charId==c.id).sort((a,b)=>b.t-a.t),pen=all.filter(t=>t.status=='pending'),inc=pen.filter(t=>t.to.charId==c.id),out=pen.filter(t=>t.from.charId==c.id),his=all.filter(t=>t.status!='pending').slice(0,20),
+ rcs=Object.values(chars).filter(x=>x.id!=c.id&&x.cid==c.cid),rc=rcs.find(x=>x.id==tdr.to)||rcs[0],bal=E.pts(c.money),mny=Math.max(0,+tdr.l||0)*240+Math.max(0,+tdr.s||0)*12+Math.max(0,+tdr.p||0),
+ sel=c.inv.map((x,i)=>[x,i,Math.min(+tdr.q[i]||0,x.q)]).filter(a=>a[2]>0),over=mny>bal,
+ SN={pending:'بانتظار القبول',done:'مكتمل',rejected:'مرفوض',cancelled:'ملغى'},SC2={pending:'#f5b942',done:'#3ecf8e',rejected:'#e5484d',cancelled:'#9aa4b2'},
+ chips=(items,m)=>items.map(x=>`<span class='tdp' style='--rc:${RC[x.r]||RC['عادي']}'>◆ ${esc(x.n)} <i>×${x.q}</i></span>`).join('')+(m?`<span class='tdp mon'>🪙 ${E.money(m)}</span>`:''),
+ card=t=>{const o=t.from.charId==c.id,st=t.status;return `<div class='tdc' style='--tc:${SC2[st]}'><div class='tdt'><span class='tda'>${o?'⇢':'⇠'}</span><div class='tdn'><b>${o?'إلى '+esc(t.to.name):'من '+esc(t.from.name)}</b><small>${fmt(t.t)}</small></div><span class='tds2'>${st=='pending'&&!o?'عرض جديد':SN[st]}</span></div><div class='tdb'>${chips(t.items,t.money)}</div>${t.note?`<div class='tdq'>«${esc(t.note)}»</div>`:''}${st=='pending'&&!ro?`<div class='row'>${o?`<button class='r' data-a='tcan' data-id='${t.id}' style='flex:1'>إلغاء واسترجاع</button>`:`<button data-a='tacc' data-id='${t.id}' style='flex:2'>✓ قبول</button><button class='r' data-a='trej' data-id='${t.id}' style='flex:1'>✕ رفض</button>`}</div>`:''}</div>`},
+ tabs=[['send','✉ إرسال'],['offers','📥 العروض'+(pen.length?` (${pen.length})`:'')],['log','📜 السجل']];
+ let body='';
+ if(tsub=='send'){body=ro?`<div class='alert'>👁 عرض فقط — لا يرسل بهذه الشخصية إلا صاحبها وDM.</div>`:!rcs.length?`<div class='card sub'>لا توجد شخصيات أخرى في هذه الحملة للتبادل معها.</div>`:
+  `<div class='card'><h3>المستلم</h3><select data-tr='to'>${opts(rcs.map(x=>[x.id,x.name||'—']),rc.id)}</select><div class='tdr'><div class='av2'${rc.avatar?` style="background-image:url('${esc(rc.avatar)}')"`:''}>${rc.avatar?'':'☾'}</div><div><b>${esc(rc.name||'—')}</b><div class='sub'>${esc(PATHS[rc.path][1])} · تسلسل ${rc.seq} · ${esc(names[rc.owner]||'لاعب')}</div></div></div></div>
+  <div class='card'><h3>الأموال</h3><div class='tdm'><label>جنيه<input type='text' data-num='1' autocomplete='off' data-tr='l' value='${+tdr.l||0}'></label><label>سولي<input type='text' data-num='1' autocomplete='off' data-tr='s' value='${+tdr.s||0}'></label><label>بنس<input type='text' data-num='1' autocomplete='off' data-tr='p' value='${+tdr.p||0}'></label></div><p class='sub' style='margin:8px 0 0'>المتاح من الأصول الحرة: <b>${E.money(bal)}</b></p></div>
+  <div class='card'><h3>الأغراض</h3>${c.inv.map((x,i)=>{const q=Math.min(+tdr.q[i]||0,x.q);return `<div class='tdi${q?' on':''}' style='--rc:${RC[x.r]||RC['عادي']}'><span class='ico'>◆</span><div class='tdn'><b>${esc(x.n)}</b><small>${esc(x.r||'عادي')} · لديك ×${x.q}</small></div><span class='stp' style='--ac:var(--g)'><button class='mn' data-a='tstp' data-k='${i}' data-v='-1'>−</button><em>${q}</em><button class='mn' data-a='tstp' data-k='${i}' data-v='1'>+</button></span></div>`}).join('')||'<p class="sub">لا ممتلكات لإرسالها.</p>'}</div>
+  <div class='tds'><h3 style='margin-bottom:8px'>ملخص العرض إلى ${esc(rc.name||'—')}</h3><div class='tdb'>${mny||sel.length?chips(sel.map(a=>({n:a[0].n,q:a[2],r:a[0].r})),mny):'<span class="sub">لم تختر شيئًا بعد</span>'}</div>${mny?`<p class='sub' style='margin:8px 0 0'>الأصول بعد الإرسال: <b class='${over?'bad':'good'}'>${over?'المبلغ يتجاوز المتاح':E.money(bal-mny)}</b></p>`:''}<div class='row'><input data-tr='note' placeholder='ملاحظة للمستلم (اختياري)' value='${esc(tdr.note)}'></div><div class='row'><button data-a='tsend' style='width:100%;height:40px'${(mny||sel.length)&&!over?'':' disabled'}>إرسال العرض</button></div></div>`}
+ else if(tsub=='offers'){body=`${inc.length?`<div class='fgl'>وارد إليك (${inc.length})</div>${inc.map(card).join('')}`:''}${out.length?`<div class='fgl'>صادر منك (${out.length})</div>${out.map(card).join('')}`:''}${pen.length?'':`<div class='card sub'>لا عروض معلّقة حاليًا.</div>`}`}
+ else body=his.map(card).join('')||`<div class='card sub'>لا عمليات سابقة.</div>`;
+ return `<div class='card tdh'><div class='l1'><h2 style='margin:0;flex:1'>⇄ التبادل</h2><button data-a='tref'>↻ تحديث</button></div><div class='tdw'><div style='grid-column:1/-1'><small>الأصول الحرة</small><b>${E.money(bal)}</b></div><div><small>الأغراض</small><b>${c.inv.reduce((a,x)=>a+x.q,0)}</b></div><div><small>عروض بانتظارك</small><b>${inc.length}</b></div></div></div>
+ <div class='fmw'>${tabs.map(([k,l])=>`<button class='fmb${tsub==k?' on':''}' data-a='tsub' data-v='${k}'>${l}</button>`).join('')}</div>${saveErr?`<div class='alert'>تعذّر الحفظ في قاعدة البيانات. تأكد من قواعد مجموعة trades.</div>`:''}${last&&tab=='trade'?`<div class='alert'>${last}</div>`:''}${body}`}
 const pLog=c=>`<div class="card log"><h2>سجل الشخصية</h2>${c.log.map(e=>`<div><span class="sub">${fmt(e.t)}</span> <b>${esc(e.type)}</b> — ${esc(e.txt)}${e.b!=null?` <span class="sub">(${esc(e.b)} ← ${esc(e.a)})</span>`:''}</div>`).join('')||'<span class="sub">فارغ</span>'}</div>`;
 const THM=[['#e0c27a','#8a6a2a'],['#2dd4bf','#0f766e'],['#94a3b8','#475569'],['#fbbf24','#b45309'],['#3b82f6','#1d4ed8'],['#f0abfc','#a21caf'],['#b45f5f','#7a2a2a'],['#e2e8f0','#64748b'],['#fdba74','#c2410c'],['#818cf8','#3730a3'],['#a7b8a0','#3f5a4a'],['#d6a15c','#8a5a22'],['#c4b5fd','#6d28d9'],['#22c55e','#14532d'],['#fda4af','#be123c'],['#8fb4cc','#334e63'],['#d6336c','#5b0f2e'],['#f472b6','#9d174d'],['#ef4444','#991b1b'],['#d4d4d8','#3f3f46'],['#bef264','#4d7c0f'],['#34d399','#047857']];
 function thm(){const o=draft||C(),t=o&&THM[o.path],r=document.documentElement.style,x=(c,k,b)=>t?`color-mix(in srgb,${c} ${k}%,${b})`:b;r.setProperty('--g',x(t&&t[0],9,'#5aa9ff'));r.setProperty('--g2',x(t&&t[1],9,'#2563eb'));r.setProperty('--bg',x(t&&t[1],2,'#05070d'));r.setProperty('--s1',x(t&&t[1],3,'#0a0f1a'));r.setProperty('--s2',x(t&&t[1],3,'#0f1626'));r.setProperty('--s3',x(t&&t[1],4,'#16203a'));r.setProperty('--bd',x(t&&t[1],6,'#1f2d4d'));r.setProperty('--m',x(t&&t[0],5,'#8fa3c4'))}
 function R(an){if(inChange){schedR(an);return}closeDD();thm();document.body.classList.toggle('lnd',!ent);const y=scrollY,ae=document.activeElement,fi=ae&&ae.matches&&ae.matches('input,select')?[...document.querySelectorAll('#m input,#m select')].indexOf(ae):-1;$('#m').classList.toggle('an',!!an);$('#sel').innerHTML=Object.values(chars).filter(x=>!chars[cur]||x.cid==chars[cur].cid).map(c=>`<option value="${c.id}"${c.id==cur?' selected':''}>${esc((c.name||'—')+(c.owner&&c.owner!=uid?' ('+(names[c.owner]||'لاعب')+')':''))}</option>`).join('');$('#who').textContent=isOwner?'DM':'لاعب';const mb=$('#mode');mb.style.display=isOwner?'':'none';mb.textContent=dmView?'👁 لاعب':'👁 DM';const eb=$('#edt');eb.style.display=(!draft&&C()&&!RO(C()))?'':'none';eb.textContent=editMode?'👤 بروفايل':'✏ تعديل';eb.classList.toggle('on',editMode);
- $('#nav').innerHTML=TABS.map(([k,i,l])=>`<button data-tab="${k}" class="${k==tab?'on':''}"><span>${i}</span>${l}</button>`).join('');const c=C();$('#dr').innerHTML=tab=='char'&&!draft?drawerHTML(c):'';
+ const TB=c0=>c0?Object.values(trades).filter(x=>x.status=='pending'&&x.to.charId==c0.id).length:0,tb=TB(C());$('#nav').innerHTML=TABS.map(([k,i,l])=>`<button data-tab="${k}" class="${k==tab?'on':''}"><span>${i}</span>${l}${k=='trade'&&tb?`<b class="nb">${tb}</b>`:''}</button>`).join('');const c=C();$('#dr').innerHTML=tab=='char'&&!draft?drawerHTML(c):'';
   $('#m').innerHTML=tab=='camp'?pCamp():draft?wizard():!c?'<div class="card">لا شخصيات بعد.</div>':{char:pChar,test:pTest,path:pPath,mind:pMind,fight:pFight2,trade:pTrade,log:pLog}[tab](c);if(draft&&!ent&&tab!='camp')$('#m').insertAdjacentHTML('afterbegin','<div class="row"><button data-a="wback">→ رجوع للحملة</button></div>');enh();fixNums($('#m'));fixNums($('#dr'));sbUpd();scrollTo(0,an?0:y);if(fi>=0){const el=document.querySelectorAll('#m input,#m select')[fi];if(el)el.focus({preventScroll:true})}}
 const ev=(c,f)=>ed&&f in ed?ed[f]:c[f];
 const sb=document.createElement('div');sb.id='sb';sb.innerHTML='<span>تعديلات غير محفوظة</span><button class="sv" data-a="edsave">💾 حفظ</button><button data-a="edcancel">تراجع</button>';document.body.appendChild(sb);
@@ -683,11 +746,11 @@ document.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)r
   return R()}
  if(a=='cnew'){draft=mkChar();draft.cid=t.dataset.id;editMode=false;tab='char';return R(true)}
  if(a=='copen'){ent=true;cur=t.dataset.id;cv=chars[cur]&&camps[chars[cur].cid]?chars[cur].cid:'_';draft=null;tab='char';editMode=false;ed=null;return R(true)}
- if(a=='tref'){loadTrades().then(()=>R());return}if(a=='lenter'){lst=1;return R(true)}if(a=='lback'){lst=0;cv=null;return R(true)}if(a=='wback'){draft=null;tab='camp';return R(true)}if(a=='cview'){cv=t.dataset.id;gmsg='';return R(true)}if(a=='cback'){cv=null;gop=false;return R(true)}if(a=='gtog'){readGen();gop=!gop;return R()}if(a=='gen'){if(!DM()||!cv||cv=='_')return;readGen();const n=Math.max(1,Math.min(10,Math.floor(+GS.count)||1)),nn=[];for(let i=0;i<n;i++){const x=genChar(GS,cv);x.id+=i;chars[x.id]=x;save(x);nn.push(x.name)}gmsg='تم توليد '+n+': '+nn.join('، ');return R()}if(a=='avdel'){const tg=d||c;if(tg){tg.avatar='';if(!d){E.ev(tg,'الملف الشخصي','حذف الصورة');save(tg)}R()}return}
+ if(a=='tsub'){tsub=t.dataset.v;last='';return R()}if(a=='tref'){loadTrades().then(()=>R());return}if(a=='lenter'){lst=1;return R(true)}if(a=='lback'){lst=0;cv=null;return R(true)}if(a=='wback'){draft=null;tab='camp';return R(true)}if(a=='cview'){cv=t.dataset.id;gmsg='';return R(true)}if(a=='cback'){cv=null;gop=false;return R(true)}if(a=='gtog'){readGen();gop=!gop;return R()}if(a=='gen'){if(!DM()||!cv||cv=='_')return;readGen();const n=Math.max(1,Math.min(10,Math.floor(+GS.count)||1)),nn=[];for(let i=0;i<n;i++){const x=genChar(GS,cv);x.id+=i;chars[x.id]=x;save(x);nn.push(x.name)}gmsg='تم توليد '+n+': '+nn.join('، ');return R()}if(a=='avdel'){const tg=d||c;if(tg){tg.avatar='';if(!d){E.ev(tg,'الملف الشخصي','حذف الصورة');save(tg)}R()}return}
  if(d){if(a=='rollattr'){const rs=A.map(()=>Dice.roll('3d3'));A.forEach((x,i)=>d.attr[x[0]]=rs[i].t);d.rolled++;d.rl=A.map((x,i)=>`${x[1]} [${rs[i].d}]=${rs[i].t}`).join(' · ');return R()}
   if(a=='adj'){const v=d.attr[t.dataset.k]+ +t.dataset.v;if(v>=3)d.attr[t.dataset.k]=v;return R()}if(a=='d100'){d.d100=Dice.n(100);return R()}
-  if(a=='drep'){d.rep=Dice.n(7);const tr=E.assets(d);d.rl=`السمعة ${d.rep}، محاولات الأصول ${tr}`;return R()}
-  if(a=='create'){d.a0={...d.attr};d.owner=uid;applyRace(d);E.ev(d,'إنشاء الشخصية',`${d.name} — ${d.race}`);E.ev(d,'الحصول على المسار',`${PATHS[d.path][1]} · التسلسل 9`);chars[d.id]=d;cur=d.id;cv=d.cid||'_';ent=true;draft=null;editMode=false;tab='char';save(d);return R(true)}return}
+  if(a=='drep'){d.rep=Dice.n(7);d.repR=1;E.assets(d);return R()}if(a=='drepset'){if(!DM())return;d.rep=+t.dataset.v;d.repR=1;E.assets(d);return R()}if(a=='wnext'){if(wStep(d,d.step||0))d.step=(d.step||0)+1;return R(true)}if(a=='wprev'){d.step=Math.max(0,(d.step||0)-1);return R(true)}
+  if(a=='create'){if(!wOk(d))return;d.a0={...d.attr};d.owner=uid;applyRace(d);E.ev(d,'إنشاء الشخصية',`${d.name} — ${d.race}`);E.ev(d,'الحصول على المسار',`${PATHS[d.path][1]} · التسلسل 9`);chars[d.id]=d;cur=d.id;cv=d.cid||'_';ent=true;draft=null;editMode=false;tab='char';save(d);return R(true)}return}
  if(!c)return;if(RO(c)&&!['fold','rptoggle','dgtoggle','hltoggle','sptoggle','close','sklearn'].includes(a))return;const L=(ty,tx,b,af)=>E.ev(c,ty,tx,b,af);
  if(!editMode&&['addfor','pick','addsk','rmsk','attrp','addb','delb','arep','edsave'].includes(a))return;
  if(a=='edsave'){if(!ed)return;let rc=0;const lb={name:'الاسم',gender:'الجنس',age:'العمر',race:'العرق',job:'المهنة',affil:'الانتساب',path:'المسار'};for(const k in ed){let v=ed[k];if(k=='path')v=+v;if(k=='name'&&!String(v).trim())continue;if(String(c[k]??'')!=String(v)){L('تعديل المعلومات',lb[k],k=='path'?PATHS[c[k]][1]:c[k],k=='path'?PATHS[v][1]:v);c[k]=v;if(k=='race')rc=1}}if(rc)applyRace(c);ed=null;return done(c)}
@@ -711,15 +774,16 @@ document.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)r
  if(a=='itoggle'){ia=!ia;return R()}if(a=='itedit'){ie=+t.dataset.i;return R()}if(a=='itcancel'){ie=-1;return R()}
  if(a=='itsave'){const x=c.inv[+t.dataset.i];if(x){const n=(g('ein')||'').trim();if(n){x.n=n;x.dm=(g('edm')||'').trim();x.ds=(g('eds')||'').trim();x.r=g('err')||'عادي';x.q=+g('eiq')||1;x.v=g('eiv')||'';L('تعديل الممتلكات',n)}}ie=-1;return done(c)}
  if(a=='deli'){c.inv.splice(+t.dataset.i,1);ie=-1;return done(c)}if(a=='addb'){const n=g('bn').trim();if(n){c.bless.push({n,ty:g('bty')||'المنخفضة',d:(g('bd')||'').trim()});L('الحصول على البركة',n);done(c)}return}if(a=='delb'){c.bless.splice(+t.dataset.i,1);return done(c)}
- if(a=='tsend'){const rc=chars[g('tto')];if(!rc||rc.id==c.id)return;const money=Math.max(0,+g('tl')||0)*240+Math.max(0,+g('ts')||0)*12+Math.max(0,+g('tp')||0),it=[];
-  document.querySelectorAll('[data-tq]').forEach(e=>{const i=+e.dataset.tq,q=Math.floor(+AD(e.value)||0),x=c.inv[i];if(x&&q>0)it.push({i,q:Math.min(q,x.q)})});
+ if(a=='tstp'){const k=+t.dataset.k,x=c.inv[k];if(!x)return;tdr.q[k]=Math.max(0,Math.min(x.q,(+tdr.q[k]||0)+ +t.dataset.v));return R()}
+ if(a=='tsend'){const rcs=Object.values(chars).filter(x=>x.id!=c.id&&x.cid==c.cid),rc=rcs.find(x=>x.id==tdr.to)||rcs[0];if(!rc)return;const money=Math.max(0,+tdr.l||0)*240+Math.max(0,+tdr.s||0)*12+Math.max(0,+tdr.p||0),it=[];
+  c.inv.forEach((x,i)=>{const q=Math.min(+tdr.q[i]||0,x.q);if(q>0)it.push({i,q})});
   if(!money&&!it.length){last='اختر أغراضًا أو مبلغًا أولًا';return R()}
   if(money>E.pts(c.money)){last='المبلغ يتجاوز الأصول الحرة';return R()}
   const snap=it.map(({i,q})=>{const x=c.inv[i];return{n:x.n,q,v:x.v||'',dm:x.dm||'',ds:x.ds||'',r:x.r||'عادي'}});
   it.slice().sort((a,b)=>b.i-a.i).forEach(({i,q})=>{const x=c.inv[i];x.q-=q;if(x.q<=0)c.inv.splice(i,1)});
   if(money)c.money=mp(E.pts(c.money)-money);
-  const t0={id:'t'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),cid:c.cid,from:{owner:c.owner,charId:c.id,name:c.name},to:{owner:rc.owner,charId:rc.id,name:rc.name},items:snap,money,note:(g('tnt')||'').trim(),status:'pending',t:Date.now()};
-  tSave(t0);L('التبادل','إرسال إلى '+rc.name+': '+tRaw(t0));last='أُرسل العرض إلى '+esc(rc.name)+' بانتظار القبول';return done(c)}
+  const t0={id:'t'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),cid:c.cid,from:{owner:c.owner,charId:c.id,name:c.name},to:{owner:rc.owner,charId:rc.id,name:rc.name},items:snap,money,note:(tdr.note||'').trim(),status:'pending',t:Date.now()};
+  tSave(t0);L('التبادل','إرسال إلى '+rc.name+': '+tRaw(t0));last='أُرسل العرض إلى '+esc(rc.name)+' بانتظار القبول';tdr={for:c.id,to:rc.id,l:0,s:0,p:0,note:'',q:{}};tsub='offers';return done(c)}
  if(a=='tacc'||a=='trej'||a=='tcan'){const id=t.dataset.id;loadTrades().then(()=>{const x=trades[id];if(!x||x.status!='pending'){last='تغيّرت حالة العرض';return R()}
   if(a=='tacc'){const r=chars[x.to.charId];if(!r||!(r.owner==uid||isOwner))return;x.items.forEach(i=>addInv(r,i));if(x.money)r.money=mp(E.pts(r.money)+x.money);E.ev(r,'التبادل','استلام من '+x.from.name+': '+tRaw(x));x.status='done';save(r);tSave(x);last='تم الاستلام'}
   else if(a=='trej'){x.status='rejected';tSave(x);settle();last='رُفض العرض وسيعود إلى المرسل'}
@@ -758,8 +822,8 @@ document.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)r
  if(a=='heal'){const con=E.ga(c,'con'),h=+t.dataset.v?con:Math.floor(con/2);c.dmg=Math.max(0,c.dmg-h);L('العلاج','استعادة صحة '+h);return done(c)}
  if(a=='arep'){const tr=E.assets(c);L('تغير السمعة',`رمي أصول (${tr} محاولة)`);return done(c)}});
 const CH=e=>{const t=e.target,c=C(),d=draft;if(t.id=='irr'||t.id=='err'||t.id=='bty'){const b=t.closest('.itf');if(b)b.style.setProperty('--rc',(t.id=='bty'?BC:RC)[t.value]||'#9aa4b2');return}if(t.id=='dty'){dtyV=t.value;dfV=DF[t.value]||'pd';return R()}if(t.id=='ddf'){dfV=t.value;return R()}if(t.id=='sel'){cur=t.value;draft=null;ed=null;editMode=false;return R(true)}
- if(t.dataset.av){const f=t.files&&t.files[0],tg=d||c;if(!f||!tg||RO(tg))return;avatarFrom(f,u=>{tg.avatar=u;if(!d){E.ev(tg,'الملف الشخصي','تغيير الصورة');save(tg)}R()});return}
- if(t.dataset.d){const k=t.dataset.d;d[k]=t.dataset.num?+t.value:t.value;if(['name','age','job','affil'].includes(k)){const b=document.querySelector('[data-a=create]');if(b)b.disabled=!(Object.values(d.attr).reduce((x,y)=>x+y,0)==d.target&&d.name.trim()&&d.gender);return}return R()}if(!c)return;if(RO(c)&&!t.dataset.lrn)return;
+ if(t.dataset.tr){tdr[t.dataset.tr]=t.dataset.num?(+AD(t.value)||0):t.value;return R()}if(t.dataset.av){const f=t.files&&t.files[0],tg=d||c;if(!f||!tg||RO(tg))return;avatarFrom(f,u=>{tg.avatar=u;if(!d){E.ev(tg,'الملف الشخصي','تغيير الصورة');save(tg)}R()});return}
+ if(t.dataset.d){const k=t.dataset.d;d[k]=t.dataset.num?+t.value:t.value;if(k=='rscale'&&d.rbd)E.rescale(d);if(['name','age','job','affil'].includes(k)){const b=document.querySelector('[data-a=wnext],[data-a=create]');if(b)b.disabled=!(b.dataset.a=='create'?wOk(d):wStep(d,d.step||0));return}return R()}if(!c)return;if(RO(c)&&!t.dataset.lrn)return;
  if(!editMode&&(t.dataset.e||t.dataset.sk||t.dataset.skattr||t.dataset.seq))return;
  if(t.dataset.e){setEd(t.dataset.e,t.value);return}
  if(t.dataset.f){const n=t.dataset.num?+t.value:t.value;setp(c,t.dataset.f,t.dataset.f=='rep'?+n:n);if(t.dataset.f=='rep')L2(c,'تغير السمعة','المستوى '+n);if(['pname','potion'].includes(t.dataset.f)){save(c);return}return done(c)}
