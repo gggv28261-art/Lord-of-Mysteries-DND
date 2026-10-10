@@ -520,7 +520,7 @@ const E={
  dig(c){if(c.seq>9||c.seq<1&&false)return 0;const i=9-c.seq;return Math.min(20,Math.floor((c.dig.act||0)/DIGA[i])+Math.floor((c.dig.idle||0)/DIGN[i])+(c.dig.bonus||0))},
  stats(c){const a=c.a0,r=n=>(a[n]||0)+(E.race(c)[n]||0),d=E.dig(c),pen=ARM[c.armor][2];
   let hp=r('con')*r('str')*2+10,sp=r('wil')+r('ins'),en=(r('con')+r('wil'))*2;
-  c.hist.forEach((h,i)=>{const lv=i==c.hist.length-1&&h.seq==c.seq,cn=lv?E.ga(c,'con'):h.con,ins=lv?E.ga(c,'ins'):h.ins,m=IMM[h.seq]||1,k=ADDK[h.seq]||1;hp=Math.floor(hp*m)+cn*k;sp=Math.floor(sp*m)+ins*k;en+=cn});
+  if(c.seq<=9){const cs={},is={};cs[c.seq]=E.ga(c,'con');is[c.seq]=E.ga(c,'ins');for(let q=c.seq+1;q<=9;q++){const h=c.hist.find(x=>x.seq==q);cs[q]=h?h.con:cs[q-1];is[q]=h?h.ins:is[q-1]}for(let q=9;q>=c.seq;q--){const m=IMM[q]||1,k=ADDK[q]||1;hp=Math.floor(hp*m)+cs[q]*k;sp=Math.floor(sp*m)+is[q]*k;if(q<=8)en+=cs[q]}}
   hp=Math.round(hp+(E.race(c).hp||0)+d);sp=Math.round(sp+d);const g=n=>E.ga(c,n),rm=g('wil')+10+5*(E.li(c,'علم النفس')+E.li(c,'التوجيه العقلي'));
   return{hp,sp,en,pd:10+Math.max(0,g('agi')-pen)+ARM[c.armor][0]+E.sv(c,'المراوغة'),wd:10+g('wil'),cd:10+g('con'),md:g('mys')+sp,rm,dig:d,pen}},
  rat(c){return Math.max(0,E.stats(c).rm-c.m.lost+c.m.extra)},rh:c=>Math.max(1,Math.min(8,+c.restH||8)),
@@ -544,7 +544,7 @@ const E={
    if(w>=20)H.push('نجح ← تصبح متجاوزًا لكن الترقية فشلت');
    else{const d=Dice.n(2);if(d==1){c.m.forced=3;H.push('<b class="bad">1d2 = 1: فقدت السيطرة</b>')}else{c.dead=1;H.push('<b class="bad">1d2 = 2: ماتت الشخصية</b>')}}}
   const up=(c.pots||[]).find(x=>x.id==pm.pot);if(up){c.pots=c.pots.filter(x=>x!==up);pm.pot='';H.push('استُهلكت الجرعة: '+esc(up.name))}E.ev(c,'اختبار الترقية',`د20=${r}+${base}${mod?(mod>0?'+':'')+mod:''}=${tot} ضد ${rat} (${ok?'نجح':'فشل'}) · خسارة ${sum}`,b,E.rat(c));
-  if(res){if(c.path==22&&tp!=null){c.path=tp;E.ev(c,'الحصول على المسار',PATHS[tp][1]+' · '+PATHS[tp][0])}const ph=c.hist[c.hist.length-1];if(ph){ph.con=E.ga(c,'con');ph.ins=E.ga(c,'ins')}if(c.seq<=9)c.hist.push({seq:c.seq-1,con:E.ga(c,'con'),ins:E.ga(c,'ins')});c.seq--;c.dig={act:0,idle:0,bonus:0};c.fail=null;Object.assign(pm,{pot:'',n2:0,help:0,direct:0,imp:'n',under:0,hi:0,moon:0,animal:0,hiMad:0,manual:0,tpath:''});E.ev(c,'الترقية','أصبح التسلسل '+c.seq+' · فيضان روحي 72 ساعة (القدرات −2)',c.seq+1,c.seq);H.push(`<b class="good">✔ نجحت الترقية إلى التسلسل ${c.seq}</b> — خلال 72 ساعة: فيضان روحي وقدراتك −2`)}
+  if(res){if(c.path==22&&tp!=null){c.path=tp;E.ev(c,'الحصول على المسار',PATHS[tp][1]+' · '+PATHS[tp][0])}if(c.seq<=9&&!c.hist.some(x=>x.seq==c.seq))c.hist.push({seq:c.seq,con:E.ga(c,'con'),ins:E.ga(c,'ins')});const ph=c.hist[c.hist.length-1];if(ph){ph.con=E.ga(c,'con');ph.ins=E.ga(c,'ins')}if(c.seq<=10)c.hist.push({seq:c.seq-1,con:E.ga(c,'con'),ins:E.ga(c,'ins')});c.seq--;c.dig={act:0,idle:0,bonus:0};c.fail=null;Object.assign(pm,{pot:'',n2:0,help:0,direct:0,imp:'n',under:0,hi:0,moon:0,animal:0,hiMad:0,manual:0,tpath:''});E.ev(c,'الترقية','أصبح التسلسل '+c.seq+' · فيضان روحي 72 ساعة (القدرات −2)',c.seq+1,c.seq);H.push(`<b class="good">✔ نجحت الترقية إلى التسلسل ${c.seq}</b> — خلال 72 ساعة: فيضان روحي وقدراتك −2`)}
   else{c.fail={t:c.seq-1,tot,extracted:false};E.ev(c,'فشل الترقية','إلى التسلسل '+(c.seq-1));H.push('<b class="bad">✘ فشلت الترقية</b>')}
   return{html:H.join('<br>')}},
  pmod(c){const p=c.pm;return -E.dig(c)-E.help(c)+(p.direct?5:0)+(p.imp=='s'?-2:p.imp=='o'?4:0)+(+p.under||0)-2*(+p.hi||0)-(p.moon==1?2:p.moon==2?4:0)+(p.animal?4:0)},
@@ -575,7 +575,7 @@ function applyRace(c){c.rg=c.rg||[];c.rch=c.rch||{};
  for(const n in c.skills){const d=c.skills[n].lv-(bf[n]||0);if(d>0)c.rg.push([n,d])}
  E.ev(c,'مميزات العرق',c.race)}
 const snapHist=c=>{const h=c.hist[c.hist.length-1];if(h&&h.seq==c.seq){h.con=E.ga(c,'con');h.ins=E.ga(c,'ins')}};
-function fixHist(c){const cv=E.ga(c,'con'),iv=E.ga(c,'ins'),h=c.seq<=8?c.hist.filter(x=>x.seq<=8&&x.seq>=c.seq):[];if(c.seq<=8){const have=new Set(h.map(x=>x.seq));for(let q=8;q>=c.seq;q--)if(!have.has(q))h.push({seq:q,con:cv,ins:iv})}h.sort((a,b)=>b.seq-a.seq);c.hist=h}
+function fixHist(c){const cv=E.ga(c,'con'),iv=E.ga(c,'ins'),h=c.seq<=9?c.hist.filter(x=>x.seq<=9&&x.seq>=c.seq):[];if(c.seq<=9){const have=new Set(h.map(x=>x.seq));for(let q=9;q>=c.seq;q--)if(!have.has(q))h.push({seq:q,con:cv,ins:iv})}h.sort((a,b)=>b.seq-a.seq);c.hist=h}
 function syncRace(c){snapHist(c);
  if(c.race=='عِرق الدم'){
   if(!c.rsv)c.rsv={path:c.path,seq:c.seq,hist:JSON.parse(JSON.stringify(c.hist||[]))};
@@ -839,7 +839,7 @@ function genChar(S,cid){const c=mkChar();c.owner=uid;c.cid=cid&&camps[cid]?cid:'
  const kk=S.chaos/100,n=RND(+S.sMin,Math.max(+S.sMin,+S.sMax)),mx=Math.max(1,Math.min(6,+S.sLv));
  for(let i=0;i<n;i++){const cd=Object.entries(c.skills).filter(([k,s])=>!s.lv);if(!cd.length)break;
   const p=wpick(cd,cd.map(([k,s])=>(1-kk)*Math.pow(c.attr[s.a]||3,2)+kk*30+1));setLv(c,p[0],Math.min(mx,1+Math.floor(Math.pow(Math.random(),1.7)*mx)))}
- for(let s=8;s>=c.seq;s--){const d=s-c.seq,f=x=>Math.max(3,c.attr[x]-Math.floor(d*Math.random()*1.5));c.hist.push({seq:s,con:f('con'),ins:f('ins')})}
+ for(let s=9;s>=c.seq;s--){const d=s-c.seq,f=x=>Math.max(3,c.attr[x]-Math.floor(d*Math.random()*1.5));c.hist.push({seq:s,con:f('con'),ins:f('ins')})}
  if(c.race=='أحفاد العمالقة')c.rch.cmb=PK(GROUPS['القتال']);applyRace(c);
  c.rep=Math.max(1,Math.min(7,RND(+S.rep1,Math.max(+S.rep1,+S.rep2))));E.assets(c);
  if(S.armorR)c.armor=PK(['بلا','قطني/جلدي','حديدي','نصفي']);
@@ -1240,7 +1240,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)r
  if(d){if(a=='rollattr'){const rs=A.map(()=>Dice.roll('3d3'));A.forEach((x,i)=>d.attr[x[0]]=rs[i].t);d.rolled++;d.rl=A.map((x,i)=>`${x[1]} [${rs[i].d}]=${rs[i].t}`).join(' · ');return R()}
   if(a=='adj'){const v=d.attr[t.dataset.k]+ +t.dataset.v;if(v>=3)d.attr[t.dataset.k]=v;return R()}if(a=='d100'){d.d100=Dice.n(100);return R()}
   if(a=='drep'){d.rep=Dice.n(7);d.repR=1;E.assets(d);return R()}if(a=='drepset'){if(!DM())return;d.rep=+t.dataset.v;d.repR=1;E.assets(d);return R()}if(a=='wnext'){if(wStep(d,d.step||0))d.step=(d.step||0)+1;return R(true)}if(a=='wprev'){d.step=Math.max(0,(d.step||0)-1);return R(true)}
-  if(a=='create'){if(!wOk(d))return;d.a0={...d.attr};d.owner=uid;applyRace(d);E.ev(d,'إنشاء الشخصية',`${d.name} — ${d.race}`);d.path=+d.path;if(d.race=='عِرق الدم'){d.rsv={path:d._pp==null?22:+d._pp,seq:(d._pp==null||d._pp==22)?10:9,hist:[]};d.path=14;d.seq=7;const cv=E.ga(d,'con'),iv=E.ga(d,'ins');d.hist=[{seq:8,con:cv,ins:iv},{seq:7,con:cv,ins:iv}]}else if(d.path==22)d.seq=10;E.ev(d,'الحصول على المسار',d.path==22?'بلا مسار':PATHS[d.path][1]+' · التسلسل '+d.seq);chars[d.id]=d;cur=d.id;cv=d.cid||'_';ent=true;draft=null;editMode=false;tab='char';save(d);return R(true)}return}
+  if(a=='create'){if(!wOk(d))return;d.a0={...d.attr};d.owner=uid;applyRace(d);E.ev(d,'إنشاء الشخصية',`${d.name} — ${d.race}`);d.path=+d.path;if(d.race=='عِرق الدم'){d.rsv={path:d._pp==null?22:+d._pp,seq:(d._pp==null||d._pp==22)?10:9,hist:[]};d.path=14;d.seq=7;const cv=E.ga(d,'con'),iv=E.ga(d,'ins');d.hist=[{seq:9,con:cv,ins:iv},{seq:8,con:cv,ins:iv},{seq:7,con:cv,ins:iv}]}else if(d.path==22)d.seq=10;else d.hist=[{seq:9,con:E.ga(d,'con'),ins:E.ga(d,'ins')}];E.ev(d,'الحصول على المسار',d.path==22?'بلا مسار':PATHS[d.path][1]+' · التسلسل '+d.seq);chars[d.id]=d;cur=d.id;cv=d.cid||'_';ent=true;draft=null;editMode=false;tab='char';save(d);return R(true)}return}
  if(!c)return;if(RO(c)&&!['fold','rptoggle','dgtoggle','hltoggle','sptoggle','rctoggle','close','sklearn'].includes(a))return;const L=(ty,tx,b,af)=>E.ev(c,ty,tx,b,af);
  if(!editMode&&['addfor','pick','addsk','rmsk','attrp','addb','delb','arep','edsave'].includes(a))return;
  if(a=='edsave'){if(!ed)return;let rc=0;const p0=c.path,s0=c.seq,lb={name:'الاسم',gender:'الجنس',age:'العمر',race:'العرق',job:'المهنة',affil:'الانتساب',path:'المسار'};for(const k in ed){let v=ed[k];if(k=='path')v=+v;if(k=='name'&&!String(v).trim())continue;if(String(c[k]??'')!=String(v)){L('تعديل المعلومات',lb[k],k=='path'?PATHS[c[k]][1]:c[k],k=='path'?PATHS[v][1]:v);c[k]=v;if(k=='race')rc=1}}syncRace(c);if(rc)applyRace(c);if(c.seq!=s0){c.dig={act:0,idle:0,bonus:0};c.fail=null}if(c.path!=p0||c.seq!=s0){c.pm.pot='';c.pm.manual=0;c.pm.tpath='';bsel.for=''}ed=null;return done(c)}
@@ -1328,7 +1328,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)r
  if(a=='rgjump'){rgs.s=+t.dataset.v;rgLoad();return R()}if(a=='rgsave'){const sp=s=>AD(s).split(/[,،\n]/).map(x=>x.trim()).filter(Boolean),m=sp(g('rgm')||''),ax=sp(g('rga')||'');if(!m.length){last='أدخل المكونات الأساسية';return R()}const o={p:rgs.p,s:rgs.s,m,a:ax},id=rgs.p+'_'+rgs.s;RECIPES[id]=o;if(db)db.doc('recipes/'+id).set(o).catch(()=>{saveErr=1;R()});else store.set('rcp_'+id,JSON.stringify(o));rgs.m=m.join('\n');rgs.a=ax.join('\n');last='حُفظت وصفة '+esc(sqn(rgs.p,rgs.s));return R()}
  if(a=='rgdel'){const id=rgs.p+'_'+rgs.s;delete RECIPES[id];if(RDEFM[id])RECIPES[id]=RDEFM[id];if(db)db.doc('recipes/'+id).delete().catch(()=>{});else try{localStorage.removeItem('rcp_'+id)}catch(e){}rgLoad();last='';return R()}
  if(a=='pmstep'){const k=t.dataset.k;c.pm[k]=Math.max(0,(+c.pm[k]||0)+ +t.dataset.v);return done(c)}if(a=='revive'){c.dead=0;return done(c)}
- if(a=='attrp'){const k=t.dataset.k,v=Math.max(3,c.attr[k]+ +t.dataset.v);L('تعديل سمة',AN[k],c.attr[k],v);c.attr[k]=v;if(!c.hist.length)c.a0[k]=v;return done(c)}
+ if(a=='attrp'){const k=t.dataset.k,v=Math.max(3,c.attr[k]+ +t.dataset.v);L('تعديل سمة',AN[k],c.attr[k],v);c.attr[k]=v;if(c.seq>=9)c.a0[k]=v;return done(c)}
  if(a=='dg'){const k=t.dataset.k,b=E.dig(c);c.dig[k]+=+t.dataset.v;L('زيادة الهضم',k=='act'?'تمثيل يومي':'بلا تمثيل',b,E.dig(c));return done(c)}
  if(a=='crit'){const b=E.dig(c),r=Dice.roll('1d'+t.dataset.v).t;c.dig.bonus+=r;L('زيادة الهضم','تمثيل حاسم +'+r,b,E.dig(c));return done(c)}
  
@@ -1346,7 +1346,7 @@ const CH=e=>{const t=e.target,c=C(),d=draft;if(t.id=='ta'||t.id=='tk'){tst[t.id=
  if(!editMode&&(t.dataset.e||t.dataset.sk||t.dataset.skattr||t.dataset.seq))return;
  if(t.dataset.e){setEd(t.dataset.e,t.value);if(t.dataset.e=='race'||t.dataset.e=='path')R();return}
  if(t.dataset.f=='pw'){if(!DM())return;c.pw=Math.max(0,Math.floor(+t.value)||0);E.ev(c,'تعديل سمة','معدل القوة',null,c.pw+'%');return done(c)}if(t.dataset.f){const n=t.dataset.num?+t.value:t.value;setp(c,t.dataset.f,t.dataset.f=='rep'?+n:n);if(t.dataset.f=='rep')L2(c,'تغير السمعة','المستوى '+n);if(['pname','potion'].includes(t.dataset.f)){save(c);return}return done(c)}
- if(t.dataset.attr){const v=Math.max(3,+t.value||3);E.ev(c,'تعديل سمة',AN[t.dataset.attr],c.attr[t.dataset.attr],v);c.attr[t.dataset.attr]=v;if(!c.hist.length)c.a0[t.dataset.attr]=v;return done(c)}
+ if(t.dataset.attr){const v=Math.max(3,+t.value||3);E.ev(c,'تعديل سمة',AN[t.dataset.attr],c.attr[t.dataset.attr],v);c.attr[t.dataset.attr]=v;if(c.seq>=9)c.a0[t.dataset.attr]=v;return done(c)}
  if(t.dataset.seq){const v=+t.value;snapHist(c);E.ev(c,'تعديل التسلسل','التسلسل',c.seq,v);c.seq=v;fixHist(c);c.dig={act:0,idle:0,bonus:0};c.fail=null;c.pm.pot='';c.pm.manual=0;c.pm.tpath='';bsel.for='';return done(c)}
  if(t.dataset.sk){setLv(c,t.dataset.sk,+t.value);return done(c)}
  if(t.dataset.skattr){const n=t.dataset.skattr;E.ev(c,'تصنيف المهارة',n,AN[c.skills[n].a],AN[t.value]);c.skills[n].a=t.value;return done(c)}
