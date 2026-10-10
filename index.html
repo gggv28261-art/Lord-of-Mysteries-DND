@@ -433,6 +433,14 @@ details.dz>.clp{animation:none!important}
 .ach{display:flex;align-items:center;gap:10px;width:100%}
 .aci{font-style:normal;width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:color-mix(in srgb,var(--g) 14%,var(--s3));color:var(--g);flex:none}
 .ach h3{margin:0;flex:1;text-align:start}.ach h3::before{display:none}
+
+/* ---- svg icons ---- */
+.ic{width:1.1em;height:1.1em;vertical-align:-.2em;display:inline-block;flex:none;margin-inline-end:.3em}
+:is(.dic,.aci,.vi,.ci,.tda,.ico,.pnh span,.dfb>span,.stt i,.av,.mo,.cav,.dpi,nav span,.vc,.tb,.avx,.ddo i,.wzs span,.mn,.lb,.tgl,.pl) .ic{margin:0}
+.dfb>span .ic,.stt i .ic{width:1.15em;height:1.15em}
+.landing .mo .ic{filter:drop-shadow(0 0 14px color-mix(in srgb,var(--g) 55%,transparent));stroke-width:1.5}
+nav button span .ic{width:1.15em;height:1.15em}
+.av>.ic{stroke-width:1.5}
 </style></head><body><header><h1>☾ لورد الغوامض</h1><select id="sel"></select><button id="new">+ جديدة</button><button id="exp" title="تصدير الشخصيات">⬇ تصدير</button><button id="imp" title="استيراد الشخصيات">⬆ استيراد</button><span id="who" class="tag"></span><button id="mode" style="display:none"></button><button id="edt" style="display:none"></button><button id="out" title="تسجيل الخروج">خروج</button></header><main id="m"></main><p id="uidb" class="sub" style="text-align:center;margin:6px 0 14px"></p><nav id="nav"></nav><div id="dr"></div><input type="file" id="impf" accept=".json,application/json" hidden>
 <script>
 const $=s=>document.querySelector(s),AD=s=>String(s??'').replace(/[٠-٩۰-۹]/g,d=>{const i='٠١٢٣٤٥٦٧٨٩'.indexOf(d);return i>=0?i:'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)}),esc=s=>AD(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -525,7 +533,7 @@ function syncRace(c){if(c.race=='عِرق الدم'){if(c.path!=14){E.ev(c,'ال
  if(c.seq>7){const cv=E.ga(c,'con'),iv=E.ga(c,'ins');for(let s=Math.min(c.seq-1,8);s>=7;s--)c.hist.push({seq:s,con:cv,ins:iv});E.ev(c,'تعديل التسلسل','عِرق الدم: متجاوز طبيعي من التسلسل 7',c.seq,7);c.seq=7}}
  const p=RP[c.race];if(p&&p.ch&&!(c.rch||{})[p.ch[0]])rpo=true}
 function pRace(c){const p=RP[c.race]||{n:[]},b=E.race(c),ch=Object.entries(b).filter(([k,v])=>v).map(([k,v])=>`<span class="tag good">${k=='hp'?'الصحة':AN[k]} +${v}</span>`).join(' '),gr=(c.rg||[]).map(([n,d])=>`<span class="tag good">${esc(n)} +${d} مستوى</span>`).join(' '),cv=p.ch?(c.rch||{})[p.ch[0]]||'':'';
- return`<div class="card rpc"><button class="dgb" data-a="rptoggle">${acc('☉','مميزات الأعراق',esc(c.race),rpo)}</button><div class="clp${rpo?' open':''}" data-k="rp"><div><div class="dgp"><div class="row" style="margin-top:0">${ch||''} ${gr}${ch||gr?'':'<span class="sub">لا تعديلات رقمية</span>'}</div>${p.ch?`<div class="pmo"><span><b>${p.ch[1]}</b><small>يُطبَّق فورًا؛ التغيير لاحقًا من وضع التعديل</small></span><select data-rch="${p.ch[0]}"${editMode||!cv?'':' disabled'}>${opts([['','اختر مهارة'],...GROUPS['القتال'].map(x=>[x,x])],cv)}</select></div>`:''}<ul class="rpn">${p.n.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div></div></div></div>`}
+ return`<div class="card rpc"><button class="dgb" data-a="rptoggle">${acc('👥','مميزات الأعراق',esc(c.race),rpo)}</button><div class="clp${rpo?' open':''}" data-k="rp"><div><div class="dgp"><div class="row" style="margin-top:0">${ch||''} ${gr}${ch||gr?'':'<span class="sub">لا تعديلات رقمية</span>'}</div>${p.ch?`<div class="pmo"><span><b>${p.ch[1]}</b><small>يُطبَّق فورًا؛ التغيير لاحقًا من وضع التعديل</small></span><select data-rch="${p.ch[0]}"${editMode||!cv?'':' disabled'}>${opts([['','اختر مهارة'],...GROUPS['القتال'].map(x=>[x,x])],cv)}</select></div>`:''}<ul class="rpn">${p.n.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div></div></div></div>`}
 const IMM={4:2,2:2,1:1.5,0:2},ADDK={4:2,3:2,2:3,1:3,0:4};
 const CI={'الخوف':'😨','الغضب/الاستفزاز':'😡','فقدان التوازن':'🌀','العمى':'🕶','الصمم':'🔇','الصمت':'🤐','التقييد':'⛓','الصدمة':'⚡','العجز':'🛑','الاختفاء':'👁','الإمساك':'✊'};
 const CAUTO={'الخوف':'يُطبَّق تلقائيًا: −4 على كل الاختبارات والمبادرة','الغضب/الاستفزاز':'يُطبَّق تلقائيًا: −4 على كل الاختبارات والمبادرة','فقدان التوازن':'يُطبَّق تلقائيًا: الرشاقة نصف قيمتها (الدفاع والمبادرة والاختبارات)','الصمت':'يُطبَّق تلقائيًا: اختبارات الصوت واللغة تفشل','الصمم':'يُطبَّق تلقائيًا: اختبار الاستماع يفشل','التقييد':'يُطبَّق تلقائيًا: الحركة = 0 في القتال','الصدمة':'يُطبَّق تلقائيًا: الهجوم والإلقاء والحركة = 0 في القتال','العجز':'يُطبَّق تلقائيًا: اختبارات الدفاع تفشل وإجراءات القتال = 0'};
@@ -575,7 +583,7 @@ const rollTxt=o=>`🎲 <b>${o.r}</b> + سمة ${o.av} + مهارة ${o.sv}${o.mo
 const ROM=['9','8','7','6','5','4','3','2','1','0'];
 const avHTML=(o,ro)=>`<div class="avw"><div class="av${ro?' ro':''}"${o.avatar?` style="background-image:url('${esc(o.avatar)}')"`:''}>${o.avatar?'':'☾'}${ro?'':`<small>${o.avatar?'تغيير':'إضافة صورة'}</small><input type="file" class="avin" data-av="1" accept="image/*" title="اختيار صورة">`}</div>${o.avatar&&!ro?'<button class="avx" data-a="avdel" title="حذف الصورة">✕</button>':''}</div>`;
 function avatarFrom(f,cb){const fr=new FileReader();fr.onload=()=>{const im=new Image();im.onload=()=>{const S=256,cv=document.createElement('canvas');cv.width=cv.height=S;const m=Math.min(im.width,im.height);cv.getContext('2d').drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,S,S);cb(cv.toDataURL('image/jpeg',.82))};im.onerror=()=>alert('تعذّر قراءة الصورة');im.src=fr.result};fr.readAsDataURL(f)}
-const TABS=[['camp','🏰','الحملات'],['char','☉','الشخصية'],['test','✦','اختبار'],['path','⚗','المسار'],['mind','☾','العقل'],['fight','⚔','القتال'],['trade','⇄','التبادل'],['log','✎','السجل']];
+const TABS=[['camp','🏰','الحملات'],['char','☉','الشخصية'],['test','✦','اختبار'],['path','⚗','المسار'],['mind','☾','العقل'],['fight','⚔','القتال'],['trade','⇄','التبادل'],['log','📜','السجل']];
 const pathOpts=()=>[[22,'بلا مسار'],...PATHS.slice(0,22).map((p,i)=>[i,`${p[1]} · ${p[0]}`])];
 const WST=['الهوية','العرق والمسار','السمات','السمعة والمراجعة'];
 const wSum=d=>Object.values(d.attr).reduce((a,b)=>a+b,0);
@@ -622,7 +630,7 @@ const infoCard=c=>{const em=editMode,dm=DM(),camp=camps[c.cid],own=c.owner==uid?
  return`<div class="card dsr"><h3>ملف الشخصية</h3><div class="ig"><div class="dsp"><div class="dpi">⚗</div><div class="dpb"><small>المسار</small>${pv}<div class="dps">${sl}</div></div><div class="dsq">${[9,8,7,6,5,4,3,2,1,0].map(i=>`<i class="${hn?'':i>c.seq?'p':i==c.seq?'on':''}"></i>`).join('')}</div></div>
  ${it(ev(c,'gender')=='أنثى'?'♀':'♂','الجنس',`<select data-e="gender">${opts([['ذكر','ذكر'],['أنثى','أنثى']],ev(c,'gender'))}</select>`,c.gender)}
  ${it('⏳','العمر',`<input data-e="age" placeholder="—" value="${esc(ev(c,'age'))}">`,ag)}
- ${it('☉','العرق',`<select data-e="race">${opts(Object.keys(RACES).map(r=>[r,r]),ev(c,'race'))}</select>`,c.race,'wd',bn?`<div class="dtg">${bn}</div>`:'')}
+ ${it('👥','العرق',`<select data-e="race">${opts(Object.keys(RACES).map(r=>[r,r]),ev(c,'race'))}</select>`,c.race,'wd',bn?`<div class="dtg">${bn}</div>`:'')}
  ${it('⚒','المهنة',`<input data-e="job" placeholder="—" value="${esc(ev(c,'job'))}">`,c.job)}
  ${it('⚑','الانتساب',`<input data-e="affil" placeholder="—" value="${esc(ev(c,'affil'))}">`,c.affil)}
  ${it('🏰','الحملة',`<b>${esc(camp?camp.name:'—')}</b>`,camp?camp.name:'')}
@@ -1103,7 +1111,7 @@ const THM=[['#e0c27a','#8a6a2a'],['#2dd4bf','#0f766e'],['#94a3b8','#475569'],['#
 function thm(){const o=draft||C(),t=o&&THM[o.path],r=document.documentElement.style,x=(c,k,b)=>t?`color-mix(in srgb,${c} ${k}%,${b})`:b;r.setProperty('--g',x(t&&t[0],9,'#5aa9ff'));r.setProperty('--g2',x(t&&t[1],9,'#2563eb'));r.setProperty('--bg',x(t&&t[1],2,'#05070d'));r.setProperty('--s1',x(t&&t[1],3,'#0a0f1a'));r.setProperty('--s2',x(t&&t[1],3,'#0f1626'));r.setProperty('--s3',x(t&&t[1],4,'#16203a'));r.setProperty('--bd',x(t&&t[1],6,'#1f2d4d'));r.setProperty('--m',x(t&&t[0],5,'#8fa3c4'))}
 function R(an){if(inChange){schedR(an);return}closeDD();thm();document.body.classList.toggle('lnd',!ent);const y=scrollY,ae=document.activeElement,fi=ae&&ae.matches&&ae.matches('input,select')?[...document.querySelectorAll('#m input,#m select')].indexOf(ae):-1;$('#m').classList.toggle('an',!!an);{const ls=Object.values(chars).filter(x=>!chars[cur]||x.cid==chars[cur].cid),op=c=>`<option value="${c.id}"${c.id==cur?' selected':''}>${esc(c.name||'—')}</option>`,ow=[...new Set(ls.map(c=>c.owner))].sort((a,b)=>(b==uid)-(a==uid));$('#sel').innerHTML=ow.length>1?ow.map(o=>`<optgroup label="${o==uid?'شخصياتي':esc(names[o]||'لاعب')}">${ls.filter(c=>c.owner==o).map(op).join('')}</optgroup>`).join(''):ls.map(op).join('')}$('#who').textContent=isOwner?'DM':'لاعب';const mb=$('#mode');mb.style.display=isOwner?'':'none';mb.textContent=dmView?'👁 لاعب':'👁 DM';const eb=$('#edt');eb.style.display=(!draft&&C()&&!RO(C()))?'':'none';eb.textContent=editMode?'👤 بروفايل':'✏ تعديل';eb.classList.toggle('on',editMode);
  const TB=c0=>c0?Object.values(trades).filter(x=>x.status=='pending'&&x.to.charId==c0.id).length:0,tb=TB(C());$('#nav').innerHTML=TABS.map(([k,i,l])=>`<button data-tab="${k}" class="${k==tab?'on':''}"><span>${i}</span>${l}${k=='trade'&&tb?`<b class="nb">${tb}</b>`:''}</button>`).join('');const c=C();$('#dr').innerHTML=tab=='char'&&!draft?drawerHTML(c):'';
-  $('#m').innerHTML=tab=='camp'?pCamp():draft?wizard():!c?'<div class="card">لا شخصيات بعد.</div>':{char:pChar,test:pTest,path:pPath,mind:pMind,fight:pFight2,trade:pTrade,log:pLog}[tab](c);if(draft&&!ent&&tab!='camp')$('#m').insertAdjacentHTML('afterbegin','<div class="row"><button data-a="wback">→ رجوع للحملة</button></div>');enh();fixNums($('#m'));fixNums($('#dr'));sbUpd();scrollTo(0,an?0:y);if(fi>=0){const el=document.querySelectorAll('#m input,#m select')[fi];if(el)el.focus({preventScroll:true})}}
+  $('#m').innerHTML=tab=='camp'?pCamp():draft?wizard():!c?'<div class="card">لا شخصيات بعد.</div>':{char:pChar,test:pTest,path:pPath,mind:pMind,fight:pFight2,trade:pTrade,log:pLog}[tab](c);if(draft&&!ent&&tab!='camp')$('#m').insertAdjacentHTML('afterbegin','<div class="row"><button data-a="wback">→ رجوع للحملة</button></div>');enh();fixNums($('#m'));fixNums($('#dr'));icz(document.body);sbUpd();scrollTo(0,an?0:y);if(fi>=0){const el=document.querySelectorAll('#m input,#m select')[fi];if(el)el.focus({preventScroll:true})}}
 const ev=(c,f)=>ed&&f in ed?ed[f]:c[f];
 const sb=document.createElement('div');sb.id='sb';sb.innerHTML='<span>تعديلات غير محفوظة</span><button class="sv" data-a="edsave">💾 حفظ</button><button data-a="edcancel">تراجع</button>';document.body.appendChild(sb);
 const sbUpd=()=>sb.classList.toggle('on',!!(ed&&Object.keys(ed).length&&!draft));
@@ -1125,7 +1133,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)r
   return R()}
  if(a=='cnew'){draft=mkChar();draft.cid=t.dataset.id;editMode=false;tab='char';return R(true)}
  if(a=='copen'){ent=true;cur=t.dataset.id;cv=chars[cur]&&camps[chars[cur].cid]?chars[cur].cid:'_';draft=null;tab='char';editMode=false;ed=null;return R(true)}
- if(a=='psub'){psub=t.dataset.v;last='';return R()}if(a=='bpick'){const [a2,b2]=t.dataset.k.split('|').map(Number);bsel.p=a2;bsel.s=b2;return R()}if(a=='tsub'){tsub=t.dataset.v;last='';return R()}if(a=='tref'){loadTrades().then(()=>R());return}if(a=='lenter'){lst=1;return R(true)}if(a=='lback'){lst=0;cv=null;return R(true)}if(a=='wback'){draft=null;tab='camp';return R(true)}if(a=='cview'){cv=t.dataset.id;gmsg='';return R(true)}if(a=='cback'){cv=null;gop=false;return R(true)}if(a=='gtog'){readGen();gop=!gop;t.textContent=gop?'إخفاء المولّد':'🎲 توليد عشوائي';if(!clpT('gop',gop,null))R();return}if(a=='gen'){if(!DM()||!cv||cv=='_')return;readGen();const n=Math.max(1,Math.min(10,Math.floor(+GS.count)||1)),nn=[];for(let i=0;i<n;i++){const x=genChar(GS,cv);x.id+=i;chars[x.id]=x;save(x);nn.push(x.name)}gmsg='تم توليد '+n+': '+nn.join('، ');return R()}if(a=='avdel'){const tg=d||c;if(tg){tg.avatar='';if(!d){E.ev(tg,'الملف الشخصي','حذف الصورة');save(tg)}R()}return}
+ if(a=='psub'){psub=t.dataset.v;last='';return R()}if(a=='bpick'){const [a2,b2]=t.dataset.k.split('|').map(Number);bsel.p=a2;bsel.s=b2;return R()}if(a=='tsub'){tsub=t.dataset.v;last='';return R()}if(a=='tref'){loadTrades().then(()=>R());return}if(a=='lenter'){lst=1;return R(true)}if(a=='lback'){lst=0;cv=null;return R(true)}if(a=='wback'){draft=null;tab='camp';return R(true)}if(a=='cview'){cv=t.dataset.id;gmsg='';return R(true)}if(a=='cback'){cv=null;gop=false;return R(true)}if(a=='gtog'){readGen();gop=!gop;t.textContent=gop?'إخفاء المولّد':'🎲 توليد عشوائي';icz(t);if(!clpT('gop',gop,null))R();return}if(a=='gen'){if(!DM()||!cv||cv=='_')return;readGen();const n=Math.max(1,Math.min(10,Math.floor(+GS.count)||1)),nn=[];for(let i=0;i<n;i++){const x=genChar(GS,cv);x.id+=i;chars[x.id]=x;save(x);nn.push(x.name)}gmsg='تم توليد '+n+': '+nn.join('، ');return R()}if(a=='avdel'){const tg=d||c;if(tg){tg.avatar='';if(!d){E.ev(tg,'الملف الشخصي','حذف الصورة');save(tg)}R()}return}
  if(d){if(a=='rollattr'){const rs=A.map(()=>Dice.roll('3d3'));A.forEach((x,i)=>d.attr[x[0]]=rs[i].t);d.rolled++;d.rl=A.map((x,i)=>`${x[1]} [${rs[i].d}]=${rs[i].t}`).join(' · ');return R()}
   if(a=='adj'){const v=d.attr[t.dataset.k]+ +t.dataset.v;if(v>=3)d.attr[t.dataset.k]=v;return R()}if(a=='d100'){d.d100=Dice.n(100);return R()}
   if(a=='drep'){d.rep=Dice.n(7);d.repR=1;E.assets(d);return R()}if(a=='drepset'){if(!DM())return;d.rep=+t.dataset.v;d.repR=1;E.assets(d);return R()}if(a=='wnext'){if(wStep(d,d.step||0))d.step=(d.step||0)+1;return R(true)}if(a=='wprev'){d.step=Math.max(0,(d.step||0)-1);return R(true)}
@@ -1225,6 +1233,65 @@ const CH=e=>{const t=e.target,c=C(),d=draft;if(t.id=='irr'||t.id=='err'||t.id=='
 document.addEventListener('change',e=>{inChange=true;try{CH(e)}finally{inChange=false}});
 const L2=(c,a,b)=>E.ev(c,a,b);
 
+/* ===== Icons: emoji -> line SVG (inherits color) ===== */
+const ICON={
+dice:'<rect x="3" y="3" width="18" height="18" rx="3.5"/><circle cx="8.5" cy="8.5" r="1" fill="currentColor"/><circle cx="15.5" cy="8.5" r="1" fill="currentColor"/><circle cx="8.5" cy="15.5" r="1" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/>',
+moon:'<path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/>',
+swords:'<path d="M5 19L19 5"/><path d="M19 19L5 5"/><path d="M5 15l4 4"/><path d="M19 15l-4 4"/>',
+shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+heart:'<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21.2l7.8-7.7 1-1.1a5.5 5.5 0 0 0 0-7.8z"/>',
+spark:'<path d="M12 3l1.9 5.6 5.6 1.9-5.6 1.9L12 18l-1.9-5.6-5.6-1.9 5.6-1.9z"/>',
+flask:'<path d="M9 3h6"/><path d="M10 3v6L4.5 19a1.5 1.5 0 0 0 1.3 2h12.4a1.5 1.5 0 0 0 1.3-2L14 9V3"/><path d="M7.5 15h9"/>',
+steth:'<path d="M6 3v6a4 4 0 0 0 8 0V3"/><path d="M10 13v1a5 5 0 0 0 10 0v-2"/><circle cx="20" cy="10" r="2"/>',
+pill:'<path d="M10.5 20.5a5 5 0 0 1-7-7l10-10a5 5 0 0 1 7 7z"/><path d="M8.5 8.5l7 7"/>',
+bed:'<path d="M3 19V6"/><path d="M3 15h18v4"/><path d="M21 15v-3a3 3 0 0 0-3-3h-8v6"/><circle cx="6.5" cy="11" r="1.6"/>',
+brain:'<path d="M12 5a3.5 3.5 0 0 0-6.5 1.7A3.5 3.5 0 0 0 4 12.5 3.5 3.5 0 0 0 7 18a3 3 0 0 0 5 1.5z"/><path d="M12 5a3.5 3.5 0 0 1 6.5 1.7A3.5 3.5 0 0 1 20 12.5 3.5 3.5 0 0 1 17 18a3 3 0 0 1-5 1.5z"/><path d="M12 5v14.5"/>',
+smile:'<circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><path d="M9 9h.01M15 9h.01"/>',
+flame:'<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>',
+bolt:'<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>',
+move:'<path d="M5 12h14M13 6l6 6-6 6"/>',
+hourglass:'<path d="M6 3h12M6 21h12"/><path d="M7 3v4l5 5-5 5v4M17 3v4l-5 5 5 5v4"/>',
+target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor"/>',
+wind:'<path d="M3 8h11a3 3 0 1 0-3-3"/><path d="M3 12h16a3 3 0 1 1-3 3"/><path d="M3 16h7"/>',
+dumbbell:'<path d="M6.5 6.5v11M17.5 6.5v11M3 9v6M21 9v6M6.5 12h11"/>',
+lock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
+eye:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+eyeoff:'<path d="M3 3l18 18"/><path d="M10.6 5.1A10 10 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3 4M6.6 6.6A17 17 0 0 0 2 12s3.5 7 10 7a10 10 0 0 0 5-1.4"/>',
+pen:'<path d="M16 3l5 5L8 21H3v-5z"/><path d="M14 5l5 5"/>',
+user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/>',
+users:'<circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-3.5 3-6 7-6s7 2.5 7 6"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14c2.5.8 4 2.7 4 6"/>',
+castle:'<path d="M3 21V7l3 2V5l3 2V4h6v3l3-2v4l3-2v14z"/><path d="M10 21v-4a2 2 0 0 1 4 0v4"/>',
+doc:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/>',
+mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
+inbox:'<path d="M3 13l3-8h12l3 8v6H3z"/><path d="M3 13h5l1 3h6l1-3h5"/>',
+swap:'<path d="M4 8h15M15 4l4 4-4 4"/><path d="M20 16H5M9 12l-4 4 4 4"/>',
+coin:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/>',
+book:'<path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v18H6.5A2.5 2.5 0 0 0 4 22z"/><path d="M4 4.5V22"/>',
+bag:'<path d="M8 6a4 4 0 0 1 8 0"/><rect x="5" y="6" width="14" height="16" rx="3"/><path d="M9 14h6"/>',
+wallet:'<rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18M16 15h2"/>',
+save:'<path d="M5 3h11l3 3v15H5z"/><path d="M8 3v5h7V3M8 21v-7h8v7"/>',
+down:'<path d="M12 4v11M7 11l5 5 5-5M5 20h14"/>',
+up:'<path d="M12 20V9M7 13l5-5 5 5M5 4h14"/>',
+next:'<path d="M5 5l9 7-9 7z"/><path d="M18 5v14"/>',
+undo:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>',
+refresh:'<path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/>',
+flag:'<path d="M5 21V4M5 4h12l-2 4 2 4H5"/>',
+tool:'<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.5-.5-.5-2.5z"/>',
+mars:'<circle cx="10" cy="14" r="5"/><path d="M14 10l6-6M15 4h5v5"/>',
+venus:'<circle cx="12" cy="9" r="5"/><path d="M12 14v8M9 18h6"/>',
+alert:'<path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18v.01"/>',
+mute:'<path d="M3 9v6h4l5 4V5L7 9z"/><path d="M16 9l5 6M21 9l-5 6"/>',
+minus:'<circle cx="12" cy="12" r="9"/><path d="M8 12h8"/>',
+link:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
+ban:'<circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/>',
+hand:'<path d="M8 12V6a1.5 1.5 0 0 1 3 0v5"/><path d="M11 11V4.5a1.5 1.5 0 0 1 3 0V11"/><path d="M14 11V6a1.5 1.5 0 0 1 3 0v7a7 7 0 0 1-7 7h-.5A6.5 6.5 0 0 1 4 15.5V13a1.5 1.5 0 0 1 3 0"/>',
+check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+x:'<path d="M6 6l12 12M18 6L6 18"/>'};
+const IM={'🎲':'dice','☾':'moon','⚔':'swords','🛡':'shield','♥':'heart','✦':'spark','✨':'spark','⚗':'flask','🧪':'flask','🩺':'steth','💊':'pill','🛏':'bed','🧠':'brain','🧘':'brain','🎭':'smile','🔥':'flame','😡':'flame','⚡':'bolt','👣':'move','⏳':'hourglass','🎯':'target','🌀':'wind','💪':'dumbbell','🔒':'lock','👁':'eye','🕶':'eyeoff','✎':'pen','✏':'pen','👤':'user','☉':'user','👥':'users','🏰':'castle','📜':'doc','✉':'mail','📥':'inbox','⇄':'swap','🪙':'coin','📖':'book','🎒':'bag','💰':'wallet','💾':'save','⬇':'down','⬆':'up','⏭':'next','↺':'undo','↻':'refresh','⚑':'flag','⚒':'tool','♂':'mars','♀':'venus','😨':'alert','⚠':'alert','🔇':'mute','🤐':'minus','⛓':'link','🛑':'ban','✊':'hand','✓':'check','✔':'check','✕':'x','✘':'x'};
+const IS='('+Object.keys(IM).join('|')+')\\uFE0F?',IT=new RegExp(IS,'u'),IG=new RegExp(IS,'gu'),
+ svgI=n=>`<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[n]}</svg>`;
+function icz(root){if(!root)return;const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentElement&&!n.parentElement.closest('script,style,textarea,select,option,svg')&&IT.test(n.nodeValue)?1:2}),L=[];while(w.nextNode())L.push(w.currentNode);
+ L.forEach(n=>{const h=n.nodeValue.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])).replace(IG,(m,k)=>svgI(IM[k])),t=document.createElement('template');t.innerHTML=h;n.replaceWith(t.content)})}
 /* ===== Numbers: Latin digits + LTR isolation ===== */
 const NR=/[+−\-–]?\d+(?:\.\d+)?(?:d\d+)?(?:\s*[+−\-–/×÷:]\s*\d+(?:\.\d+)?(?:d\d+)?)*%?/gi;
 function fixNums(root){if(!root)return;const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentElement&&/\d|[٠-٩۰-۹]/.test(n.nodeValue)&&!n.parentElement.closest('script,style,textarea,select,option,bdi,[dir=ltr],.fm')?1:2}),L=[];while(w.nextNode())L.push(w.currentNode);
@@ -1240,7 +1307,7 @@ function closeDD(){ddCur=null;ddP.classList.remove('on')}
 function openDD(b){const sl=b.parentNode._s;if(!sl||sl.disabled)return;if(ddCur===sl)return closeDD();ddCur=sl;
  const it=o=>{if(o.hidden)return'';const ch=sl.id=='sel'?chars[o.value]:null,ck=o.selected?'<i>✓</i>':'';if(ch)return`<button type="button" class="ddo cho${o.selected?' on':''}" data-v="${esc(o.value)}"><span class="cav"${ch.avatar?` style="background-image:url('${esc(ch.avatar)}')"`:''}>${ch.avatar?'':'☾'}</span><span class="cin"><b>${esc(ch.name||'—')}</b><small>${esc((ch.path==22?'بلا مسار':PATHS[ch.path][1])+' · '+(ch.path==22||ch.seq>9?'إنسان عادي':'تسلسل '+ch.seq))}</small></span>${ck}</button>`;return`<button type="button" class="ddo${o.selected?' on':''}" data-v="${esc(o.value)}">${esc(o.textContent)}${ck}</button>`};
  ddP.innerHTML=[...sl.children].map(ch=>ch.tagName=='OPTGROUP'?`<div class="ddg">${esc(ch.label)}</div>`+[...ch.children].map(it).join(''):it(ch)).join('');
- fixNums(ddP);const r=b.getBoundingClientRect(),vw=innerWidth,vh=innerHeight,w=Math.min(Math.max(r.width,sl.id=='sel'?270:150),vw-16),l=Math.min(Math.max(8,r.left),vw-w-8),below=vh-r.bottom-66,above=r.top-50,mh=Math.min(240,vh*.42),dn=below>=Math.min(mh,160)||below>=above,H=Math.max(90,Math.min(mh,dn?below:above));
+ fixNums(ddP);icz(ddP);const r=b.getBoundingClientRect(),vw=innerWidth,vh=innerHeight,w=Math.min(Math.max(r.width,sl.id=='sel'?270:150),vw-16),l=Math.min(Math.max(8,r.left),vw-w-8),below=vh-r.bottom-66,above=r.top-50,mh=Math.min(240,vh*.42),dn=below>=Math.min(mh,160)||below>=above,H=Math.max(90,Math.min(mh,dn?below:above));
  ddP.style.cssText=`left:${l}px;width:${w}px;max-height:${H}px;${dn?`top:${r.bottom+4}px;bottom:auto`:`bottom:${vh-r.top+4}px;top:auto`}`;ddP.classList.add('on');
  const on=ddP.querySelector('.on');if(on)ddP.scrollTop=on.offsetTop-ddP.clientHeight/2+on.offsetHeight/2}
 document.addEventListener('click',e=>{const b=e.target.closest('.ddt');if(b)openDD(b)});
