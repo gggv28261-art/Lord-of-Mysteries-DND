@@ -644,16 +644,24 @@ function uiSave(){if(!uiOn)return;try{localStorage.setItem(uiKey(),JSON.stringif
 function uiLoad(){try{return JSON.parse(localStorage.getItem(uiKey()))}catch(e){return null}}
 addEventListener('scroll',()=>{clearTimeout(uiT);uiT=setTimeout(uiSave,250)},{passive:true});addEventListener('pagehide',uiSave);
 const store={set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
-async function save(c){c.owner=c.owner||uid;store.set('lom_'+c.id,JSON.stringify(c));if(db)try{if(!rs[c.owner]){rs[c.owner]=1;db.doc('roster/'+c.owner).set({t:Date.now()}).catch(()=>{})}await db.doc('pc/'+c.owner+'/chars/'+c.id).set({cid:c.cid||'',name:c.name||'',json:JSON.stringify(c)});saveErr=0}catch(e){saveErr=1;if(tab=='camp')R()}}
+let rawJ={},lastSv=0,syncB=0;
+async function save(c){lastSv=Date.now();c.owner=c.owner||uid;store.set('lom_'+c.id,JSON.stringify(c));if(db)try{if(!rs[c.owner]){rs[c.owner]=1;db.doc('roster/'+c.owner).set({t:Date.now()}).catch(()=>{})}await db.doc('pc/'+c.owner+'/chars/'+c.id).set({cid:c.cid||'',name:c.name||'',json:(rawJ[c.id]=JSON.stringify(c))});saveErr=0}catch(e){saveErr=1;if(tab=='camp')R()}}
 let camps={},names={},saveErr=0,cdel='',lpw='',lml='';const rs={};
 async function loadAll(reset){const old=reset?{}:{...chars};camps={};
  if(!db){try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k.startsWith('cmp_'))try{const x=JSON.parse(localStorage.getItem(k));camps[x.id]=x}catch(e){}}}catch(e){}return}
  try{(await db.collection('camp').get()).docs.forEach(d=>{const x=d.data();if(x&&x.name)camps[d.id]=x})}catch(e){}
- const ch={},add=d=>{try{const c=norm(JSON.parse(d.data().json));ch[c.id]=c}catch(e){}};let ids=[uid];
+ const ch={},add=d=>{try{const c=norm(JSON.parse(d.data().json));rawJ[c.id]=d.data().json;ch[c.id]=c}catch(e){}};let ids=[uid];
  try{(await db.collection('roster').get()).docs.forEach(d=>ids.push(d.id))}catch(e){}
  for(const o of new Set(ids)){try{(await db.collection('pc/'+o+'/chars').get()).docs.forEach(add)}catch(e){}}
  if(isOwner)for(const id in old)if(!ch[id]){const c=old[id];if(!c.owner||c.owner=='local')c.owner=uid;ch[id]=c;save(c)}
  chars=ch;try{const ps=await user.profiles([...new Set(Object.values(chars).map(c=>c.owner))]);for(const k in ps)names[k]=ps[k].name||''}catch(e){}}
+async function syncChars(){if(!db||syncB||draft||(ed&&Object.keys(ed).length)||Date.now()-lastSv<6000||isTxt(document.activeElement)||ddCur||drawer||document.hidden)return;syncB=1;
+ try{let ids=[uid],chg=0;try{(await db.collection('roster').get()).docs.forEach(d=>ids.push(d.id))}catch(e){}
+  for(const o of new Set(ids)){let docs=[];try{docs=(await db.collection('pc/'+o+'/chars').get()).docs}catch(e){continue}
+   for(const d of docs){if(Date.now()-lastSv<6000||(ed&&Object.keys(ed).length))return;const j=d.data().json;if(rawJ[d.id]===j)continue;try{const c=norm(JSON.parse(j));chars[c.id]=c;rawJ[c.id]=j;chg=1}catch(e){}}}
+  if(chg&&!draft&&!isTxt(document.activeElement)&&!(ed&&Object.keys(ed).length)&&Date.now()-lastSv>=6000){if(!chars[cur])cur=Object.keys(chars)[0]||null;R()}}
+ finally{syncB=0}}
+setInterval(syncChars,8000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)syncChars()});
 async function init(){try{const U=await claude.use('user');if(U){user=U;isOwner=!!(await U.isOwner())||!!(await U.canEdit());try{uid=(await U.id())||'local'}catch(e){}}}catch(e){}
  try{db=await claude.use('db')}catch(e){}
  if(db){try{const q=await db.collection('chars').get();q.docs.forEach(d=>{try{const c=norm(JSON.parse(d.data().json));if(isOwner||c.owner==uid)chars[c.id]=c}catch(e){}})}catch(e){}}
