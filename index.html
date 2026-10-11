@@ -1534,7 +1534,7 @@ document.addEventListener('input',e=>{const t=e.target;if(t.id=='tm'||t.id=='td'
 document.addEventListener('input',e=>{const t=e.target;if(t.dataset&&t.dataset.num){const v=t.value.replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٫،]/g,'.').replace(/[^0-9.\-]/g,'');if(v!==t.value)t.value=v}},true);
 document.addEventListener('input',e=>{const t=e.target;if(t.matches&&t.matches('input:not([type=checkbox]):not([type=file]),textarea')&&!(t.dataset&&t.dataset.num)){const v=AD(t.value);if(v!==t.value){const p=t.selectionStart;t.value=v;try{t.setSelectionRange(p,p)}catch(x){}}}},true);
 </script>
-<div id="auth"><div class="acard"><h1>👁 لورد الغوامض</h1><button id="agoogle">الدخول بحساب Google</button><div class="aor">أو</div><input id="anm" placeholder="اكتب اسمك الظاهر للجميع"><button id="aanon">الدخول بالاسم فقط</button><div class="asub">الدخول بالاسم مرتبط بهذا المتصفح فقط؛ استخدم Google إن أردت الدخول من أجهزة مختلفة.</div><div id="aerr"></div></div></div>
+<div id="auth"><div class="acard"><h1>👁 لورد الغوامض</h1><input id="anm" placeholder="اكتب اسمك الظاهر للجميع"><button id="aanon">دخول</button><div class="asub">الدخول بالاسم مرتبط بهذا المتصفح على هذا الجهاز.</div><div id="aerr"></div></div></div>
 <script type="module">
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import {getAuth,onAuthStateChanged,GoogleAuthProvider,signInWithPopup,signInAnonymously,signOut,updateProfile} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
@@ -1549,7 +1549,6 @@ window.claude={use:async n=>{
  if(n=='db')return{collection:p=>({get:async()=>{const s=await getDocs(collection(fs,...seg(p)));if(p=='roster')s.docs.forEach(d=>{NM[d.id]=d.data().n||''});return{docs:s.docs.map(d=>({id:d.id,data:()=>d.data()}))}}}),doc:p=>({set:async x=>{if(p=='roster/'+auth.currentUser.uid)x={...x,n:auth.currentUser.displayName||''};await setDoc(doc(fs,...seg(p)),x,{merge:p.startsWith('roster/')})},delete:async()=>deleteDoc(doc(fs,...seg(p))),get:async()=>{const s=await getDoc(doc(fs,...seg(p)));return{exists:s.exists(),data:()=>s.data()}}})};
  return null}};
 Object.assign(ERR,{'auth/popup-closed-by-user':'أُغلقت نافذة الدخول قبل الإكمال','auth/popup-blocked':'المتصفح حجب نافذة الدخول، اسمح بالنوافذ المنبثقة','auth/operation-not-allowed':'طريقة الدخول هذه غير مفعّلة في Firebase','auth/cancelled-popup-request':'أُلغي طلب الدخول'});
-Q('#agoogle').onclick=async()=>{msg();try{await signInWithPopup(auth,new GoogleAuthProvider())}catch(x){msg(ERR[x.code]||x.code)}};
 Q('#aanon').onclick=async()=>{msg();const n=Q('#anm').value.trim();if(!n)return msg('اكتب اسمك أولًا');try{const u=await signInAnonymously(auth);await updateProfile(u.user,{displayName:n})}catch(x){msg(ERR[x.code]||x.code)}};
 document.addEventListener('click',e=>{if(e.target.closest('#out'))signOut(auth).then(()=>location.reload())});
 onAuthStateChanged(auth,async u=>{if(!u){Q('#auth').style.display='flex';return}
