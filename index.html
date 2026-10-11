@@ -644,8 +644,12 @@ function uiSave(){if(!uiOn)return;try{localStorage.setItem(uiKey(),JSON.stringif
 function uiLoad(){try{return JSON.parse(localStorage.getItem(uiKey()))}catch(e){return null}}
 addEventListener('scroll',()=>{clearTimeout(uiT);uiT=setTimeout(uiSave,250)},{passive:true});addEventListener('pagehide',uiSave);
 const store={set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
-let rawJ={},lastSv=0,syncB=0,saveQ={};
-function save(c){lastSv=Date.now();return saveQ[c.id]=(saveQ[c.id]||Promise.resolve()).then(()=>doSave(c)).catch(()=>{})}
+let rawJ={},lastSv=0,syncB=0,saveQ={},dirty={},saving=0;
+function save(c){if(!c)return;c.owner=c.owner||uid;dirty[c.id]=1;sbUpd()}
+async function flushAll(){if(saving)return;saving=1;sbUpd();try{await Promise.all(Object.keys(dirty).map(id=>chars[id]?saveNow(chars[id]):delete dirty[id]))}finally{saving=0;sbUpd();R()}}
+function discardAll(){for(const id of Object.keys(dirty)){const j=rawJ[id];if(j){try{chars[id]=norm(JSON.parse(j))}catch(e){}}delete dirty[id]}sbUpd()}
+addEventListener('beforeunload',e=>{if(Object.keys(dirty).length){e.preventDefault();e.returnValue=''}});
+function saveNow(c){lastSv=Date.now();delete dirty[c.id];return saveQ[c.id]=(saveQ[c.id]||Promise.resolve()).then(()=>doSave(c)).catch(()=>{})}
 function mergeChar(c,baseS,remS){let b,r;try{b=JSON.parse(baseS);r=JSON.parse(remS)}catch(e){return 0}if(!b||!r)return 0;const sm=(x,y)=>JSON.stringify(x)===JSON.stringify(y);let ch=0;
  for(const k of Object.keys(r)){if(k[0]=='_')continue;
   if(k=='skills'){c.skills=c.skills||{};for(const n of new Set([...Object.keys(r.skills||{}),...Object.keys(c.skills)])){const rem=(r.skills||{})[n];if(rem!==undefined&&sm(c.skills[n],(b.skills||{})[n])&&!sm(c.skills[n],rem)){c.skills[n]=rem;ch=1}}continue}
@@ -653,7 +657,7 @@ function mergeChar(c,baseS,remS){let b,r;try{b=JSON.parse(baseS);r=JSON.parse(re
   if(k=='log'&&Array.isArray(r.log)){const seen=new Set((c.log||[]).map(x=>JSON.stringify(x))),add=r.log.filter(x=>!seen.has(JSON.stringify(x))&&!(b.log||[]).some(y=>sm(x,y)&&false));if(add.length){c.log=[...(c.log||[]),...add].sort((x,y)=>(y.t||0)-(x.t||0)).slice(0,500);ch=1}continue}
   if(sm(c[k],b[k])&&!sm(c[k],r[k])){c[k]=r[k];ch=1}}
  return ch}
-async function doSave(c){lastSv=Date.now();c.owner=c.owner||uid;store.set('lom_'+c.id,JSON.stringify(c));if(db)try{if(!rs[c.owner]){rs[c.owner]=1;db.doc('roster/'+c.owner).set({t:Date.now()}).catch(()=>{})}const ref=db.doc('pc/'+c.owner+'/chars/'+c.id);let mg=0;try{const g=await ref.get();if(g.exists){const rj=g.data().json;if(rj&&rawJ[c.id]&&rj!==rawJ[c.id])mg=mergeChar(c,rawJ[c.id],rj)}}catch(e){}await ref.set({cid:c.cid||'',name:c.name||'',json:(rawJ[c.id]=JSON.stringify(c))});saveErr=0;if(mg&&!draft&&!isTxt(document.activeElement)&&tab!='camp')R()}catch(e){saveErr=1;if(tab=='camp')R()}}
+async function doSave(c){lastSv=Date.now();c.owner=c.owner||uid;store.set('lom_'+c.id,JSON.stringify(c));if(!db)rawJ[c.id]=JSON.stringify(c);if(db)try{if(!rs[c.owner]){rs[c.owner]=1;db.doc('roster/'+c.owner).set({t:Date.now()}).catch(()=>{})}const ref=db.doc('pc/'+c.owner+'/chars/'+c.id);let mg=0;try{const g=await ref.get();if(g.exists){const rj=g.data().json;if(rj&&rawJ[c.id]&&rj!==rawJ[c.id])mg=mergeChar(c,rawJ[c.id],rj)}}catch(e){}await ref.set({cid:c.cid||'',name:c.name||'',json:(rawJ[c.id]=JSON.stringify(c))});saveErr=0;if(mg&&!draft&&!isTxt(document.activeElement)&&tab!='camp')R()}catch(e){saveErr=1;dirty[c.id]=1;sbUpd();if(tab=='camp')R()}}
 let camps={},names={},saveErr=0,cdel='',lpw='',lml='';const rs={};
 async function loadAll(reset){const old=reset?{}:{...chars};camps={};
  if(!db){try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k.startsWith('cmp_'))try{const x=JSON.parse(localStorage.getItem(k));camps[x.id]=x}catch(e){}}}catch(e){}return}
@@ -661,19 +665,19 @@ async function loadAll(reset){const old=reset?{}:{...chars};camps={};
  const ch={},add=d=>{try{const c=norm(JSON.parse(d.data().json));rawJ[c.id]=d.data().json;ch[c.id]=c}catch(e){}};let ids=[uid];
  try{(await db.collection('roster').get()).docs.forEach(d=>ids.push(d.id))}catch(e){}
  for(const o of new Set(ids)){try{(await db.collection('pc/'+o+'/chars').get()).docs.forEach(add)}catch(e){}}
- if(isOwner)for(const id in old)if(!ch[id]){const c=old[id];if(!c.owner||c.owner=='local')c.owner=uid;ch[id]=c;save(c)}
- chars=ch;try{const ps=await user.profiles([...new Set(Object.values(chars).map(c=>c.owner))]);for(const k in ps)names[k]=ps[k].name||''}catch(e){}}
+ if(isOwner)for(const id in old)if(!ch[id]){const c=old[id];if(!c.owner||c.owner=='local')c.owner=uid;ch[id]=c;saveNow(c)}
+ for(const id in dirty)if(chars[id])ch[id]=chars[id];chars=ch;try{const ps=await user.profiles([...new Set(Object.values(chars).map(c=>c.owner))]);for(const k in ps)names[k]=ps[k].name||''}catch(e){}}
 async function syncChars(){if(!db||syncB||draft||(ed&&Object.keys(ed).length)||Date.now()-lastSv<6000||isTxt(document.activeElement)||ddCur||drawer||document.hidden)return;syncB=1;
  try{let ids=[uid],chg=0;try{(await db.collection('roster').get()).docs.forEach(d=>ids.push(d.id))}catch(e){}
   for(const o of new Set(ids)){let docs=[];try{docs=(await db.collection('pc/'+o+'/chars').get()).docs}catch(e){continue}
-   for(const d of docs){if(Date.now()-lastSv<6000||(ed&&Object.keys(ed).length))return;const j=d.data().json;if(rawJ[d.id]===j)continue;try{const c=norm(JSON.parse(j));chars[c.id]=c;rawJ[c.id]=j;chg=1}catch(e){}}}
+   for(const d of docs){if(Date.now()-lastSv<6000||(ed&&Object.keys(ed).length))return;const j=d.data().json;if(rawJ[d.id]===j||dirty[d.id])continue;try{const c=norm(JSON.parse(j));chars[c.id]=c;rawJ[c.id]=j;chg=1}catch(e){}}}
   if(chg&&!draft&&!isTxt(document.activeElement)&&!(ed&&Object.keys(ed).length)&&Date.now()-lastSv>=6000){if(!chars[cur])cur=Object.keys(chars)[0]||null;R()}}
  finally{syncB=0}}
 setInterval(syncChars,8000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)syncChars()});
 async function init(){try{const U=await claude.use('user');if(U){user=U;isOwner=!!(await U.isOwner())||!!(await U.canEdit());try{uid=(await U.id())||'local'}catch(e){}}}catch(e){}
  try{db=await claude.use('db')}catch(e){}
  if(db){try{const q=await db.collection('chars').get();q.docs.forEach(d=>{try{const c=norm(JSON.parse(d.data().json));if(isOwner||c.owner==uid)chars[c.id]=c}catch(e){}})}catch(e){}}
- else try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k.startsWith('lom_'))try{const c=norm(JSON.parse(localStorage.getItem(k)));chars[c.id]=c}catch(e){}}}catch(e){}
+ else try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k.startsWith('lom_'))try{const c=norm(JSON.parse(localStorage.getItem(k)));rawJ[c.id]=localStorage.getItem(k);chars[c.id]=c}catch(e){}}}catch(e){}
  await loadAll();await loadTrades();await loadRecipes();cur=Object.keys(chars)[0]||null;
  const u=uiLoad();if(u){if(u.cur&&chars[u.cur])cur=u.cur;ent=!!u.ent;lst=u.lst?1:0;cv=u.cv&&(u.cv=='_'||camps[u.cv])?u.cv:null;tab=TABS.some(x=>x[0]==u.tab)?u.tab:u.tab=='mind'?'char':'camp';if(tab!='camp'&&!chars[cur])tab='camp';if(tab!='camp')ent=true;if(u.psub)psub=u.psub;if(u.tsub)tsub=u.tsub;if(isOwner&&typeof u.dm=='boolean')dmView=u.dm;Object.assign(fo,u.fo||{});hlo=!!u.hlo;spo=!!u.spo;rco=!!u.rco;dgo=!!u.dgo;rpo=!!u.rpo}
  uiOn=true;R(true);if(u&&u.y){scrollTo(0,u.y);setTimeout(()=>scrollTo(0,u.y),60)}}
@@ -936,7 +940,7 @@ function delInv(c,x){let n=x.q;for(let i=0;i<c.inv.length&&n>0;i++){const y=c.in
 const sRaw=q=>[...q.items.map(x=>`${x.n} ×${x.q}`),q.money?E.money(q.money):''].filter(Boolean).join('، ');
 let sw={for:''};
 function addInv(c,x){const m=c.inv.find(y=>y.n==x.n&&(y.r||'عادي')==(x.r||'عادي')&&(y.dm||'')==(x.dm||'')&&(y.ds||'')==(x.ds||'')&&(y.v||'')==(x.v||''));if(m)m.q+=x.q;else c.inv.push({...x})}
-function refund(s,t,why){t.items.forEach(x=>addInv(s,x));if(t.money)s.money=mp(E.pts(s.money)+t.money);E.ev(s,'التبادل',why+': '+tRaw(t));t.refunded=1;save(s);tSave(t)}
+function refund(s,t,why){t.items.forEach(x=>addInv(s,x));if(t.money)s.money=mp(E.pts(s.money)+t.money);E.ev(s,'التبادل',why+': '+tRaw(t));t.refunded=1;saveNow(s);tSave(t)}
 function settle(){let ch=0;Object.values(trades).forEach(t=>{if(t.kind!='swap'&&t.status=='rejected'&&!t.refunded){const s=chars[t.from.charId];if(s&&(s.owner==uid||isOwner)){refund(s,t,'استرجاع عرض مرفوض من '+t.to.name);ch=1}}});if(ch&&tab=='trade')R()}
 async function loadTrades(){const o={};
  if(!db){try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k.startsWith('trd_'))try{const x=JSON.parse(localStorage.getItem(k));o[x.id]=x}catch(e){}}}catch(e){}}
@@ -1282,7 +1286,7 @@ function R(an){if(inChange){schedR(an);return}if(tab=='log'&&!DM())tab='camp';cl
   $('#m').innerHTML=tab=='camp'?pCamp():draft?wizard():!c?'<div class="card">لا شخصيات بعد.</div>':{char:pChar,test:pTest,path:pPath,route:pRoute,mind:pMind,fight:pFight2,trade:pTrade,log:pLog}[tab](c);if(draft&&!ent&&tab!='camp')$('#m').insertAdjacentHTML('afterbegin','<div class="row"><button data-a="wback">→ رجوع للحملة</button></div>');enh();fixNums($('#m'));fixNums($('#dr'));icz(document.body);sbUpd();scrollTo(0,an?0:y);if(fi>=0){const el=document.querySelectorAll('#m input,#m select,#m textarea')[fi];if(el){el.focus({preventScroll:true});try{if(ss!=null)el.setSelectionRange(ss,se)}catch(e){}}}uiSave()}
 const ev=(c,f)=>ed&&f in ed?ed[f]:c[f];
 const sb=document.createElement('div');sb.id='sb';sb.innerHTML='<span>تعديلات غير محفوظة</span><button class="sv" data-a="edsave">💾 حفظ</button><button data-a="edcancel">تراجع</button>';document.body.appendChild(sb);
-const sbUpd=()=>sb.classList.toggle('on',!!(ed&&Object.keys(ed).length&&!draft));
+const sbUpd=()=>{const n=Object.keys(dirty).length,e=!!(ed&&Object.keys(ed).length);sb.classList.toggle('on',!!((n||e||saving)&&!draft));sb.firstElementChild.textContent=saving?'جارٍ الحفظ…':'تعديلات غير محفوظة'+(n>1?' ('+n+' شخصيات)':'');sb.querySelectorAll('button').forEach(b=>b.disabled=!!saving)};
 const setEd=(f,v)=>{ed=ed||{};ed[f]=v;sbUpd()};
 document.addEventListener('input',e=>{const t=e.target;if(editMode&&t.dataset&&t.dataset.e)setEd(t.dataset.e,t.value)});
 function clpT(k,o,b){const e=document.querySelector('.clp[data-k="'+k+'"]');if(!e)return false;e.classList.toggle('open',o);
@@ -1305,15 +1309,15 @@ document.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)r
   return R()}
  if(a=='cnew'){draft=mkChar();draft.cid=t.dataset.id;editMode=false;tab='char';return R(true)}
  if(a=='copen'){clearMsgs();ent=true;cur=t.dataset.id;cv=chars[cur]&&camps[chars[cur].cid]?chars[cur].cid:'_';draft=null;tab='char';editMode=false;ed=null;return R(true)}
- if(a=='psub'){psub=t.dataset.v;clearMsgs();return R()}if(a=='bpick'){const [a2,b2]=t.dataset.k.split('|').map(Number);bsel.p=a2;bsel.s=b2;return R()}if(a=='tsub'){tsub=t.dataset.v;clearMsgs();return R()}if(a=='tref'){loadTrades().then(()=>R());return}if(a=='lenter'){lst=1;return R(true)}if(a=='lback'){lst=0;cv=null;return R(true)}if(a=='wback'){draft=null;tab='camp';return R(true)}if(a=='cview'){cv=t.dataset.id;gmsg='';return R(true)}if(a=='cback'){cv=null;gop=false;return R(true)}if(a=='gtog'){readGen();gop=!gop;t.textContent=gop?'إخفاء المولّد':'🎲 توليد عشوائي';icz(t);if(!clpT('gop',gop,null))R();return}if(a=='gen'){if(!DM()||!cv||cv=='_')return;readGen();const n=Math.max(1,Math.min(10,Math.floor(+GS.count)||1)),nn=[];for(let i=0;i<n;i++){const x=genChar(GS,cv);x.id+=i;chars[x.id]=x;save(x);nn.push(x.name)}gmsg='تم توليد '+n+': '+nn.join('، ');return R()}if(a=='avdel'){const tg=d||c;if(tg){tg.avatar='';if(!d){E.ev(tg,'الملف الشخصي','حذف الصورة');save(tg)}R()}return}
+ if(a=='psub'){psub=t.dataset.v;clearMsgs();return R()}if(a=='bpick'){const [a2,b2]=t.dataset.k.split('|').map(Number);bsel.p=a2;bsel.s=b2;return R()}if(a=='tsub'){tsub=t.dataset.v;clearMsgs();return R()}if(a=='tref'){loadTrades().then(()=>R());return}if(a=='lenter'){lst=1;return R(true)}if(a=='lback'){lst=0;cv=null;return R(true)}if(a=='wback'){draft=null;tab='camp';return R(true)}if(a=='cview'){cv=t.dataset.id;gmsg='';return R(true)}if(a=='cback'){cv=null;gop=false;return R(true)}if(a=='gtog'){readGen();gop=!gop;t.textContent=gop?'إخفاء المولّد':'🎲 توليد عشوائي';icz(t);if(!clpT('gop',gop,null))R();return}if(a=='gen'){if(!DM()||!cv||cv=='_')return;readGen();const n=Math.max(1,Math.min(10,Math.floor(+GS.count)||1)),nn=[];for(let i=0;i<n;i++){const x=genChar(GS,cv);x.id+=i;chars[x.id]=x;saveNow(x);nn.push(x.name)}gmsg='تم توليد '+n+': '+nn.join('، ');return R()}if(a=='avdel'){const tg=d||c;if(tg){tg.avatar='';if(!d){E.ev(tg,'الملف الشخصي','حذف الصورة');save(tg)}R()}return}
  if(d){if(a=='rollattr'){const rs=A.map(()=>Dice.roll('3d3'));A.forEach((x,i)=>d.attr[x[0]]=rs[i].t);d.rolled++;d.rl=A.map((x,i)=>`${x[1]} [${rs[i].d}]=${rs[i].t}`).join(' · ');return R()}
   if(a=='adj'){const v=d.attr[t.dataset.k]+ +t.dataset.v;if(v>=3)d.attr[t.dataset.k]=v;return R()}if(a=='d100'){d.d100=Dice.n(100);return R()}
   if(a=='drep'){d.rep=Dice.n(7);d.repR=1;E.assets(d);return R()}if(a=='drepset'){if(!DM())return;d.rep=+t.dataset.v;d.repR=1;E.assets(d);return R()}if(a=='wnext'){if(wStep(d,d.step||0))d.step=(d.step||0)+1;return R(true)}if(a=='wprev'){d.step=Math.max(0,(d.step||0)-1);return R(true)}
-  if(a=='create'){if(!wOk(d))return;d.a0={...d.attr};d.owner=uid;applyRace(d);E.ev(d,'إنشاء الشخصية',`${d.name} — ${d.race}`);d.path=+d.path;if(d.race=='عِرق الدم'){d.rsv={path:d._pp==null?22:+d._pp,seq:(d._pp==null||d._pp==22)?10:9,hist:[]};d.path=14;d.seq=7;const cv=E.ga(d,'con'),iv=E.ga(d,'ins');d.hist=[{seq:9,con:cv,ins:iv},{seq:8,con:cv,ins:iv},{seq:7,con:cv,ins:iv}]}else if(d.path==22)d.seq=10;else d.hist=[{seq:9,con:E.ga(d,'con'),ins:E.ga(d,'ins')}];E.ev(d,'الحصول على المسار',d.path==22?'بلا مسار':PATHS[d.path][1]+' · التسلسل '+d.seq);chars[d.id]=d;cur=d.id;cv=d.cid||'_';ent=true;draft=null;editMode=false;tab='char';save(d);return R(true)}return}
+  if(a=='create'){if(!wOk(d))return;d.a0={...d.attr};d.owner=uid;applyRace(d);E.ev(d,'إنشاء الشخصية',`${d.name} — ${d.race}`);d.path=+d.path;if(d.race=='عِرق الدم'){d.rsv={path:d._pp==null?22:+d._pp,seq:(d._pp==null||d._pp==22)?10:9,hist:[]};d.path=14;d.seq=7;const cv=E.ga(d,'con'),iv=E.ga(d,'ins');d.hist=[{seq:9,con:cv,ins:iv},{seq:8,con:cv,ins:iv},{seq:7,con:cv,ins:iv}]}else if(d.path==22)d.seq=10;else d.hist=[{seq:9,con:E.ga(d,'con'),ins:E.ga(d,'ins')}];E.ev(d,'الحصول على المسار',d.path==22?'بلا مسار':PATHS[d.path][1]+' · التسلسل '+d.seq);chars[d.id]=d;cur=d.id;cv=d.cid||'_';ent=true;draft=null;editMode=false;tab='char';saveNow(d);return R(true)}return}
  if(!c)return;if(RO(c)&&!['fold','rptoggle','dgtoggle','hltoggle','sptoggle','rctoggle','close','sklearn'].includes(a))return;const L=(ty,tx,b,af)=>E.ev(c,ty,tx,b,af);
- if(!editMode&&['addfor','pick','addsk','rmsk','attrp','addb','delb','arep','edsave'].includes(a))return;
- if(a=='edsave'){if(!ed)return;let rc=0;const p0=c.path,s0=c.seq,lb={name:'الاسم',gender:'الجنس',age:'العمر',race:'العرق',job:'المهنة',affil:'الانتساب',path:'المسار'};for(const k in ed){let v=ed[k];if(k=='path')v=+v;if(k=='name'&&!String(v).trim())continue;if(String(c[k]??'')!=String(v)){L('تعديل المعلومات',lb[k],k=='path'?PATHS[c[k]][1]:c[k],k=='path'?PATHS[v][1]:v);c[k]=v;if(k=='race')rc=1}}syncRace(c);if(rc)applyRace(c);if(c.seq!=s0){c.dig={act:0,idle:0,bonus:0};c.fail=null}if(c.path!=p0||c.seq!=s0){c.pm.pot='';c.pm.manual=0;c.pm.tpath='';bsel.for=''}ed=null;return done(c)}
- if(a=='edcancel'){ed=null;return R()}
+ if(!editMode&&['addfor','pick','addsk','rmsk','attrp','addb','delb','arep'].includes(a))return;
+ if(a=='edsave'){if(!(ed&&Object.keys(ed).length)){flushAll();return}let rc=0;const p0=c.path,s0=c.seq,lb={name:'الاسم',gender:'الجنس',age:'العمر',race:'العرق',job:'المهنة',affil:'الانتساب',path:'المسار'};for(const k in ed){let v=ed[k];if(k=='path')v=+v;if(k=='name'&&!String(v).trim())continue;if(String(c[k]??'')!=String(v)){L('تعديل المعلومات',lb[k],k=='path'?PATHS[c[k]][1]:c[k],k=='path'?PATHS[v][1]:v);c[k]=v;if(k=='race')rc=1}}syncRace(c);if(rc)applyRace(c);if(c.seq!=s0){c.dig={act:0,idle:0,bonus:0};c.fail=null}if(c.path!=p0||c.seq!=s0){c.pm.pot='';c.pm.manual=0;c.pm.tpath='';bsel.for=''}ed=null;save(c);flushAll();return}
+ if(a=='edcancel'){ed=null;discardAll();return R()}
  if(a=='addfor'){drawer=t.dataset.k;dan=1;return R()}if(a=='close'){drawer=null;return R()}if(a=='dgtoggle'){dgo=!dgo;if(!clpT('dg',dgo,t))R();return}if(a=='rptoggle'){rpo=!rpo;if(!clpT('rp',rpo,t))R();return}if(a=='fold'){const k=t.dataset.k;fo[k]=!fo[k];if(!clpT(k,fo[k],t))R();return}if(a=='hltoggle'){hlo=!hlo;if(!clpT('hl',hlo,t))R();return}if(a=='sptoggle'){spo=!spo;if(!clpT('sp',spo,t))R();return}if(a=='rctoggle'){rco=!rco;if(!clpT('rc',rco,t))R();return}
  if(a=='sklearn'){const n=t.dataset.n;lrn=lrn&&lrn.n==n?null:{n,to:c.skills[n].lv+1,cs:0,self:0,ins:0};return R()}
  if(a=='pick'){const n=t.dataset.n;if(c.skills[n]&&!c.skills[n].u&&!c.skills[n].lv){c.skills[n].u=1;L('التقدم في المهارات','إضافة مهارة: '+n+' (غير مدرَّبة)');}return done(c)}
@@ -1345,7 +1349,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)r
   if(!(gm||gi.length)||!(wm||wi.length)){last='حدّد ما تعطيه وما تطلبه';return R()}
   if(gm>E.pts(c.money)||wm>E.pts(rw.money)){last='أحد المبلغين يتجاوز المتاح';return R()}
   const t0={id:'t'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),kind:'swap',cid:c.cid,from:{owner:c.owner,charId:c.id,name:c.name},to:{owner:rw.owner,charId:rw.id,name:rw.name},items:[],money:0,give:{items:gi,money:gm},want:{items:wi,money:wm},okA:1,okB:0,note:(sw.note||'').trim(),status:'pending',t:Date.now()};
-  tSave(t0);L('التبادل','عرض مقايضة إلى '+rw.name+': أعطي '+sRaw(t0.give)+' مقابل '+sRaw(t0.want));last='أُرسل عرض المقايضة إلى '+esc(rw.name);sw={for:c.id,to:rw.id,gl:0,gs:0,gp:0,wl:0,ws:0,wp:0,note:'',q:{},wq:{}};tsub='offers';return done(c)}
+  tSave(t0);L('التبادل','عرض مقايضة إلى '+rw.name+': أعطي '+sRaw(t0.give)+' مقابل '+sRaw(t0.want));last='أُرسل عرض المقايضة إلى '+esc(rw.name);sw={for:c.id,to:rw.id,gl:0,gs:0,gp:0,wl:0,ws:0,wp:0,note:'',q:{},wq:{}};tsub='offers';saveNow(c);return R()}
  if(a=='swacc'||a=='swrej'||a=='swcan'){const id=t.dataset.id;loadAll(1).then(()=>{if(!chars[cur])cur=Object.keys(chars)[0]||null;return loadTrades()}).then(()=>{const x=trades[id];if(!x||x.status!='pending'||x.kind!='swap'){last='تغيّرت حالة العرض';return R()}
   if(a=='swrej'){x.status='rejected';tSave(x);last='رُفضت المقايضة'}
   else if(a=='swcan'){x.status='cancelled';tSave(x);last='أُلغيت المقايضة'}
@@ -1355,7 +1359,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)r
    x.give.items.forEach(i=>delInv(A,i));x.want.items.forEach(i=>delInv(B,i));x.give.items.forEach(i=>addInv(B,i));x.want.items.forEach(i=>addInv(A,i));
    A.money=mp(E.pts(A.money)-gm+wm);B.money=mp(E.pts(B.money)-wm+gm);
    E.ev(A,'التبادل','مقايضة مع '+B.name+': أعطيت '+sRaw(x.give)+' واستلمت '+sRaw(x.want));E.ev(B,'التبادل','مقايضة مع '+A.name+': أعطيت '+sRaw(x.want)+' واستلمت '+sRaw(x.give));
-   x.status='done';x.okB=1;save(A);save(B);tSave(x);last='تمت المقايضة بنجاح'}
+   x.status='done';x.okB=1;saveNow(A);saveNow(B);tSave(x);last='تمت المقايضة بنجاح'}
   R()});return}
  if(a=='rsel'){const v=+t.dataset.v;rsel=rsel===v?-1:v;aedit='';return R()}
  if(a=='abtog'){const k=t.dataset.k;abo[k]=!abo[k];if(!clpT(k,abo[k],t))R();return}
@@ -1382,9 +1386,9 @@ document.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)r
   it.slice().sort((a,b)=>b.i-a.i).forEach(({i,q})=>{const x=c.inv[i];x.q-=q;if(x.q<=0)c.inv.splice(i,1)});
   if(money)c.money=mp(E.pts(c.money)-money);
   const t0={id:'t'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),cid:c.cid,from:{owner:c.owner,charId:c.id,name:c.name},to:{owner:rc.owner,charId:rc.id,name:rc.name},items:snap,money,note:(tdr.note||'').trim(),status:'pending',t:Date.now()};
-  tSave(t0);L('التبادل','إرسال إلى '+rc.name+': '+tRaw(t0));last='أُرسل العرض إلى '+esc(rc.name)+' بانتظار القبول';tdr={for:c.id,to:rc.id,l:0,s:0,p:0,note:'',q:{}};tsub='offers';return done(c)}
+  tSave(t0);L('التبادل','إرسال إلى '+rc.name+': '+tRaw(t0));last='أُرسل العرض إلى '+esc(rc.name)+' بانتظار القبول';tdr={for:c.id,to:rc.id,l:0,s:0,p:0,note:'',q:{}};tsub='offers';saveNow(c);return R()}
  if(a=='tacc'||a=='trej'||a=='tcan'){const id=t.dataset.id;loadTrades().then(()=>{const x=trades[id];if(!x||x.status!='pending'){last='تغيّرت حالة العرض';return R()}
-  if(a=='tacc'){const r=chars[x.to.charId];if(!r)return;x.items.forEach(i=>addInv(r,i));if(x.money)r.money=mp(E.pts(r.money)+x.money);E.ev(r,'التبادل','استلام من '+x.from.name+': '+tRaw(x));x.status='done';save(r);tSave(x);last='تم الاستلام'}
+  if(a=='tacc'){const r=chars[x.to.charId];if(!r)return;x.items.forEach(i=>addInv(r,i));if(x.money)r.money=mp(E.pts(r.money)+x.money);E.ev(r,'التبادل','استلام من '+x.from.name+': '+tRaw(x));x.status='done';saveNow(r);tSave(x);last='تم الاستلام'}
   else if(a=='trej'){x.status='rejected';tSave(x);settle();last='رُفض العرض وسيعود إلى المرسل'}
   else{const s2=chars[x.from.charId];if(!s2)return;x.status='cancelled';refund(s2,x,'إلغاء عرض إلى '+x.to.name);last='أُلغي العرض واسترجعت الأغراض'}R()});return}
  if(a=='pwcalc'){const ex=(g('pwx')||'').trim(),r=rollExpr(ex);if(!r.ok){lpw='أدخل الضرر الأصلي، مثل 1d8+2 أو 12';return R()}const pw=Math.max(0,Math.floor(+c.pw)||0),base=Math.max(0,r.t),out=pw?Math.floor((base*(100+pw)+50)/100):base;c.cb.pwx=ex;lpw=`⚔ ${r.txt} = <b>${base}</b>`+(pw?` · معدل القوة +${pw}% (+${out-base}) ← <b class="good">${out}</b> ضرر نهائي`:` ← <b class="good">${out}</b> ضرر`);L('المعارك','ضرر هجوم '+ex+': '+base+(pw?' + '+pw+'% = '+out:''));return done(c)}
@@ -1525,7 +1529,7 @@ addEventListener('pointerdown',e=>{if(ddCur&&!e.target.closest('#ddp,.ddt'))clos
 addEventListener('scroll',e=>{if(ddCur&&!(e.target.closest&&e.target.closest('#ddp')))closeDD()},true);
 addEventListener('resize',closeDD);addEventListener('keydown',e=>{if(e.key=='Escape')closeDD()});
 
-$('#impf').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const fr=new FileReader();fr.onload=()=>{try{const j=JSON.parse(fr.result),arr=Array.isArray(j)?j:Array.isArray(j.chars)?j.chars:[j];let n=0;arr.forEach(o=>{if(o&&typeof o=='object'&&o.id&&o.attr){const c=norm(o);if(!c.owner)c.owner=uid;chars[c.id]=c;save(c);n++}});if(!n)throw 0;cur=Object.keys(chars)[0];draft=null;editMode=false;ed=null;R(true);alert('تم استيراد '+n+' شخصية')}catch(x){alert('ملف غير صالح')}e.target.value=''};fr.readAsText(f)});
+$('#impf').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const fr=new FileReader();fr.onload=()=>{try{const j=JSON.parse(fr.result),arr=Array.isArray(j)?j:Array.isArray(j.chars)?j.chars:[j];let n=0;arr.forEach(o=>{if(o&&typeof o=='object'&&o.id&&o.attr){const c=norm(o);if(!c.owner)c.owner=uid;chars[c.id]=c;saveNow(c);n++}});if(!n)throw 0;cur=Object.keys(chars)[0];draft=null;editMode=false;ed=null;R(true);alert('تم استيراد '+n+' شخصية')}catch(x){alert('ملف غير صالح')}e.target.value=''};fr.readAsText(f)});
 document.addEventListener('input',e=>{const t=e.target;if(t.id=='tm'||t.id=='td'){setTimeout(()=>{tst[t.id=='tm'?'m':'d']=t.value})}});
 document.addEventListener('input',e=>{const t=e.target;if(t.dataset&&t.dataset.num){const v=t.value.replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٫،]/g,'.').replace(/[^0-9.\-]/g,'');if(v!==t.value)t.value=v}},true);
 document.addEventListener('input',e=>{const t=e.target;if(t.matches&&t.matches('input:not([type=checkbox]):not([type=file]),textarea')&&!(t.dataset&&t.dataset.num)){const v=AD(t.value);if(v!==t.value){const p=t.selectionStart;t.value=v;try{t.setSelectionRange(p,p)}catch(x){}}}},true);
