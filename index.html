@@ -644,8 +644,16 @@ function uiSave(){if(!uiOn)return;try{localStorage.setItem(uiKey(),JSON.stringif
 function uiLoad(){try{return JSON.parse(localStorage.getItem(uiKey()))}catch(e){return null}}
 addEventListener('scroll',()=>{clearTimeout(uiT);uiT=setTimeout(uiSave,250)},{passive:true});addEventListener('pagehide',uiSave);
 const store={set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
-let rawJ={},lastSv=0,syncB=0;
-async function save(c){lastSv=Date.now();c.owner=c.owner||uid;store.set('lom_'+c.id,JSON.stringify(c));if(db)try{if(!rs[c.owner]){rs[c.owner]=1;db.doc('roster/'+c.owner).set({t:Date.now()}).catch(()=>{})}await db.doc('pc/'+c.owner+'/chars/'+c.id).set({cid:c.cid||'',name:c.name||'',json:(rawJ[c.id]=JSON.stringify(c))});saveErr=0}catch(e){saveErr=1;if(tab=='camp')R()}}
+let rawJ={},lastSv=0,syncB=0,saveQ={};
+function save(c){lastSv=Date.now();return saveQ[c.id]=(saveQ[c.id]||Promise.resolve()).then(()=>doSave(c)).catch(()=>{})}
+function mergeChar(c,baseS,remS){let b,r;try{b=JSON.parse(baseS);r=JSON.parse(remS)}catch(e){return 0}if(!b||!r)return 0;const sm=(x,y)=>JSON.stringify(x)===JSON.stringify(y);let ch=0;
+ for(const k of Object.keys(r)){if(k[0]=='_')continue;
+  if(k=='skills'){c.skills=c.skills||{};for(const n of new Set([...Object.keys(r.skills||{}),...Object.keys(c.skills)])){const rem=(r.skills||{})[n];if(rem!==undefined&&sm(c.skills[n],(b.skills||{})[n])&&!sm(c.skills[n],rem)){c.skills[n]=rem;ch=1}}continue}
+  if(k=='attr'||k=='a0'){c[k]=c[k]||{};for(const n of new Set([...Object.keys(r[k]||{}),...Object.keys(c[k])])){if(r[k]&&r[k][n]!==undefined&&c[k][n]===(b[k]||{})[n]&&c[k][n]!==r[k][n]){c[k][n]=r[k][n];ch=1}}continue}
+  if(k=='log'&&Array.isArray(r.log)){const seen=new Set((c.log||[]).map(x=>JSON.stringify(x))),add=r.log.filter(x=>!seen.has(JSON.stringify(x))&&!(b.log||[]).some(y=>sm(x,y)&&false));if(add.length){c.log=[...(c.log||[]),...add].sort((x,y)=>(y.t||0)-(x.t||0)).slice(0,500);ch=1}continue}
+  if(sm(c[k],b[k])&&!sm(c[k],r[k])){c[k]=r[k];ch=1}}
+ return ch}
+async function doSave(c){lastSv=Date.now();c.owner=c.owner||uid;store.set('lom_'+c.id,JSON.stringify(c));if(db)try{if(!rs[c.owner]){rs[c.owner]=1;db.doc('roster/'+c.owner).set({t:Date.now()}).catch(()=>{})}const ref=db.doc('pc/'+c.owner+'/chars/'+c.id);let mg=0;try{const g=await ref.get();if(g.exists){const rj=g.data().json;if(rj&&rawJ[c.id]&&rj!==rawJ[c.id])mg=mergeChar(c,rawJ[c.id],rj)}}catch(e){}await ref.set({cid:c.cid||'',name:c.name||'',json:(rawJ[c.id]=JSON.stringify(c))});saveErr=0;if(mg&&!draft&&!isTxt(document.activeElement)&&tab!='camp')R()}catch(e){saveErr=1;if(tab=='camp')R()}}
 let camps={},names={},saveErr=0,cdel='',lpw='',lml='';const rs={};
 async function loadAll(reset){const old=reset?{}:{...chars};camps={};
  if(!db){try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k.startsWith('cmp_'))try{const x=JSON.parse(localStorage.getItem(k));camps[x.id]=x}catch(e){}}}catch(e){}return}
@@ -1534,7 +1542,7 @@ const ERR={'auth/invalid-credential':'البريد أو كلمة المرور غ
 const msg=t=>{Q('#aerr').textContent=t||''};
 window.claude={use:async n=>{
  if(n=='user')return{isOwner:async()=>admin,canEdit:async()=>admin,id:async()=>auth.currentUser.uid,profiles:async ids=>{const o={};[].concat(ids).forEach(i=>{o[i]={id:i,name:NM[i]||(i==auth.currentUser.uid?auth.currentUser.displayName:'')||''}});return o}};
- if(n=='db')return{collection:p=>({get:async()=>{const s=await getDocs(collection(fs,...seg(p)));if(p=='roster')s.docs.forEach(d=>{NM[d.id]=d.data().n||''});return{docs:s.docs.map(d=>({id:d.id,data:()=>d.data()}))}}}),doc:p=>({set:async x=>{if(p=='roster/'+auth.currentUser.uid)x={...x,n:auth.currentUser.displayName||''};await setDoc(doc(fs,...seg(p)),x,{merge:p.startsWith('roster/')})},delete:async()=>deleteDoc(doc(fs,...seg(p)))})};
+ if(n=='db')return{collection:p=>({get:async()=>{const s=await getDocs(collection(fs,...seg(p)));if(p=='roster')s.docs.forEach(d=>{NM[d.id]=d.data().n||''});return{docs:s.docs.map(d=>({id:d.id,data:()=>d.data()}))}}}),doc:p=>({set:async x=>{if(p=='roster/'+auth.currentUser.uid)x={...x,n:auth.currentUser.displayName||''};await setDoc(doc(fs,...seg(p)),x,{merge:p.startsWith('roster/')})},delete:async()=>deleteDoc(doc(fs,...seg(p))),get:async()=>{const s=await getDoc(doc(fs,...seg(p)));return{exists:s.exists(),data:()=>s.data()}}})};
  return null}};
 Object.assign(ERR,{'auth/popup-closed-by-user':'أُغلقت نافذة الدخول قبل الإكمال','auth/popup-blocked':'المتصفح حجب نافذة الدخول، اسمح بالنوافذ المنبثقة','auth/operation-not-allowed':'طريقة الدخول هذه غير مفعّلة في Firebase','auth/cancelled-popup-request':'أُلغي طلب الدخول'});
 Q('#agoogle').onclick=async()=>{msg();try{await signInWithPopup(auth,new GoogleAuthProvider())}catch(x){msg(ERR[x.code]||x.code)}};
