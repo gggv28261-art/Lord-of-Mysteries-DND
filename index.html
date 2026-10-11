@@ -645,9 +645,9 @@ function uiSave(){if(!uiOn)return;try{localStorage.setItem(uiKey(),JSON.stringif
 function uiLoad(){try{return JSON.parse(localStorage.getItem(uiKey()))}catch(e){return null}}
 addEventListener('scroll',()=>{clearTimeout(uiT);uiT=setTimeout(uiSave,250)},{passive:true});addEventListener('pagehide',uiSave);
 const store={set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
-let rawJ={},lastSv=0,syncB=0,saveQ={},dirty={},saving=0;
+let rawJ={},lastSv=0,syncB=0,saveQ={},dirty={},saving=0,sbMsg='',lastErr='';
 function save(c){if(!c)return;c.owner=c.owner||uid;dirty[c.id]=1;sbUpd()}
-async function flushAll(){if(saving)return;saving=1;sbUpd();try{await Promise.all(Object.keys(dirty).map(id=>chars[id]?saveNow(chars[id]):delete dirty[id]))}finally{saving=0;sbUpd();R()}}
+async function flushAll(){if(saving)return;saving=1;saveErr=0;lastErr='';sbUpd();try{await Promise.all(Object.keys(dirty).map(id=>chars[id]?saveNow(chars[id]):delete dirty[id]))}finally{saving=0;const fl=saveErr||Object.keys(dirty).length;sbMsg=fl?'تعذّر الحفظ'+(lastErr?': '+lastErr:''):'✔ تم الحفظ في قاعدة البيانات';setTimeout(()=>{sbMsg='';sbUpd()},fl?10000:2500);sbUpd();R()}}
 function discardAll(){for(const id of Object.keys(dirty)){const j=rawJ[id];if(j){try{chars[id]=norm(JSON.parse(j))}catch(e){}}delete dirty[id]}sbUpd()}
 addEventListener('beforeunload',e=>{if(Object.keys(dirty).length){e.preventDefault();e.returnValue=''}});
 function saveNow(c){lastSv=Date.now();delete dirty[c.id];return saveQ[c.id]=(saveQ[c.id]||Promise.resolve()).then(()=>doSave(c)).catch(()=>{})}
@@ -658,7 +658,7 @@ function mergeChar(c,baseS,remS){let b,r;try{b=JSON.parse(baseS);r=JSON.parse(re
   if(k=='log'&&Array.isArray(r.log)){const seen=new Set((c.log||[]).map(x=>JSON.stringify(x))),add=r.log.filter(x=>!seen.has(JSON.stringify(x))&&!(b.log||[]).some(y=>sm(x,y)&&false));if(add.length){c.log=[...(c.log||[]),...add].sort((x,y)=>(y.t||0)-(x.t||0)).slice(0,500);ch=1}continue}
   if(sm(c[k],b[k])&&!sm(c[k],r[k])){c[k]=r[k];ch=1}}
  return ch}
-async function doSave(c){lastSv=Date.now();c.owner=c.owner||uid;store.set('lom_'+c.id,JSON.stringify(c));if(!db)rawJ[c.id]=JSON.stringify(c);if(db)try{if(!rs[c.owner]){rs[c.owner]=1;db.doc('roster/'+c.owner).set({t:Date.now()}).catch(()=>{})}const ref=db.doc('pc/'+c.owner+'/chars/'+c.id);let mg=0;try{const g=await ref.get();if(g.exists){const rj=g.data().json;if(rj&&rawJ[c.id]&&rj!==rawJ[c.id])mg=mergeChar(c,rawJ[c.id],rj)}}catch(e){}await ref.set({cid:c.cid||'',name:c.name||'',json:(rawJ[c.id]=JSON.stringify(c))});saveErr=0;if(mg&&!draft&&!isTxt(document.activeElement)&&tab!='camp')R()}catch(e){saveErr=1;dirty[c.id]=1;sbUpd();if(tab=='camp')R()}}
+async function doSave(c){lastSv=Date.now();c.owner=c.owner||uid;store.set('lom_'+c.id,JSON.stringify(c));if(!db)rawJ[c.id]=JSON.stringify(c);if(db)try{if(!rs[c.owner]){rs[c.owner]=1;db.doc('roster/'+c.owner).set({t:Date.now()}).catch(()=>{})}const ref=db.doc('pc/'+c.owner+'/chars/'+c.id);let mg=0;try{const g=await ref.get();if(g.exists){const rj=g.data().json;if(rj&&rawJ[c.id]&&rj!==rawJ[c.id])mg=mergeChar(c,rawJ[c.id],rj)}}catch(e){}await ref.set({cid:c.cid||'',name:c.name||'',json:(rawJ[c.id]=JSON.stringify(c))});saveErr=0;if(mg&&!draft&&!isTxt(document.activeElement)&&tab!='camp')R()}catch(e){saveErr=1;lastErr=(e&&(e.code||e.message))||'خطأ';dirty[c.id]=1;sbUpd();if(tab=='camp')R()}}
 let camps={},names={},saveErr=0,cdel='',lpw='',lml='';const rs={};
 async function loadAll(reset){const old=reset?{}:{...chars};camps={};
  if(!db){try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k.startsWith('cmp_'))try{const x=JSON.parse(localStorage.getItem(k));camps[x.id]=x}catch(e){}}}catch(e){}return}
@@ -1287,7 +1287,7 @@ function R(an){if(inChange){schedR(an);return}if(tab=='log'&&!DM())tab='camp';cl
   $('#m').innerHTML=tab=='camp'?pCamp():draft?wizard():!c?'<div class="card">لا شخصيات بعد.</div>':{char:pChar,test:pTest,path:pPath,route:pRoute,mind:pMind,fight:pFight2,trade:pTrade,log:pLog}[tab](c);if(draft&&!ent&&tab!='camp')$('#m').insertAdjacentHTML('afterbegin','<div class="row"><button data-a="wback">→ رجوع للحملة</button></div>');enh();fixNums($('#m'));fixNums($('#dr'));icz(document.body);sbUpd();scrollTo(0,an?0:y);if(fi>=0){const el=document.querySelectorAll('#m input,#m select,#m textarea')[fi];if(el){el.focus({preventScroll:true});try{if(ss!=null)el.setSelectionRange(ss,se)}catch(e){}}}uiSave()}
 const ev=(c,f)=>ed&&f in ed?ed[f]:c[f];
 const sb=document.createElement('div');sb.id='sb';sb.innerHTML='<span>تعديلات غير محفوظة</span><button class="sv" data-a="edsave">💾 حفظ</button><button data-a="edcancel">تراجع</button>';document.body.appendChild(sb);
-const sbUpd=()=>{const n=Object.keys(dirty).length,e=!!(ed&&Object.keys(ed).length);sb.classList.toggle('on',!!((n||e||saving)&&!draft));sb.firstElementChild.textContent=saving?'جارٍ الحفظ…':'تعديلات غير محفوظة'+(n>1?' ('+n+' شخصيات)':'');sb.querySelectorAll('button').forEach(b=>b.disabled=!!saving)};
+const sbUpd=()=>{const n=Object.keys(dirty).length,e=!!(ed&&Object.keys(ed).length);sb.classList.toggle('on',!!((n||e||saving||sbMsg)&&!draft));sb.firstElementChild.textContent=saving?'جارٍ الحفظ…':sbMsg&&!n&&!e?sbMsg:(sbMsg?sbMsg+' · ':'')+'تعديلات غير محفوظة'+(n>1?' ('+n+' شخصيات)':'');sb.querySelectorAll('button').forEach(b=>{b.disabled=!!saving;b.style.display=(!n&&!e&&!saving)?'none':''})};
 const setEd=(f,v)=>{ed=ed||{};ed[f]=v;sbUpd()};
 document.addEventListener('input',e=>{const t=e.target;if(editMode&&t.dataset&&t.dataset.e)setEd(t.dataset.e,t.value)});
 function clpT(k,o,b){const e=document.querySelector('.clp[data-k="'+k+'"]');if(!e)return false;e.classList.toggle('open',o);
@@ -1556,7 +1556,7 @@ document.addEventListener('click',e=>{if(e.target.closest('#out'))signOut(auth).
 onAuthStateChanged(auth,async u=>{if(!u){goAnon();return}
  admin=false;try{admin=(await getDoc(doc(fs,'admins',u.uid))).exists()}catch(e){}
  if(!admin){try{await setDoc(doc(fs,'admins',u.uid),{t:Date.now()});admin=true}catch(e){}}
- Q('#uidb').innerHTML='معرّف حسابك: <bdi dir="ltr">'+u.uid+'</bdi>';
+ Q('#uidb').innerHTML='معرّف حسابك: <bdi dir="ltr">'+u.uid+'</bdi> · إصدار الحفظ اليدوي';
  if(!started){started=true;const t0=Date.now();try{await init()}finally{const w=1400-(Date.now()-t0);if(w>0)await new Promise(r=>setTimeout(r,w))}}
  Q('#auth').style.display='none'});
 </script>
