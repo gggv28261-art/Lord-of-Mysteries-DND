@@ -504,7 +504,8 @@ main.an>*{animation-fill-mode:backwards}
 .rtb{display:flex;gap:6px;margin:8px 0 2px}.rtb button{flex:1;height:28px}
 .rth .dsq{margin-top:14px}
 .rsub{margin:0 10px 10px}.rsub .rst{margin:6px 0}.rab .rab{background:#060a12;margin:6px 0}
-</style></head><body><header><h1>👁 لورد الغوامض</h1><select id="sel"></select><button id="new">+ جديدة</button><button id="exp" title="تصدير الشخصيات">⬇ تصدير</button><button id="imp" title="استيراد الشخصيات">⬆ استيراد</button><span id="who" class="tag"></span><button id="mode" style="display:none"></button><button id="edt" style="display:none"></button><button id="out" title="تسجيل الخروج">خروج</button></header><main id="m"></main><p id="uidb" class="sub" style="text-align:center;margin:6px 0 14px"></p><nav id="nav"></nav><div id="dr"></div><input type="file" id="impf" accept=".json,application/json" hidden>
+.wl{font-size:1.05em;line-height:1.8;margin:6px 0 16px}.ld{width:28px;height:28px;margin:0 auto 6px;border:3px solid var(--bd);border-top-color:var(--g);border-radius:50%;animation:spn 1s linear infinite}@keyframes spn{to{transform:rotate(360deg)}}#aretry{display:none}
+</style></head><body><header><h1>👁 لورد الغوامض</h1><select id="sel"></select><button id="new">+ جديدة</button><button id="exp" title="تصدير الشخصيات">⬇ تصدير</button><button id="imp" title="استيراد الشخصيات">⬆ استيراد</button><span id="who" class="tag"></span><button id="mode" style="display:none"></button><button id="edt" style="display:none"></button></header><main id="m"></main><p id="uidb" class="sub" style="text-align:center;margin:6px 0 14px"></p><nav id="nav"></nav><div id="dr"></div><input type="file" id="impf" accept=".json,application/json" hidden>
 <script>
 const $=s=>document.querySelector(s),AD=s=>String(s??'').replace(/[٠-٩۰-۹]/g,d=>{const i='٠١٢٣٤٥٦٧٨٩'.indexOf(d);return i>=0?i:'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)}),esc=s=>AD(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const A=[['str','القوة'],['agi','الرشاقة'],['con','البنية الجسدية'],['wil','الإرادة'],['ins','الإلهام'],['edu','التعليم'],['cha','الكاريزما'],['luck','الحظ'],['mys','الغموض']],AN=Object.fromEntries(A);
@@ -1534,7 +1535,7 @@ document.addEventListener('input',e=>{const t=e.target;if(t.id=='tm'||t.id=='td'
 document.addEventListener('input',e=>{const t=e.target;if(t.dataset&&t.dataset.num){const v=t.value.replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٫،]/g,'.').replace(/[^0-9.\-]/g,'');if(v!==t.value)t.value=v}},true);
 document.addEventListener('input',e=>{const t=e.target;if(t.matches&&t.matches('input:not([type=checkbox]):not([type=file]),textarea')&&!(t.dataset&&t.dataset.num)){const v=AD(t.value);if(v!==t.value){const p=t.selectionStart;t.value=v;try{t.setSelectionRange(p,p)}catch(x){}}}},true);
 </script>
-<div id="auth"><div class="acard"><h1>👁 لورد الغوامض</h1><input id="anm" placeholder="اكتب اسمك الظاهر للجميع"><button id="aanon">دخول</button><div class="asub">الدخول بالاسم مرتبط بهذا المتصفح على هذا الجهاز.</div><div id="aerr"></div></div></div>
+<div id="auth"><div class="acard"><h1>👁 لورد الغوامض</h1><div class="wl">أهلا بك في عالم لورد الغوامض</div><div class="ld"></div><div id="aerr"></div><button id="aretry">إعادة المحاولة</button></div></div>
 <script type="module">
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import {getAuth,onAuthStateChanged,GoogleAuthProvider,signInWithPopup,signInAnonymously,signOut,updateProfile} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
@@ -1549,12 +1550,14 @@ window.claude={use:async n=>{
  if(n=='db')return{collection:p=>({get:async()=>{const s=await getDocs(collection(fs,...seg(p)));if(p=='roster')s.docs.forEach(d=>{NM[d.id]=d.data().n||''});return{docs:s.docs.map(d=>({id:d.id,data:()=>d.data()}))}}}),doc:p=>({set:async x=>{if(p=='roster/'+auth.currentUser.uid)x={...x,n:auth.currentUser.displayName||''};await setDoc(doc(fs,...seg(p)),x,{merge:p.startsWith('roster/')})},delete:async()=>deleteDoc(doc(fs,...seg(p))),get:async()=>{const s=await getDoc(doc(fs,...seg(p)));return{exists:s.exists(),data:()=>s.data()}}})};
  return null}};
 Object.assign(ERR,{'auth/popup-closed-by-user':'أُغلقت نافذة الدخول قبل الإكمال','auth/popup-blocked':'المتصفح حجب نافذة الدخول، اسمح بالنوافذ المنبثقة','auth/operation-not-allowed':'طريقة الدخول هذه غير مفعّلة في Firebase','auth/cancelled-popup-request':'أُلغي طلب الدخول'});
-Q('#aanon').onclick=async()=>{msg();const n=Q('#anm').value.trim();if(!n)return msg('اكتب اسمك أولًا');try{const u=await signInAnonymously(auth);await updateProfile(u.user,{displayName:n})}catch(x){msg(ERR[x.code]||x.code)}};
+const goAnon=async()=>{msg();Q('#aretry').style.display='none';try{await signInAnonymously(auth)}catch(x){msg(ERR[x.code]||x.code);Q('#aretry').style.display='block'}};
+Q('#aretry').onclick=goAnon;
 document.addEventListener('click',e=>{if(e.target.closest('#out'))signOut(auth).then(()=>location.reload())});
-onAuthStateChanged(auth,async u=>{if(!u){Q('#auth').style.display='flex';return}
+onAuthStateChanged(auth,async u=>{if(!u){goAnon();return}
  admin=false;try{admin=(await getDoc(doc(fs,'admins',u.uid))).exists()}catch(e){}
  if(!admin){try{await setDoc(doc(fs,'admins',u.uid),{t:Date.now()});admin=true}catch(e){}}
- Q('#auth').style.display='none';Q('#uidb').innerHTML='معرّف حسابك: <bdi dir="ltr">'+u.uid+'</bdi>';
- if(!started){started=true;await init()}});
+ Q('#uidb').innerHTML='معرّف حسابك: <bdi dir="ltr">'+u.uid+'</bdi>';
+ if(!started){started=true;const t0=Date.now();try{await init()}finally{const w=1400-(Date.now()-t0);if(w>0)await new Promise(r=>setTimeout(r,w))}}
+ Q('#auth').style.display='none'});
 </script>
 </body></html>
