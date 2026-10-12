@@ -553,6 +553,11 @@ main.an>*{animation-fill-mode:backwards}
 .avb canvas{display:block;width:100%;max-width:300px;aspect-ratio:1;margin:0 auto 6px;border-radius:12px;touch-action:none;cursor:grab;background:#060a12}
 .avb input[type=range]{flex:1;padding:0;height:24px;background:transparent;border:0;accent-color:var(--g)}
 .avb .avok{background:linear-gradient(135deg,var(--g),var(--g2));color:#030712;border:0}
+
+/* ---- path workshop ---- */
+.psc{height:24px;padding:0 11px;border-radius:12px;background:var(--s2);color:var(--m);border:1px solid var(--bd);font-size:.75em;font-weight:600}
+.psc.on{background:color-mix(in srgb,var(--cc) 20%,var(--s2));border-color:var(--cc);color:var(--cc)}
+.itm .stp{margin-inline-start:2px}.itm .sr.vt{padding:8px 10px}
 </style></head><body><header><h1>👁 لورد الغوامض</h1><select id="sel"></select><button id="new">+ جديدة</button><button id="exp" title="تصدير الشخصيات">⬇ تصدير</button><button id="imp" title="استيراد الشخصيات">⬆ استيراد</button><span id="who" class="tag"></span><button id="mode" style="display:none"></button><button id="edt" style="display:none"></button></header><main id="m"></main><p id="uidb" class="sub" style="text-align:center;margin:6px 0 14px"></p><nav id="nav"></nav><div id="dr"></div><input type="file" id="impf" accept=".json,application/json" hidden>
 <script>
 const $=s=>document.querySelector(s),AD=s=>String(s??'').replace(/[٠-٩۰-۹]/g,d=>{const i='٠١٢٣٤٥٦٧٨٩'.indexOf(d);return i>=0?i:'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)}),esc=s=>AD(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -686,7 +691,7 @@ addEventListener('pointerdown',()=>{down=true},true);['pointerup','pointercancel
 addEventListener('pointerup',e=>{const t=e.target;if(isTxt(t)&&!t.disabled&&!t.readOnly)setTimeout(()=>{if(t.isConnected&&document.activeElement!==t)t.focus()},30)},true);
 document.addEventListener('focusout',()=>{if(!pendF)return;setTimeout(()=>{if(isTxt(document.activeElement))return;const a=pendF;pendF=false;R(a===true)},80)});
 let ent=false,lst=0,cv=null,gop=false,gmsg='',lsp='',db=null,user=null,uid='local',isOwner=true,dmView=true,chars={},cur=null,tab='camp',draft=null,last='';
-const mkChar=()=>{const attr=Object.fromEntries(A.map(a=>[a[0],3]));return{id:'c'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),owner:uid,cid:'',name:'',gender:'',age:'',race:'بشري',job:'',affil:'',path:0,seq:9,potion:'',pname:'',attr,a0:{...attr},skills:mkSkills(),luck:{burned:0,at:0},dig:{act:0,idle:0,bonus:0},hist:[],mult:{4:2,2:2,1:1.5,0:2},m:{lost:0,extra:0,prot:0,forced:null,partial:null,unc:0,rc:{g:0,r:0,e:0}},avatar:'',avSrc:'',avT:null,rep:1,money:{l:0,s:0,p:0},saved:{l:0,s:0,p:0},armor:'بلا',dmg:0,spu:0,inv:[],ing:[],pots:[],bless:[],log:[],rolls:[],cb:{init:null,round:0,raid:0,prep:0,pa:1,act:{atk:1,cast:1,quick:3,move:1,full:1,parry:1,ready:1}},st:[],fail:null,dead:0,rg:[],rch:{},rp:0,restH:8,pm:{n2:0,ritual:1,help:0,direct:0,imp:'n',under:0,hi:0,moon:0,animal:0,hiMad:0,fol:0,pot:'',tpath:'',manual:0},target:60,rr:3,rolled:0,pw:0}};
+const mkChar=()=>{const attr=Object.fromEntries(A.map(a=>[a[0],3]));return{id:'c'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),owner:uid,cid:'',name:'',gender:'',age:'',race:'بشري',job:'',affil:'',path:0,seq:9,potion:'',pname:'',attr,a0:{...attr},skills:mkSkills(),luck:{burned:0,at:0},dig:{act:0,idle:0,bonus:0},hist:[],mult:{4:2,2:2,1:1.5,0:2},m:{lost:0,extra:0,prot:0,forced:null,partial:null,unc:0,rc:{g:0,r:0,e:0}},avatar:'',avSrc:'',avT:null,psec:{craft:[],crt:[],stock:[],cnt:[],note:''},rep:1,money:{l:0,s:0,p:0},saved:{l:0,s:0,p:0},armor:'بلا',dmg:0,spu:0,inv:[],ing:[],pots:[],bless:[],log:[],rolls:[],cb:{init:null,round:0,raid:0,prep:0,pa:1,act:{atk:1,cast:1,quick:3,move:1,full:1,parry:1,ready:1}},st:[],fail:null,dead:0,rg:[],rch:{},rp:0,restH:8,pm:{n2:0,ritual:1,help:0,direct:0,imp:'n',under:0,hi:0,moon:0,animal:0,hiMad:0,fol:0,pot:'',tpath:'',manual:0},target:60,rr:3,rolled:0,pw:0}};
 const BOOKA={};for(const k in BOOK)BOOK[k].forEach(n=>BOOKA[n]=k);
 const norm=c=>{const d=mkChar();for(const k in d)c[k]??=d[k];c.pm={...d.pm,...c.pm};c.skills={...mkSkills(),...c.skills};bookFix(c);c.a0??={...c.attr};if(c.path==22&&c.seq==9&&!c.hist.length)c.seq=10;if(!c._sv){for(const n in c.skills){const k=c.skills[n];if(!k.u&&!k.lv&&BOOKA[n])k.a=BOOKA[n]}c._sv=2}return c};
 let uiOn=false,uiT=0;const uiKey=()=>'ui_state_'+uid;
@@ -1332,7 +1337,7 @@ let rsel=-1,aedit='',abForm='';const AB={},AKY=(p,s)=>'ab_'+p+'_'+s,PWAY=Object.
 const abSave=(k,o)=>{AB[k]=o;if(db)db.doc('recipes/'+k).set(o).catch(()=>{saveErr=1;if(tab=='route')R()});else store.set('abl_'+k,JSON.stringify(o))};
 const abDoc=(p,s)=>{const o=AB[AKY(p,s)]||{ab:1,p,s};o.list=o.list||[];o.en=o.en||[];o.at=o.at||{};o.st=o.st||{};return o};
 const abo={},fmtD=t=>String(t||'').split('\n').map(l=>esc(l).replace(/^\s*([①-⑳]|\(\d+\)|\d+[.)])\s*/,'<b class="rtk">$1</b> ').replace(/^\s*(ملاحظة|تأثير خاص|توضيحات إضافية|مثال)\s*:/,'<b class="rtn">$1:</b>')).join('\n');
-function pRoute(c){
+function pRoute0(c){
  if(c.path==22||!PATHS[c.path])return `<div class="card"><h2>المسار</h2><p class="sub">لا مسار لهذه الشخصية.</p></div>`;
  const p=c.path,dm=DM(),pn=PATHS[p];
  if(!PWAY[p])return `<div class="card pth"><div class="pth-k">المسار</div><h2>${esc(pn[1])} · ${esc(pn[0])}</h2><div class="alert">غير متاح: قدرات هذا المسار لم تُضَف بعد.</div></div>`;
@@ -1352,6 +1357,46 @@ function pRoute(c){
   ${dm&&abForm=='en'&&prev.length?`<div class="itf" style="margin-top:8px"><select id="enr">${opts([['','اختر القدرة المعزَّزة'],...prev],'')}</select><textarea id="end" rows="4" placeholder="ما الذي تغيّر في هذه القدرة بعد التعزيز؟"></textarea><div class="row"><button data-a="enadd">+ إضافة قدرة معزَّزة</button></div></div>`:''}</div>`};
  return `<div class="card pth rth">${PSYM[p]?`<div class="emb"><img src="${PSYM[p]}" alt="رمز المسار" draggable="false"></div>`:''}<div class="pth-k">المسار</div><h2>${esc(pn[1])} · ${esc(pn[0])}</h2><div class="pth-s">${c.seq<=9?'التسلسل الحالي <b>'+c.seq+'</b> — '+esc(sqn(p,c.seq)):'لم تبلغ أي تسلسل بعد'}</div><div class="dsq">${[9,8,7,6,5,4,3,2,1,0].map(i=>`<i class="${c.seq>9?'':i>c.seq?'p':i==c.seq?'on':''}"></i>`).join('')}</div></div>
  <div class="card"><h3>التسلسلات${dm?' <span class="sub">(تراها كلها بصفتك DM)</span>':''}</h3>${seqs.map(q=>{const o=abDoc(p,q),on=rsel===q,rc=reached(q),cu=c.seq==q;return `<button class="dgb" data-a="rsel" data-v="${q}"><div class="rsr${on?' on':''}${rc?'':' lk'}${cu?' cu':''}"><span class="rsn">${q}</span><span class="rsb"><b>${esc(sqn(p,q))}</b><small>${o.list.length} قدرة${o.en.length?' · '+o.en.length+' معزَّزة':''}</small></span>${cu?'<span class="tag good">الحالي</span>':''}${rc?'':'<span class="tag">🔒</span>'}<em class="vc">${on?'▴':'▾'}</em></div></button>${on&&(dm||rc)?panel(q):''}`}).join('')||'<p class="sub">لا تسلسلات بعد.</p>'}${saveErr?`<div class="alert">تعذّر الحفظ في قاعدة البيانات.</div>`:''}</div>`}
+/* ===== Path workshop (per-path section; Moon first) ===== */
+const PSEC={14:{t:'ورشة القمر',mods:{
+ craft:{t:'الجرعات الخاصة',h:'الجرعات والمستحضرات التي تصنعها بقدرات المسار. اضغط − عند استخدام واحدة.'},
+ crt:{t:'الوحوش المروضة',h:'الكائنات التي ترُوّضها: تتبّع صحتها وحالتها.',lock:8},
+ stock:{t:'المواد والمكوّنات',h:'ما جمعته من مواد لصنع الجرعات والمستحضرات.'},
+ cnt:{t:'عدّادات القدرات',h:'مرات الاستخدام والشحنات؛ اضغط «تجديد» عند تجددها.'},
+ note:{t:'ملاحظات المسار',h:'وصفات وأفكار وأي شيء تريد تذكّره.'}}}};
+const PST=['حي','جريح','غائب','ميت'],PSC={'حي':'#3ecf8e','جريح':'#f5b942','غائب':'#9aa4b2','ميت':'#e5484d'};
+let rtab='ab',psf='',pse='';
+const psx=c=>{const o=c.psec=c.psec||{};['craft','crt','stock','cnt'].forEach(k=>o[k]=o[k]||[]);o.note=o.note||'';return o};
+function psForm(m,x){const e=x||{},sv=`<div class="row"><button data-a="pssave" data-m="${m}" data-id="${x?x.id:''}">${x?'حفظ':'إضافة'}</button><button data-a="pscancel">إلغاء</button></div>`,
+ nm=ph=>`<input id="psn" placeholder="${ph}" value="${esc(e.n||'')}">`,
+ ta=(id,ph,v,r,mh)=>`<textarea id="${id}" rows="${r}" placeholder="${ph}"${mh?` style="min-height:${mh}px"`:''}>${esc(v||'')}</textarea>`,
+ nu=(id,v)=>`<input id="${id}" type="text" data-num="1" autocomplete="off" value="${v}">`;
+ if(m=='craft')return`<div class="itf" style="--rc:${RC[e.r||'عادي']}">${nm('اسم الجرعة أو المستحضر')}${ta('psd','التأثير وطريقة الاستخدام',e.ds,4)}${ta('psi','المكوّنات المستخدمة (اختياري)',e.ing,2,60)}<div class="row"><select id="psr">${opts(RAR.map(r=>[r[0],'الندرة: '+r[0]]),e.r||'عادي')}</select>الكمية ${nu('psq',x?x.q:1)}</div>${sv}</div>`;
+ if(m=='crt')return`<div class="itf">${nm('اسم الوحش')}<div class="row"><input id="pss" placeholder="النوع / الفصيلة" value="${esc(e.sp||'')}"><input id="psl" placeholder="الرتبة / المستوى" value="${esc(e.lv||'')}"></div><div class="row">الصحة ${nu('psh',x?x.hp:'')} / ${nu('psm',x?x.mh:'')}</div>${ta('psd','القدرات والطباع وأي ملاحظات',e.ds,4)}${sv}</div>`;
+ if(m=='stock')return`<div class="itf">${nm('اسم المادة')}<div class="row">الكمية ${nu('psq',x?x.q:1)}</div>${ta('psd','ملاحظة: المصدر، الجودة، الاستخدام...',e.ds,2,60)}${sv}</div>`;
+ return`<div class="itf">${nm('اسم العدّاد (مثال: استخدامات قدرة ...)')}<div class="row">الحالي ${nu('psv',x?x.v:0)} / الأقصى ${nu('psm',x?x.m:0)}</div>${ta('psd','التجديد: يوميًا، أسبوعيًا، بعد راحة...',e.ds,2,60)}${sv}</div>`}
+function pPsec(c){const P=PSEC[c.path],o=psx(c),dm=DM(),M=P.mods,
+ hd=(k,n)=>`<div class="fh"><div style="flex:1;min-width:0"><h3 style="margin:0">${M[k].t}${n!=null?` <span class="sub">${n}</span>`:''}</h3></div><button class="tgl" data-a="psadd" data-v="${k}" title="إضافة">${psf==k&&!pse?'−':'+'}</button></div><p class="sub" style="margin:4px 0 8px">${M[k].h}</p>`,
+ ctl=(m,x)=>`<button class="lb" data-a="psedit" data-m="${m}" data-id="${x.id}" title="تعديل">✎</button><button class="r" data-a="psdel" data-m="${m}" data-id="${x.id}">✕</button>`,
+ stp=(a,m,x,v,mid)=>`<span class="stp" style="--ac:var(--g)"><button class="mn" data-a="${a}" data-m="${m}" data-id="${x.id}" data-v="-1">−</button><em>${mid}</em><button class="mn" data-a="${a}" data-m="${m}" data-id="${x.id}" data-v="1">+</button></span>`,
+ add=m=>psf==m&&!pse?psForm(m,null):'',
+ lst=(m,fn,empty)=>o[m].map(x=>psf==m&&pse==x.id?psForm(m,x):fn(x)).join('')||`<span class="sub">${empty}</span>`,
+ ready=o.craft.reduce((a,x)=>a+(+x.q||0),0),alive=o.crt.filter(x=>x.st=='حي'||x.st=='جريح').length,
+ lock=!dm&&c.seq>M.crt.lock;
+ const craftI=x=>`<div class="itm" style="--rc:${RC[x.r]||RC['عادي']}"><div class="l1"><span class="ico">◆</span><b>${esc(x.n)}</b><span class="rar">${esc(x.r||'عادي')}</span>${stp('psq','craft',x,0,x.q)}${ctl('craft',x)}</div>${+x.q>0?'':'<div class="sub bad">نفدت الكمية</div>'}${x.ing?`<div class="sub" style="margin-top:4px">المكوّنات: ${esc(x.ing)}</div>`:''}${x.ds?`<div class="ids">${esc(x.ds)}</div>`:''}</div>`,
+ crtI=x=>`<div class="itm" style="--rc:${PSC[x.st]||PSC['حي']}"><div class="l1"><span class="ico">◆</span><b>${esc(x.n)}</b>${x.sp?`<span class="lvl">${esc(x.sp)}</span>`:''}${x.lv?`<span class="lvl">${esc(x.lv)}</span>`:''}${ctl('crt',x)}</div>${x.mh>0?`<div style="margin-top:8px">${ring('الصحة',x.hp,x.mh,'#c2415a')}</div>`:`<div class="sub" style="margin-top:6px">الصحة: ${x.hp}</div>`}<div class="row">${[-5,-1,1,5].map(v=>`<button data-a="pshp" data-m="crt" data-id="${x.id}" data-v="${v}">${v>0?'+'+v:'−'+Math.abs(v)}</button>`).join('')}</div><div class="row">${PST.map(s=>`<button class="psc${x.st==s?' on':''}" data-a="psst" data-m="crt" data-id="${x.id}" data-v="${s}" style="--cc:${PSC[s]}">${s}</button>`).join('')}</div>${x.ds?`<div class="ids">${esc(x.ds)}</div>`:''}</div>`,
+ stockI=x=>`<div class="itm"><div class="l1"><span class="ico" style="color:var(--g)">◆</span><b>${esc(x.n)}</b>${stp('psq','stock',x,0,x.q)}${ctl('stock',x)}</div>${x.ds?`<div class="sub" style="margin-top:4px">${esc(x.ds)}</div>`:''}</div>`,
+ cntI=x=>`<div class="itm"><div class="l1"><b>${esc(x.n)}</b>${stp('pscnt','cnt',x,0,x.m>0?x.v+'/'+x.m:x.v)}<button class="lb" data-a="pscrst" data-m="cnt" data-id="${x.id}"${x.m>0?'':' disabled'}>تجديد</button>${ctl('cnt',x)}</div>${x.m>0?`<div class="bar" style="margin-top:8px"><i style="width:${pct(x.v,x.m)}%"></i></div>`:''}${x.ds?`<div class="sub" style="margin-top:4px">${esc(x.ds)}</div>`:''}</div>`;
+ return`<div class="card tdh"><div class="l1"><h2 style="margin:0;flex:1">⚗ ${P.t}</h2></div><div class="tdw" style="grid-template-columns:repeat(3,1fr)"><div><small>جرعات جاهزة</small><b>${ready}</b></div><div><small>وحوش حيّة</small><b>${lock?'—':alive}</b></div><div><small>أنواع المواد</small><b>${o.stock.length}</b></div></div></div>
+ <div class="card">${hd('craft',o.craft.length)}${add('craft')}${lst('craft',craftI,'لم تصنع جرعات خاصة بعد.')}</div>
+ ${lock?`<div class="card"><h3>${M.crt.t}</h3><p class="sub">🔒 تُفتح عند بلوغ التسلسل ${M.crt.lock} — ${esc(sqn(c.path,M.crt.lock))}</p></div>`:`<div class="card">${hd('crt',o.crt.length)}${add('crt')}${lst('crt',crtI,'لا وحوش مروضة بعد.')}</div>`}
+ <div class="card">${hd('stock',o.stock.length)}${add('stock')}${lst('stock',stockI,'لا مواد مسجّلة.')}</div>
+ <div class="card">${hd('cnt',o.cnt.length)}${o.cnt.some(x=>x.m>0)?`<div class="row" style="margin-top:0"><button data-a="pscrstall" style="width:100%">تجديد كل العدّادات</button></div>`:''}${add('cnt')}${lst('cnt',cntI,'لا عدّادات بعد.')}</div>
+ <div class="card"><h3>${M.note.t}</h3><p class="sub" style="margin:4px 0 8px">${M.note.h}</p><textarea data-psn="1" rows="5" style="width:100%;min-height:110px" placeholder="اكتب هنا...">${esc(o.note)}</textarea></div>`}
+function pRoute(c){const P=c.path!=22&&PSEC[c.path];if(!P)return pRoute0(c);
+ const sw=`<div class="fmw"><button class="fmb${rtab=='ws'?'':' on'}" data-a="rtab" data-v="ab">☾ قدرات المسار</button><button class="fmb${rtab=='ws'?' on':''}" data-a="rtab" data-v="ws">⚗ ${P.t}</button></div>`,h=pRoute0(c);
+ if(rtab!='ws')return sw+h;const i=h.indexOf('<div class="card"><h3>التسلسلات');return sw+(i>0?h.slice(0,i):'')+pPsec(c)}
+
 const pLog=c=>`<div class="card log"><h2>سجل الشخصية</h2>${c.log.map(e=>`<div><span class="sub">${fmt(e.t)}</span> <b>${esc(e.type)}</b> — ${esc(e.txt)}${e.b!=null?` <span class="sub">(${esc(e.b)} ← ${esc(e.a)})</span>`:''}</div>`).join('')||'<span class="sub">فارغ</span>'}</div>`;
 const THM=[['#e0c27a','#8a6a2a'],['#2dd4bf','#0f766e'],['#94a3b8','#475569'],['#fbbf24','#b45309'],['#3b82f6','#1d4ed8'],['#f0abfc','#a21caf'],['#b45f5f','#7a2a2a'],['#e2e8f0','#64748b'],['#fdba74','#c2410c'],['#818cf8','#3730a3'],['#a7b8a0','#3f5a4a'],['#d6a15c','#8a5a22'],['#c4b5fd','#6d28d9'],['#22c55e','#14532d'],['#fda4af','#be123c'],['#8fb4cc','#334e63'],['#d6336c','#5b0f2e'],['#f472b6','#9d174d'],['#ef4444','#991b1b'],['#d4d4d8','#3f3f46'],['#bef264','#4d7c0f'],['#34d399','#047857']];
 function thm(){const o=draft||C(),t=o&&THM[o.path],r=document.documentElement.style,x=(c,k,b)=>t?`color-mix(in srgb,${c} ${k}%,${b})`:b;r.setProperty('--g',x(t&&t[0],9,'#5aa9ff'));r.setProperty('--g2',x(t&&t[1],9,'#2563eb'));r.setProperty('--bg',x(t&&t[1],2,'#05070d'));r.setProperty('--s1',x(t&&t[1],3,'#0a0f1a'));r.setProperty('--s2',x(t&&t[1],3,'#0f1626'));r.setProperty('--s3',x(t&&t[1],4,'#16203a'));r.setProperty('--bd',x(t&&t[1],6,'#1f2d4d'));r.setProperty('--m',x(t&&t[0],5,'#8fa3c4'))}
@@ -1370,7 +1415,7 @@ function clpT(k,o,b){const e=document.querySelector('.clp[data-k="'+k+'"]');if(!
 const clearMsgs=()=>{last='';lpw='';lml='';lsp='';gmsg='';saveErr=0};
 let spp=0,spT=0,spId='';
 function spFlush(){clearTimeout(spT);spT=0;const c=chars[spId],x=spp;spp=0;if(!c||!x)return false;const mx=E.stats(c).sp,b=mx-c.spu,d=Math.min(x,b);c.spu=Math.min(mx,c.spu+x);lsp='استهلاك '+d+' روحانية';E.ev(c,'الروحانية','استهلاك '+d,b,mx-c.spu);if(!dirty[c.id])saveNow(c);else save(c);return true}
-const done=c=>{if(c){if(tab=='fight'&&!draft&&!dirty[c.id]){c.owner=c.owner||uid;saveNow(c)}else save(c)}R()},setp=(o,p,v)=>{const k=p.split('.');while(k.length>1)o=o[k.shift()];o[k[0]]=v};
+const done=c=>{if(c){if((tab=='fight'||tab=='route')&&!draft&&!dirty[c.id]){c.owner=c.owner||uid;saveNow(c)}else save(c)}R()},setp=(o,p,v)=>{const k=p.split('.');while(k.length>1)o=o[k.shift()];o[k[0]]=v};
 /* ===== Events ===== */
 document.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)return;if(t.dataset.tab){document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b===t));tab=t.dataset.tab;draft=null;clearMsgs();ie=-1;ia=false;if(tab=='trade')loadTrades().then(()=>R());if(tab=='camp'&&db)loadAll(1).then(()=>{if(!chars[cur])cur=Object.keys(chars)[0]||null;R()});return R(true)}
  if(t.id=='edt'){if(editMode&&ed&&Object.keys(ed).length&&!confirm('لديك تعديلات غير محفوظة، تجاهلها؟'))return;editMode=!editMode;ia=false;ed=null;drawer=null;lrn=null;return R()}
@@ -1458,7 +1503,28 @@ document.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)r
   if(a=='sbadd'){const x=o.list.find(y=>y.id==t.dataset.id);if(!x)return;const n=(g('sbn_'+x.id)||'').trim();if(!n)return;x.sub=x.sub||[];x.sub.push({id:rid(),n,d:(g('sbd_'+x.id)||'').trim()});abo['ab'+x.id]=true;abForm='';abSave(k,o);return R()}
   if(a=='sbsave'){for(const x of o.list){const y=(x.sub||[]).find(z=>z.id==t.dataset.id);if(y){const n=(g('sen')||'').trim();if(n){y.n=n;y.d=(g('sed')||'').trim()}}}aedit='';abSave(k,o);return R()}
   if(a=='sbdel'){if(!confirm('حذف هذه القدرة الفرعية؟'))return;o.list.forEach(x=>{x.sub=(x.sub||[]).filter(z=>z.id!=t.dataset.id)});abSave(k,o);return R()}}
- if(a=='tstp'){const k=+t.dataset.k,x=c.inv[k];if(!x)return;tdr.q[k]=Math.max(0,Math.min(x.q,(+tdr.q[k]||0)+ +t.dataset.v));return R()}
+ if(a=='rtab'){rtab=t.dataset.v;psf='';pse='';return R()}
+ if(a=='psadd'){const v=t.dataset.v;psf=psf==v&&!pse?'':v;pse='';return R()}
+ if(a=='pscancel'){psf='';pse='';return R()}
+ if(a=='psedit'){psf=t.dataset.m;pse=t.dataset.id;return R()}
+ if(a=='pscrstall'){const o=psx(c);o.cnt.forEach(y=>{if(y.m>0)y.v=y.m});L('ورشة المسار','تجديد كل العدّادات');return done(c)}
+ if(['pssave','psdel','psq','pshp','pscnt','pscrst','psst'].includes(a)){const o=psx(c),m=t.dataset.m,id=t.dataset.id;if(!['craft','crt','stock','cnt'].includes(m))return;const arr=o[m],x=arr.find(y=>y.id==id);
+  if(a=='pssave'){const n=(g('psn')||'').trim();if(!n)return;const gd=k=>(g(k)||'').trim(),num=(k,d)=>{const r=(g(k)||'').trim();if(r==='')return d;const v=Math.floor(+AD(r));return isNaN(v)?d:Math.max(0,v)};let e;
+   if(m=='craft')e={n,q:num('psq',1),r:g('psr')||'عادي',ds:gd('psd'),ing:gd('psi')};
+   else if(m=='crt'){const mh=num('psm',0);e={n,sp:gd('pss'),lv:gd('psl'),mh,hp:num('psh',mh),ds:gd('psd')};if(mh>0)e.hp=Math.min(e.hp,mh)}
+   else if(m=='stock')e={n,q:num('psq',1),ds:gd('psd')};
+   else{e={n,v:num('psv',0),m:num('psm',0),ds:gd('psd')};if(e.m>0)e.v=Math.min(e.v,e.m)}
+   if(x)Object.assign(x,e);else arr.push({id:'x'+Date.now().toString(36)+Math.random().toString(36).slice(2,4),st:'حي',...e});
+   L('ورشة المسار',(x?'تعديل ':'إضافة ')+n);psf='';pse='';return done(c)}
+  if(!x)return;
+  if(a=='psdel'){if(!confirm('حذف هذا العنصر؟'))return;o[m]=arr.filter(y=>y.id!=id);L('ورشة المسار','حذف '+x.n);return done(c)}
+  if(a=='psq'){x.q=Math.max(0,(+x.q||0)+ +t.dataset.v);return done(c)}
+  if(a=='pshp'){const v=(+x.hp||0)+ +t.dataset.v;x.hp=Math.max(0,x.mh>0?Math.min(x.mh,v):v);return done(c)}
+  if(a=='pscnt'){const v=(+x.v||0)+ +t.dataset.v;x.v=Math.max(0,x.m>0?Math.min(x.m,v):v);return done(c)}
+  if(a=='pscrst'){if(x.m>0)x.v=x.m;return done(c)}
+  if(a=='psst'){x.st=t.dataset.v;return done(c)}}
+ 
+if(a=='tstp'){const k=+t.dataset.k,x=c.inv[k];if(!x)return;tdr.q[k]=Math.max(0,Math.min(x.q,(+tdr.q[k]||0)+ +t.dataset.v));return R()}
  if(a=='tsend'){const rcs=Object.values(chars).filter(x=>x.id!=c.id&&x.cid==c.cid),rc=rcs.find(x=>x.id==tdr.to)||rcs[0];if(!rc)return;const money=Math.max(0,+tdr.l||0)*240+Math.max(0,+tdr.s||0)*12+Math.max(0,+tdr.p||0),it=[];
   c.inv.forEach((x,i)=>{const q=Math.min(+tdr.q[i]||0,x.q);if(q>0)it.push({i,q})});
   if(!money&&!it.length){last='اختر أغراضًا أو مبلغًا أولًا';return R()}
@@ -1512,7 +1578,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)r
  if(a=='arep'){const tr=E.assets(c);L('تغير السمعة',`رمي أصول (${tr} محاولة)`);return done(c)}});
 const CH=e=>{const t=e.target,c=C(),d=draft;if(t.id=='ta'||t.id=='tk'){tst[t.id=='ta'?'a':'k']=t.value;return}if(t.id=='irr'||t.id=='err'||t.id=='bty'){const b=t.closest('.itf');if(b)b.style.setProperty('--rc',(t.id=='bty'?BC:RC)[t.value]||'#9aa4b2');return}if(t.id=='pws'){const i=$('#pwx');if(i&&t.value)i.value=t.value;return}if(t.id=='dty'){dtyV=t.value;dfV=DF[t.value]||'pd';return R()}if(t.id=='ddf'){dfV=t.value;return R()}if(t.id=='sel'){clearMsgs();cur=t.value;draft=null;ed=null;editMode=false;return R(true)}
  if(t.dataset.rgt){rgs[t.dataset.rgt]=t.value;return}if(t.dataset.rg){rgs[t.dataset.rg]=+t.value;rgLoad();return R()}if(t.dataset.bs){bsel[t.dataset.bs]=+t.value;return R()}if(t.dataset.tr){tdr[t.dataset.tr]=t.dataset.num?(+AD(t.value)||0):t.value;return R()}if(t.dataset.sw){const k=t.dataset.sw;sw[k]=t.dataset.num?(+AD(t.value)||0):t.value;if(k=='to')sw.wq={};return R()}if(t.dataset.av){const f=t.files&&t.files[0],tg=d||c;if(!f||!tg||RO(tg))return;avLoad(f,tg);t.value='';return}
- if(t.dataset.d){const k=t.dataset.d;if(k=='race'){const was=d.race;if(t.value=='عِرق الدم'&&was!='عِرق الدم')d._pp=d.path;else if(was=='عِرق الدم'&&t.value!='عِرق الدم'){if(d._pp!=null)d.path=+d._pp;d._pp=null;delete d.d100}}d[k]=t.dataset.num?+t.value:t.value;if(k=='rscale'&&d.rbd)E.rescale(d);if(['name','age','job','affil'].includes(k)){const b=document.querySelector('[data-a=wnext],[data-a=create]');if(b)b.disabled=!(b.dataset.a=='create'?wOk(d):wStep(d,d.step||0));return}return R()}if(!c)return;if(RO(c)&&!t.dataset.lrn)return;
+ if(t.dataset.d){const k=t.dataset.d;if(k=='race'){const was=d.race;if(t.value=='عِرق الدم'&&was!='عِرق الدم')d._pp=d.path;else if(was=='عِرق الدم'&&t.value!='عِرق الدم'){if(d._pp!=null)d.path=+d._pp;d._pp=null;delete d.d100}}d[k]=t.dataset.num?+t.value:t.value;if(k=='rscale'&&d.rbd)E.rescale(d);if(['name','age','job','affil'].includes(k)){const b=document.querySelector('[data-a=wnext],[data-a=create]');if(b)b.disabled=!(b.dataset.a=='create'?wOk(d):wStep(d,d.step||0));return}return R()}if(!c)return;if(RO(c)&&!t.dataset.lrn)return;if(t.dataset.psn){psx(c).note=t.value;return done(c)}
  if(!editMode&&(t.dataset.e||t.dataset.sk||t.dataset.skattr||t.dataset.seq))return;
  if(t.dataset.e){setEd(t.dataset.e,t.value);if(t.dataset.e=='race'||t.dataset.e=='path')R();return}
  if(t.dataset.f=='pw'){if(!DM())return;c.pw=Math.max(0,Math.floor(+t.value)||0);E.ev(c,'تعديل سمة','معدل القوة',null,c.pw+'%');return done(c)}if(t.dataset.f){const n=t.dataset.num?+t.value:t.value;setp(c,t.dataset.f,t.dataset.f=='rep'?+n:n);if(t.dataset.f=='rep')L2(c,'تغير السمعة','المستوى '+n);if(['pname','potion'].includes(t.dataset.f)){save(c);return}return done(c)}
