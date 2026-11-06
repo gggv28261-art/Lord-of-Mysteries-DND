@@ -604,6 +604,13 @@ button.bftg:hover{color:var(--t)}button.bftg.on{outline:0;color:var(--g);border-
 .bftn{flex:1;min-width:0;display:flex;flex-direction:column}.bftn b{font-size:.9em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.bftn small{font-size:.7em}
 .bftr2 button{padding:4px 10px;font-size:.78em;flex:none}.bfsd{display:flex;align-items:center;gap:8px}
 .bfh .bfb button.bfsv{border-color:#16a34a;color:#86efac;background:#14532d55}
+
+/* ---- copyable roll command ---- */
+button.rcp{display:inline-flex;align-items:center;gap:7px;vertical-align:middle;margin:2px 3px;padding:2px 6px 2px 10px;height:auto;min-height:26px;direction:ltr;background:#060a12;color:var(--g);border:1px solid color-mix(in srgb,var(--g) 40%,var(--bd));border-radius:8px;font-weight:700;font-size:.92em;line-height:1.5;white-space:normal;text-align:start;overflow-wrap:anywhere}
+button.rcp:hover:not(:disabled){border-color:var(--g);background:color-mix(in srgb,var(--g) 10%,#060a12);filter:none}
+button.rcp .rcd{display:inline-flex;flex:none}button.rcp bdi{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:700}
+button.rcp .rcs{flex:none;font-size:.78em;font-weight:600;color:var(--m);background:var(--s3);border-radius:6px;padding:0 7px;line-height:1.7;font-family:inherit}
+button.rcp.ok{border-color:var(--gr)}button.rcp.ok .rcs{color:#04170e;background:var(--gr)}
 </style></head><body><header><h1>👁 لورد الغوامض</h1><select id="sel"></select><button id="new">+ جديدة</button><button id="exp" title="تصدير الشخصيات">⬇ تصدير</button><button id="imp" title="استيراد الشخصيات">⬆ استيراد</button><span id="who" class="tag"></span><button id="mode" style="display:none"></button><button id="edt" style="display:none"></button></header><main id="m"></main><p id="uidb" class="sub" style="text-align:center;margin:6px 0 14px"></p><nav id="nav"></nav><div id="dr"></div><input type="file" id="impf" accept=".json,application/json" hidden>
 <script>
 const $=s=>document.querySelector(s),AD=s=>String(s??'').replace(/[٠-٩۰-۹]/g,d=>{const i='٠١٢٣٤٥٦٧٨٩'.indexOf(d);return i>=0?i:'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)}),esc=s=>AD(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -1385,13 +1392,18 @@ const PSYM={0:'data:image/webp;base64,UklGRoRFAABXRUJQVlA4WAoAAAAQAAAA3wAA3wAAQU
 let rsel=-1,aedit='',abForm='';const AB={},AKY=(p,s)=>'ab_'+p+'_'+s,PWAY=Object.fromEntries(PATHS.slice(0,22).map((_,i)=>[i,1])),STL={hp:'الصحة',sp:'الروحانية',en:'التحمل',dr:'تقليل الضرر %',rm:'العقلانية القصوى'};
 const abSave=(k,o)=>{AB[k]=o;if(db)db.doc('recipes/'+k).set(o).catch(()=>{saveErr=1;if(tab=='route')R()});else store.set('abl_'+k,JSON.stringify(o))};
 const abDoc=(p,s)=>{const o=AB[AKY(p,s)]||{ab:1,p,s};o.list=o.list||[];o.en=o.en||[];o.at=o.at||{};o.st=o.st||{};return o};
-const abo={},fmtD=t=>String(t||'').split('\n').map(l=>esc(l).replace(/^\s*([①-⑳]|\(\d+\)|\d+[.)])\s*/,'<b class="rtk">$1</b> ').replace(/^\s*(ملاحظة|تأثير خاص|توضيحات إضافية|مثال)\s*:/,'<b class="rtn">$1:</b>')).join('\n');
+const abo={},rcNorm=s=>String(s||'').trim().replace(/^ال(?=..)/,''),
+rcMap=c=>{const m=new Map();if(!c)return m;A.forEach(([k,l])=>{const v=E.ga(c,k);m.set(rcNorm(l),v);m.set(l,v)});Object.entries(c.skills||{}).forEach(([n,s])=>{const v=E.ga(c,s.a)+LVV[s.lv],k=rcNorm(n);if(!m.has(k))m.set(k,v);if(!m.has(n))m.set(n,v)});return m},
+rcSub=(s,c)=>{const m=rcMap(c);if(!m.size)return s;const ks=[...m.keys()].filter(Boolean).sort((a,b)=>b.length-a.length).map(k=>k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'));if(!ks.length)return s;const re=new RegExp('(?<![\\p{L}\\p{N}_])(?:ال)?('+ks.join('|')+')(?![\\p{L}\\p{N}_])','gu');return s.replace(re,(a,k)=>{const v=m.get(k);return v==null?a:String(v)}).replace(/\+\s*-/g,'-').replace(/-\s*-/g,'+')},
+fmtD=(t,c)=>String(t||'').split('\n').map(l=>{const rm=/(^|\s)!\s*[rRرR]\s+(\S.*)$/.exec(l);if(rm){const pre=l.slice(0,rm.index+rm[1].length),cmd='!r '+rcSub(rm[2].trim(),c);return esc(pre)+`<button type="button" class="rcp" data-rc="${esc(cmd)}" title="اضغط للنسخ"><span class="rcd">🎲</span><bdi dir="ltr">${esc(cmd)}</bdi><span class="rcs">نسخ</span></button>`}return esc(l).replace(/^\s*([①-⑳]|\(\d+\)|\d+[.)])\s*/,'<b class="rtk">$1</b> ').replace(/^\s*(ملاحظة|تأثير خاص|توضيحات إضافية|مثال)\s*:/,'<b class="rtn">$1:</b>')}).join('\n');
+const rcCopy=async x=>{try{await navigator.clipboard.writeText(x);return 1}catch(e){try{const a=document.createElement('textarea');a.value=x;a.style.cssText='position:fixed;opacity:0';document.body.appendChild(a);a.select();const ok=document.execCommand('copy');a.remove();return ok}catch(e2){return 0}}};
+document.addEventListener('click',async e=>{const b=e.target.closest&&e.target.closest('[data-rc]');if(!b)return;e.preventDefault();const ok=await rcCopy(b.dataset.rc),s=b.querySelector('.rcs');if(s){s.textContent=ok?'✓ نُسخ':'تعذّر';b.classList.toggle('ok',!!ok);clearTimeout(b._t);b._t=setTimeout(()=>{s.textContent='نسخ';b.classList.remove('ok')},1300)}});
 function pRoute0(c){
  if(c.path==22||!PATHS[c.path])return `<div class="card"><h2>المسار</h2><p class="sub">لا مسار لهذه الشخصية.</p></div>`;
  const p=c.path,dm=DM(),pn=PATHS[p];
  if(!PWAY[p])return `<div class="card pth"><div class="pth-k">المسار</div><h2>${esc(pn[1])} · ${esc(pn[0])}</h2><div class="alert">غير متاح: قدرات هذا المسار لم تُضَف بعد.</div></div>`;
  const reached=q=>c.seq<=9&&q>=c.seq,seqs=[9,8,7,6,5,4,3,2,1,0].filter(q=>dm||reached(q)),sg=v=>(v>0?'+':'−')+Math.abs(v),
- fold=(key,idx,name,tag,body,rc,btns,sub)=>{const o=!!abo[key];return `<div class="rab" style="--rc:${rc}"><div class="fh"><button class="dgb" data-a="abtog" data-k="${key}"><div class="l1"><span class="rai">${idx}</span><b>${esc(name)}</b>${tag?`<span class="rar">${tag}</span>`:''}<em class="vc">${o?'▴':'▾'}</em></div></button>${btns||''}</div><div class="clp${o?' open':''}" data-k="${key}"><div><div class="rtx">${body?fmtD(body):'<span class="sub">لا وصف.</span>'}</div>${sub||''}</div></div></div>`},
+ fold=(key,idx,name,tag,body,rc,btns,sub)=>{const o=!!abo[key];return `<div class="rab" style="--rc:${rc}"><div class="fh"><button class="dgb" data-a="abtog" data-k="${key}"><div class="l1"><span class="rai">${idx}</span><b>${esc(name)}</b>${tag?`<span class="rar">${tag}</span>`:''}<em class="vc">${o?'▴':'▾'}</em></div></button>${btns||''}</div><div class="clp${o?' open':''}" data-k="${key}"><div><div class="rtx">${body?fmtD(body,c):'<span class="sub">لا وصف.</span>'}</div>${sub||''}</div></div></div>`},
  subH=x=>{const sb=x.sub||[];if(!sb.length&&!dm)return'';const fx=abForm=='sb'+x.id;return `<div class="rsub"><div class="rst">قدرات فرعية · ${sb.length}${dm?`<button class="tgl" data-a="abform" data-v="sb${x.id}" title="إضافة قدرة فرعية">${fx?'−':'+'}</button>`:''}</div>${sb.map((y,j)=>aedit==y.id&&dm?`<div class="itm itf"><input id="sen" value="${esc(y.n)}" placeholder="اسم القدرة الفرعية"><textarea id="sed" rows="5" placeholder="التأثير">${esc(y.d||'')}</textarea><div class="row"><button data-a="sbsave" data-id="${y.id}">حفظ</button><button data-a="abcancel">إلغاء</button></div></div>`:fold('sb'+y.id,j+1,y.n,'',y.d,'#a855f7',dm?`<button class="lb" data-a="abedit" data-id="${y.id}" title="تعديل">✎</button><button class="r" data-a="sbdel" data-id="${y.id}">✕</button>`:'')).join('')}${dm&&fx?`<div class="itf" style="margin-top:6px"><input id="sbn_${x.id}" placeholder="اسم قدرة فرعية جديدة"><textarea id="sbd_${x.id}" rows="4" placeholder="تأثير القدرة الفرعية"></textarea><div class="row"><button data-a="sbadd" data-id="${x.id}">+ إضافة قدرة فرعية</button></div></div>`:''}</div>`},
  panel=q=>{const o=abDoc(p,q),
   tiles=[...Object.entries(o.at).filter(([k,v])=>+v).map(([k,v])=>[AN[k],+v]),...Object.entries(o.st).filter(([k,v])=>+v).map(([k,v])=>[STL[k],+v])].map(([l,v])=>`<div class="rbt"><b class="${v>0?'good':'bad'}">${sg(v)}</b><small>${l}</small></div>`).join(''),
@@ -1401,7 +1413,7 @@ function pRoute0(c){
   return `<div class="rsp">${tiles?`<div class="rst">زيادات التسلسل · تُطبَّق تلقائيًا</div><div class="rbg">${tiles}</div>`:''}
   ${dm?`<details><summary>تعديل زيادات السمات والإحصائيات</summary><div class="sub" style="margin:4px 0">السمات</div><div class="tdm">${A.map(([k,l])=>`<label>${l}<input type="text" data-num="1" autocomplete="off" data-bn="${k}" value="${+o.at[k]||0}"></label>`).join('')}</div><div class="sub" style="margin:8px 0 4px">إحصائيات (تُضاف إلى القيمة النهائية)</div><div class="tdm">${Object.entries(STL).map(([k,l])=>`<label>${l}<input type="text" data-num="1" autocomplete="off" data-bst="${k}" value="${+o.st[k]||0}"></label>`).join('')}</div><div class="row"><button data-a="abbonus" style="width:100%">💾 حفظ الزيادات</button></div></details>`:''}
   <div class="rst">القدرات · ${o.list.length}${dm?`<button class="tgl" data-a="abform" data-v="main" title="إضافة قدرة">${abForm=='main'?'−':'+'}</button>`:''}</div>${o.list.length+o.en.length>1?`<div class="rtb"><button data-a="aball" data-v="1">فتح الكل</button><button data-a="aball" data-v="0">طي الكل</button></div>`:''}${abl}
-  ${dm&&abForm=='main'?`<div class="itf" style="margin-top:8px"><input id="abn" placeholder="اسم قدرة جديدة"><textarea id="abd" rows="6" placeholder="وصف القدرة: التأثير، الكلفة، الشروط... (ابدأ البنود بـ ① أو 1. لتظهر ملوّنة)"></textarea><div class="row"><button data-a="abadd">+ إضافة القدرة</button></div></div>`:''}
+  ${dm&&abForm=='main'?`<div class="itf" style="margin-top:8px"><input id="abn" placeholder="اسم قدرة جديدة"><textarea id="abd" rows="6" placeholder="وصف القدرة: التأثير، الكلفة، الشروط... (ابدأ البنود بـ ① أو 1. لتظهر ملوّنة — وللرمية اكتب سطرًا مثل: ! r 1d20+قوة)"></textarea><div class="row"><button data-a="abadd">+ إضافة القدرة</button></div></div>`:''}
   ${o.en.length||(dm&&prev.length)?`<div class="rst">قدرات معزَّزة من تسلسلات سابقة · ${o.en.length}${dm&&prev.length?`<button class="tgl" data-a="abform" data-v="en" title="إضافة تعزيز">${abForm=='en'?'−':'+'}</button>`:''}</div>${enl}`:''}
   ${dm&&abForm=='en'&&prev.length?`<div class="itf" style="margin-top:8px"><select id="enr">${opts([['','اختر القدرة المعزَّزة'],...prev],'')}</select><textarea id="end" rows="4" placeholder="ما الذي تغيّر في هذه القدرة بعد التعزيز؟"></textarea><div class="row"><button data-a="enadd">+ إضافة قدرة معزَّزة</button></div></div>`:''}</div>`};
  return `<div class="card pth rth">${PSYM[p]?`<div class="emb"><img src="${PSYM[p]}" alt="رمز المسار" draggable="false"></div>`:''}<div class="pth-k">المسار</div><h2>${esc(pn[1])} · ${esc(pn[0])}</h2><div class="pth-s">${c.seq<=9?'التسلسل الحالي <b>'+c.seq+'</b> — '+esc(sqn(p,c.seq)):'لم تبلغ أي تسلسل بعد'}</div><div class="dsq">${[9,8,7,6,5,4,3,2,1,0].map(i=>`<i class="${c.seq>9?'':i>c.seq?'p':i==c.seq?'on':''}"></i>`).join('')}</div></div>
@@ -1453,7 +1465,7 @@ function thm(){const o=draft||C(),t=o&&THM[o.path],r=document.documentElement.st
 const BFK='bf_v1',BFGC=[['#ef4444','أحمر'],['#3b82f6','أزرق'],['#ffffff','أبيض'],['#22c55e','أخضر'],['#eab308','أصفر'],['#a855f7','بنفسجي'],['','بلا']],TKC=['#ef4444','#f59e0b','#22c55e','#3b82f6','#a855f7','#ec4899','#e5e7eb'];
 function bfNew(id,name){return{id,name,img:'',cols:20,rows:20,cell:60,gc:'#ffffff',map:0,obs:{},tk:[],ini:{round:0,p:[],roll:{},ext:{},order:[],turn:-1},sec:0}}
 let BF=(()=>{try{const o=JSON.parse(localStorage.getItem(BFK));if(o&&o.ss&&o.ss[o.cur])return o}catch(e){}const id='s'+Date.now().toString(36);return{cur:id,ss:{[id]:bfNew(id,'الجلسة 1')}}})();
-const bfv={x:0,y:0,z:1,tool:'move',grid:true,vis:true,sel:null,atk:null,panel:false,info:true,modal:'',pm:null,pt:null,fit:true,dt:null,cc:0},bfImgs={},bfAv={};
+const bfv={x:0,y:0,z:1,tool:'drag',grid:true,vis:true,sel:null,atk:null,panel:false,info:true,modal:'',pm:null,pt:null,fit:true,dt:null,cc:0},bfImgs={},bfAv={};
 let bfC=null,bfR=null,bfTO=0;
 const bfS=()=>BF.ss[BF.cur],bfTok=id=>bfS().tk.find(t=>t.id==id),bfCol=i=>(i>=26?String.fromCharCode(64+Math.floor(i/26)):'')+String.fromCharCode(65+i%26),bfN=v=>Math.max(0,Math.trunc(+AD(v))||0);
 const bfDirty={};let bfBusy=0,bfLast=0;
@@ -1504,30 +1516,39 @@ function bfObs(x,a,b,cell,col,sty,z){const px=a*cell,py=b*cell,i=Math.max(1,cell
  else if(sty=='brick'){x.fillStyle=col+'dd';x.fillRect(px,py,cell,cell);x.strokeStyle='rgba(0,0,0,.45)';x.lineWidth=Math.max(1,cell*.035);const rh=cell/3;x.beginPath();for(let r=0;r<3;r++){const yy=py+r*rh;x.moveTo(px,yy);x.lineTo(px+cell,yy);const off=r%2?cell/2:cell/4;for(let c=off;c<cell;c+=cell/2){x.moveTo(px+c,yy);x.lineTo(px+c,yy+rh)}}x.stroke();x.strokeRect(px,py,cell,cell)}
  else{x.fillStyle=col+'d0';x.fillRect(px,py,cell,cell);x.fillStyle='rgba(255,255,255,.14)';x.fillRect(px,py,cell,cell*.16);x.strokeStyle='rgba(0,0,0,.45)';x.lineWidth=Math.max(1.5,2/z);x.strokeRect(px+i,py+i,cell-2*i,cell-2*i)}}
 function bfInfo(x,t,cx,cy,R,sz,cell,z,h,m){
- const c=t.cid&&chars[t.cid],st=c?E.stats(c):null,sp=st?Math.max(0,st.sp-(c.spu||0)):0,spm=st?st.sp:0,en=st?st.en:null,
- u=Math.max(cell*.2,10/z),bw=Math.max(sz*cell*1.05,u*6),bh=u*1.05,gap=u*.2,pad=u*.4,F='Cairo,Tahoma,sans-serif',
- rr=(a,b,w,hh,r)=>{x.beginPath();if(x.roundRect)x.roundRect(a,b,w,hh,r);else x.rect(a,b,w,hh)},bx=cx-bw/2,lw=Math.max(1,1/z);
- x.save();let y=cy+R+u*.45;
+ const c=t.cid&&chars[t.cid],st=c?E.stats(c):null,sp=st?Math.max(0,st.sp-(c.spu||0)):0,en=st?st.en:null,
+ F='Cairo,Tahoma,sans-serif',px=R*z,lw=Math.max(1,1/z),rw=Math.max(3,cell*.07),
+ hf=m>0?Math.max(0,Math.min(1,h/m)):0,hc=hf>.5?'#4ade80':hf>.25?'#fbbf24':'#f87171';
+ x.save();
+ /* 1) numbers inside the token (clipped to the avatar) */
+ if(px>=11){
+  x.save();x.beginPath();x.arc(cx,cy,R-rw/2,0,Math.PI*2);x.clip();
+  const g=x.createLinearGradient(0,cy+R*.05,0,cy+R*.62);g.addColorStop(0,'rgba(6,9,18,0)');g.addColorStop(1,'rgba(6,9,18,.9)');
+  x.fillStyle=g;x.fillRect(cx-R,cy+R*.05,R*2,R*.95);
+  const segs=(st&&px>=24)?[[h,hc],[sp,'#60a5fa'],[en,'#fde047']]:[[h,hc]],n=segs.length;
+  let fs=n>1?R*.3:R*.42;fs=Math.max(fs,7/z);
+  x.font='800 '+fs+'px '+F;x.textAlign='center';x.textBaseline='middle';x.direction='ltr';
+  const gap=fs*.55,ws=segs.map(s=>x.measureText(String(s[0])).width),tot=ws.reduce((a,b)=>a+b,0)+gap*(n-1),mx=R*1.46;
+  if(tot>mx){fs*=mx/tot;x.font='800 '+fs+'px '+F}
+  const W=segs.map(s=>x.measureText(String(s[0])).width),T=W.reduce((a,b)=>a+b,0)+gap*(n-1)*(tot>mx?mx/tot:1),gp=gap*(tot>mx?mx/tot:1),ty=cy+R*.6;
+  let sx=cx-T/2;
+  segs.forEach((s,i)=>{const tx=sx+W[i]/2;
+   x.lineJoin='round';x.lineWidth=Math.max(fs*.22,1.5/z);x.strokeStyle='rgba(0,0,0,.75)';x.strokeText(String(s[0]),tx,ty);
+   x.fillStyle=s[1];x.fillText(String(s[0]),tx,ty);
+   if(i<n-1){const dx=sx+W[i]+gp/2;x.beginPath();x.moveTo(dx,ty-fs*.4);x.lineTo(dx,ty+fs*.4);x.strokeStyle='rgba(255,255,255,.28)';x.lineWidth=lw;x.stroke()}
+   sx+=W[i]+gp});
+  x.direction='inherit';x.restore()}
+ /* 2) thin health arc just inside the colour ring */
+ if(px>=14){const aw=Math.max(2,cell*.04),ar=R-rw/2-aw/2-lw*.6;
+  x.beginPath();x.arc(cx,cy,ar,0,Math.PI*2);x.strokeStyle='rgba(0,0,0,.5)';x.lineWidth=aw;x.stroke();
+  if(hf>0){x.beginPath();x.arc(cx,cy,ar,-Math.PI/2,-Math.PI/2+Math.PI*2*hf);x.strokeStyle=hc;x.lineWidth=aw;x.lineCap='round';x.stroke();x.lineCap='butt'}}
+ /* 3) small name tag below */
+ const u=Math.max(cell*.16,9/z),nm=t.name||'?';
  x.font='700 '+u+'px '+F;x.textAlign='center';x.textBaseline='middle';
- const nm=t.name||'?',pw=Math.min(bw*1.7,Math.max(x.measureText(nm).width+u*1.4,bw*.55)),ph=u*1.4;
- rr(cx-pw/2,y,pw,ph,ph/2);x.fillStyle='rgba(8,12,24,.9)';x.fill();x.strokeStyle=t.color;x.lineWidth=Math.max(1.5,2/z);x.stroke();
- x.fillStyle='#fff';x.fillText(nm,cx,y+ph/2+u*.04,pw-u*.6);y+=ph+gap*1.3;
- const bar=(lab,v,mx,c1,c2,solid)=>{const f=mx>0?Math.max(0,Math.min(1,v/mx)):0;
-  rr(bx,y,bw,bh,bh/2);x.fillStyle='rgba(0,0,0,.72)';x.fill();
-  if(f>0){x.save();rr(bx,y,bw,bh,bh/2);x.clip();const g=x.createLinearGradient(0,y,0,y+bh);g.addColorStop(0,c1);g.addColorStop(1,c2);x.fillStyle=g;x.fillRect(bx,y,bw*f,bh);x.fillStyle='rgba(255,255,255,.18)';x.fillRect(bx,y,bw*f,bh*.38);x.restore()}
-  rr(bx,y,bw,bh,bh/2);x.strokeStyle='rgba(255,255,255,.28)';x.lineWidth=lw;x.stroke();
-  x.font='800 '+bh*.72+'px '+F;x.textBaseline='middle';const ty=y+bh/2+bh*.03,num=solid?String(v):v+' / '+mx;
-  if(bw>=u*6.5){x.fillStyle='#fff';x.textAlign='right';x.direction='rtl';x.fillText(lab,bx+bw-pad,ty);x.textAlign='left';x.direction='ltr';x.fillText(num,bx+pad,ty)}
-  else{x.fillStyle='#fff';x.textAlign='center';x.direction='ltr';x.fillText(num,cx,ty)}
-  x.direction='inherit';y+=bh+gap};
- const hf=m>0?h/m:0;
- bar('الدم',h,m,hf>.5?'#4ade80':hf>.25?'#fbbf24':'#f87171',hf>.5?'#15803d':hf>.25?'#b45309':'#b91c1c');
- if(st){bar('الروحانية',sp,spm,'#60a5fa','#1d4ed8');
-  rr(bx,y,bw,bh,bh/2);x.fillStyle='rgba(250,204,21,.16)';x.fill();x.strokeStyle='rgba(250,204,21,.8)';x.lineWidth=lw;x.stroke();
-  x.font='800 '+bh*.72+'px '+F;x.textBaseline='middle';const ty=y+bh/2+bh*.03;x.fillStyle='#fde68a';
-  if(bw>=u*6.5){x.textAlign='right';x.direction='rtl';x.fillText('التحمل',bx+bw-pad,ty);x.textAlign='left';x.direction='ltr';x.fillText(String(en),bx+pad,ty)}
-  else{x.textAlign='center';x.direction='ltr';x.fillText(String(en),cx,ty)}
-  x.direction='inherit'}
+ const pw=Math.min(Math.max(R*2.2,sz*cell*1.1),Math.max(x.measureText(nm).width+u*1.3,R*1.1)),ph=u*1.4,y=cy+R+cell*.12;
+ x.beginPath();if(x.roundRect)x.roundRect(cx-pw/2,y,pw,ph,ph/2);else x.rect(cx-pw/2,y,pw,ph);
+ x.fillStyle='rgba(8,12,24,.82)';x.fill();x.strokeStyle=t.color;x.lineWidth=Math.max(1,1.4/z);x.stroke();
+ x.fillStyle='#fff';x.fillText(nm,cx,y+ph/2+u*.04,pw-u*.6);
  x.restore()}
 function bfRead(f,cb){const fr=new FileReader();fr.onload=()=>{const im=new Image();im.onload=()=>{const m=Math.max(im.width,im.height),k=m>2200?2200/m:1,c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',.82),im.width/im.height)};im.onerror=()=>bfToast('تعذّر قراءة الصورة');im.src=fr.result};fr.readAsDataURL(f)}
 function bfTurnHTML(){const s=bfS(),I=s.ini;if(!I.order.length)return'';return`<div class="bfts"><span class="bftr">الدورة ${I.round||1}</span>${I.order.map((id,i)=>{const t=bfTok(id);return t?`<button data-bf="isel" data-v="${id}" class="bfch${i==I.turn?' on':''}" style="--tc:${t.color}"><b>${i+1}</b>${bfNb(t)}${esc(t.name)}<small>${bfTot(I,id)??''}</small></button>`:''}).join('')}<button data-bf="inext" class="bfnx">⏭ التالي</button></div>`}
@@ -1571,7 +1592,7 @@ function bfModalHTML(){const s=bfS(),m=bfv.modal;if(!m)return'';let b='';
 function bfUI(){if(!bfR)return;const s=bfS();bfNn(s);const q=x=>bfR.querySelector(x),T=[['move','✋ تحريك الخريطة'],['select','🎯 تحديد'],['attack','⚔ هجمة'],['obstacle','🧱 عقبة']];
  q('#bf-head').innerHTML=`<div class="bfh"><div class="bfht"><b>⚔ أرض المعركة</b><div class="sub">📁 ${esc(s.name)}${bfDirty[s.id]?' · <b class="bad">غير محفوظة</b>':''} — ${s.map?s.cols+'×'+s.rows+' خلية':'لا توجد خريطة محملة'}</div></div><div class="bfb">${bfDirty[s.id]?'<button data-bf="save" class="bfsv">💾 حفظ</button>':''}<button data-bf="ini"${bfv.panel?' class="on"':''}>⚔ مبادرة</button><button data-bf="fx">⏱ ${s.sec}ث</button><button data-bf="ses">📁 جلسات</button><button data-bf="map">🗺 خريطة</button><button data-bf="sty">🎨 المظهر</button><button data-bf="tok">👤 شخصية</button><button data-bf="clsel" class="r" title="مسح التحديد والهجمة">🚫</button><button data-bf="clr" class="r" title="مسح الخريطة والشخصيات">🗑</button></div></div>`;
  const tg=(a,ic,l,on)=>`<button data-bf="${a}" class="bftg${on?' on':''}" title="${l}">${ic}<span>${l}</span></button>`;
- q('#bf-tools').innerHTML=`<div class="bfb bft2"><div class="bfseg">${[['move','✋','تحريك'],['select','🎯','تحديد'],['attack','⚔','هجمة'],['obstacle','🧱','حواجز']].map(([k,ic,l])=>`<button data-bf="tool" data-v="${k}" class="${bfv.tool==k?'on':''}" title="${l}">${ic}<span>${l}</span></button>`).join('')}</div>${tg('grid','▦','الشبكة',bfv.grid)}${tg('vis','👁','المجالات',bfv.vis)}${tg('info','📊','البيانات',bfv.info)}<span class="bfzg" title="تكبير الخريطة"><span class="sub">🔍</span><button data-bf="zout" class="sec">−</button><b id="bf-zv">100%</b><button data-bf="zin" class="sec">＋</button><button data-bf="fit" class="sec" title="ملاءمة الشاشة">⤢</button></span><span class="bfzg" title="حجم الشخصيات"><span class="sub">👤</span><button data-bf="tsm" class="sec">−</button><b>${Math.round((s.ts||1)*100)}%</b><button data-bf="tsp" class="sec">＋</button></span><span class="sub">${s.tk.length?s.tk.length+' شخصية':'لا توجد شخصيات'}</span></div>`;
+ q('#bf-tools').innerHTML=`<div class="bfb bft2"><div class="bfseg">${[['move','✋','الخريطة'],['drag','🧍','اللاعبون'],['select','🎯','تحديد'],['attack','⚔','هجمة'],['obstacle','🧱','حواجز']].map(([k,ic,l])=>`<button data-bf="tool" data-v="${k}" class="${bfv.tool==k?'on':''}" title="${l}">${ic}<span>${l}</span></button>`).join('')}</div>${tg('grid','▦','الشبكة',bfv.grid)}${tg('vis','👁','المجالات',bfv.vis)}${tg('info','📊','البيانات',bfv.info)}<span class="bfzg" title="تكبير الخريطة"><span class="sub">🔍</span><button data-bf="zout" class="sec">−</button><b id="bf-zv">100%</b><button data-bf="zin" class="sec">＋</button><button data-bf="fit" class="sec" title="ملاءمة الشاشة">⤢</button></span><span class="bfzg" title="حجم الشخصيات"><span class="sub">👤</span><button data-bf="tsm" class="sec">−</button><b>${Math.round((s.ts||1)*100)}%</b><button data-bf="tsp" class="sec">＋</button></span><span class="sub">${s.tk.length?s.tk.length+' شخصية':'لا توجد شخصيات'}</span></div>`;
  q('#bf-empty').style.display=s.map?'none':'';q('#bf-empty').innerHTML=s.map?'':`<div class="bfe"><div>🗡️</div><div class="sub">اضغط على «خريطة» لتحميل خريطة المعركة<br>ثم أضف شخصياتك إليها</div><button data-bf="blank" class="sec" style="margin-top:10px">⬜ خريطة بيضاء سريعة (20×20)</button></div>`;
  q('#bf-side').innerHTML=bfSelHTML();q('#bf-modal').innerHTML=bfModalHTML();{const ov=q('#bf-ini'),sc=ov.scrollTop;ov.classList.toggle('on',!!bfv.panel);ov.innerHTML=bfv.panel?bfIniHTML():'';ov.scrollTop=sc}q('#bf-turn').innerHTML=bfTurnHTML();icz(bfR)}
 function bfAct(a,v){const s=bfS(),I=s.ini,refresh=()=>{bfSave();bfUI();bfDraw()},rl=()=>Dice.n(20);
@@ -1616,7 +1637,7 @@ function bfBind(){const cv=bfC,P=new Map();let g=null;
  cv.addEventListener('pointerdown',e=>{try{cv.setPointerCapture(e.pointerId)}catch(_){}P.set(e.pointerId,wp(e));
   if(P.size==2){const[a,b]=[...P.values()];g={t:'pinch',d:Math.hypot(a.x-b.x,a.y-b.y),z:bfv.z};g.w=w2({x:(a.x+b.x)/2,y:(a.y+b.y)/2});bfv.dt=null;return}
   const p=wp(e),w=w2(p),c=cl(w),s=bfS(),tk=tokAt(w,c);g={t:'pan',sx:p.x,sy:p.y,ox:bfv.x,oy:bfv.y,mv:0,tk};
-  if(bfv.tool=='select'&&tk){g.t='tok';bfv.sel=tk.id;g.gx=w.x/s.cell-tk.x;g.gy=w.y/s.cell-tk.y;bfUI();bfDraw()}
+  if((bfv.tool=='select'||bfv.tool=='drag')&&tk){g.t='tok';bfv.sel=tk.id;g.gx=w.x/s.cell-tk.x;g.gy=w.y/s.cell-tk.y;bfUI();bfDraw()}
   else if(bfv.tool=='obstacle'&&inb(c)){g.t='obs';g.m=s.obs[c.x+','+c.y]?'del':'add';obs(c,g.m);bfDraw()}});
  cv.addEventListener('pointermove',e=>{const p=wp(e);if(P.has(e.pointerId))P.set(e.pointerId,p);const w=w2(p),c=cl(w),cd=bfR&&bfR.querySelector('#bf-coord');if(cd)cd.textContent=inb(c)?bfCol(c.x)+(c.y+1):'—';if(!g)return;
   if(g.t=='pinch'){if(P.size<2)return;const[a,b]=[...P.values()],d=Math.hypot(a.x-b.x,a.y-b.y),m={x:(a.x+b.x)/2,y:(a.y+b.y)/2};bfv.z=Math.min(10,Math.max(.05,g.z*d/(g.d||1)));bfv.x=m.x-g.w.x*bfv.z;bfv.y=m.y-g.w.y*bfv.z;bfDraw();return}
@@ -1627,7 +1648,7 @@ function bfBind(){const cv=bfC,P=new Map();let g=null;
   if(g.t=='tok'){const t=bfTok(bfv.sel);if(g.mv&&bfv.dt&&t){const z=t.sz||1;t.x=Math.max(0,Math.min(s.cols-z,Math.round(bfv.dt.cx/s.cell-z/2)));t.y=Math.max(0,Math.min(s.rows-z,Math.round(bfv.dt.cy/s.cell-z/2)));bfSave()}bfv.dt=null;bfUI();bfDraw()}
   else if(g.t=='obs')bfSave();
   else if(g.t=='pan'&&!g.mv){if(bfv.tool=='attack'){if(g.tk){if(!bfv.atk||bfv.atk.to)bfv.atk={from:g.tk.id};else if(bfv.atk.from!=g.tk.id){bfv.atk.to=g.tk.id;bfv.modal='atk'}}else bfv.atk=null;bfUI();bfDraw()}
-   else if(g.tk&&bfv.tool!='obstacle'){bfv.sel=g.tk.id;bfUI();bfDraw()}else if(bfv.tool=='select'){bfv.sel=null;bfUI();bfDraw()}}
+   else if(g.tk&&bfv.tool!='obstacle'){bfv.sel=g.tk.id;bfUI();bfDraw()}else if(bfv.tool=='select'||bfv.tool=='drag'){bfv.sel=null;bfUI();bfDraw()}}
   g=null};
  cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
  cv.addEventListener('wheel',e=>{e.preventDefault();const p=wp(e),w=w2(p);bfv.z=Math.min(10,Math.max(.05,bfv.z*Math.exp(-e.deltaY*.0015)));bfv.x=p.x-w.x*bfv.z;bfv.y=p.y-w.y*bfv.z;bfDraw()},{passive:false})}
@@ -1838,6 +1859,7 @@ const L2=(c,a,b)=>E.ev(c,a,b);
 const ICON={
 map:'<path d="M9 4 3 6.5v13.5L9 17.5l6 2.5 6-2.5V4L15 6.5z"/><path d="M9 4v13.5"/><path d="M15 6.5V20"/>',
 pan:'<path d="M12 3v18M3 12h18"/><path d="M9 6l3-3 3 3M9 18l3 3 3-3M6 9l-3 3 3 3M18 9l3 3-3 3"/>',
+drag:'<circle cx="12" cy="7.5" r="3"/><path d="M6.5 20c0-3.1 2.4-5.5 5.5-5.5s5.5 2.4 5.5 5.5"/><path d="M4 9.5 2.3 11.2 4 13M20 9.5l1.7 1.7L20 13"/>',
 brick:'<rect x="3" y="4" width="18" height="16" rx="1.5"/><path d="M3 9.3h18M3 14.7h18M9 4v5.3M15 9.3v5.4M9 14.7V20"/>',
 grid:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/>',
 search:'<circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/>',
@@ -1905,7 +1927,7 @@ ban:'<circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/>',
 hand:'<path d="M8 12V6a1.5 1.5 0 0 1 3 0v5"/><path d="M11 11V4.5a1.5 1.5 0 0 1 3 0V11"/><path d="M14 11V6a1.5 1.5 0 0 1 3 0v7a7 7 0 0 1-7 7h-.5A6.5 6.5 0 0 1 4 15.5V13a1.5 1.5 0 0 1 3 0"/>',
 check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',crop:'<path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M2 6h14a2 2 0 0 1 2 2v14"/>',
 x:'<path d="M6 6l12 12M18 6L6 18"/>'};
-const IM={'🎲':'dice','☾':'moon','⚔':'swords','🛡':'shield','♥':'heart','✦':'spark','✨':'spark','⚗':'flask','🧪':'flask','🩺':'steth','💊':'pill','🛏':'bed','🧠':'brain','🧘':'brain','🎭':'smile','🔥':'flame','😡':'flame','⚡':'bolt','👣':'move','⏳':'hourglass','🎯':'target','🌀':'wind','💪':'dumbbell','🔒':'lock','👁':'eye','🕶':'eyeoff','✎':'pen','✏':'pen','👤':'user','☉':'user','👥':'users','🏰':'castle','🗺':'map','✋':'pan','🧱':'brick','▦':'grid','🔍':'search','📊':'chart','⏱':'clock','📁':'folder','🗑':'trash','🚫':'ban','🧹':'eraser','📋':'list','🎨':'palette','⤢':'fit','🗒':'file','⬜':'square','📸':'image','🗡':'sword','🔄':'refresh','📜':'doc','✉':'mail','📥':'inbox','⇄':'swap','🪙':'coin','📖':'book','🎒':'bag','💰':'wallet','💾':'save','⬇':'down','⬆':'up','⏭':'next','↺':'undo','↻':'refresh','⚑':'flag','⚒':'tool','♂':'mars','♀':'venus','😨':'alert','⚠':'alert','🔇':'mute','🤐':'minus','⛓':'link','🛑':'ban','✊':'hand','✓':'check','✂':'crop','✔':'check','✕':'x','✘':'x'};
+const IM={'🎲':'dice','☾':'moon','⚔':'swords','🛡':'shield','♥':'heart','✦':'spark','✨':'spark','⚗':'flask','🧪':'flask','🩺':'steth','💊':'pill','🛏':'bed','🧠':'brain','🧘':'brain','🎭':'smile','🔥':'flame','😡':'flame','⚡':'bolt','👣':'move','⏳':'hourglass','🎯':'target','🌀':'wind','💪':'dumbbell','🔒':'lock','👁':'eye','🕶':'eyeoff','✎':'pen','✏':'pen','👤':'user','☉':'user','👥':'users','🏰':'castle','🗺':'map','✋':'pan','🧱':'brick','🧍':'drag','▦':'grid','🔍':'search','📊':'chart','⏱':'clock','📁':'folder','🗑':'trash','🚫':'ban','🧹':'eraser','📋':'list','🎨':'palette','⤢':'fit','🗒':'file','⬜':'square','📸':'image','🗡':'sword','🔄':'refresh','📜':'doc','✉':'mail','📥':'inbox','⇄':'swap','🪙':'coin','📖':'book','🎒':'bag','💰':'wallet','💾':'save','⬇':'down','⬆':'up','⏭':'next','↺':'undo','↻':'refresh','⚑':'flag','⚒':'tool','♂':'mars','♀':'venus','😨':'alert','⚠':'alert','🔇':'mute','🤐':'minus','⛓':'link','🛑':'ban','✊':'hand','✓':'check','✂':'crop','✔':'check','✕':'x','✘':'x'};
 const IS='('+Object.keys(IM).join('|')+')\\uFE0F?',IT=new RegExp(IS,'u'),IG=new RegExp(IS,'gu'),
  svgI=n=>`<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[n]}</svg>`;
 function icz(root){if(!root)return;const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentElement&&!n.parentElement.closest('script,style,textarea,select,option,svg')&&IT.test(n.nodeValue)?1:2}),L=[];while(w.nextNode())L.push(w.currentNode);
